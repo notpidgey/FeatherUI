@@ -3,7 +3,7 @@
 
 #include "../control.h"
 
-class textbox : public control
+class text_box : public control
 {
 public:
 	D3DCOLOR background_color = color(255,0,0,0);
@@ -13,7 +13,7 @@ public:
 	ID3DXFont* font;
 	bool active = false;
 
-	textbox(float x, float y, float width, float height, ID3DXFont* font);
+	text_box(float x, float y, float width, float height, ID3DXFont* font);
 	
 	void render() override;
 	void handle_mouse() override;

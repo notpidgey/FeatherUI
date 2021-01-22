@@ -2,14 +2,14 @@
 #include <d3dx9core.h>
 #include <string>
 
-struct font
+struct feather_font
 {
-    font()
+    feather_font(): d3d_font(nullptr), font_size(0)
     {
-        
+        //Default Constructor
     }
-    
-    font(ID3DXFont** d3d_font, std::string name, int font_size)
+
+    feather_font(ID3DXFont** d3d_font, std::string name, int font_size)
     {
         this->d3d_font = d3d_font;
         this->name = name;

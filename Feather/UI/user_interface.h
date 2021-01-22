@@ -9,7 +9,7 @@
 #include "Controls/Headers/box.h"
 #include "Controls/Headers/checkbox.h"
 //#include "Controls/Headers/draggable_box.h"
-#include "Controls/Headers/textbox.h"
+#include "Controls/Headers/text_box.h"
 #include "Controls/Headers/text.h"
 #include "Controls/Headers/outline.h"
 #include "Controls/Headers/slider.h"
@@ -28,7 +28,7 @@ public:
 	std::unique_ptr<outline> add_outline(float x, float y, float width, float height, D3DCOLOR color);
 	std::unique_ptr<checkbox> add_checkbox(float x, float y, float width, float height, bool* checked);
 	//std::unique_ptr<draggable_box>* add_draggable_box(int x, int y, int width, int height, DWORD dword, bool filled, window* hwnd);
-	std::unique_ptr<slider> add_slider(float x, float y, float min, float max);
+	std::unique_ptr<slider>* add_slider(float x, float y, float min, float max);
 
 	void call_controls(HWND hwnd);
 

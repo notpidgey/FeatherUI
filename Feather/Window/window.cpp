@@ -2,7 +2,7 @@
 #include "../UI/Controls/Headers/title_bar.h"
 
 window::window(int width, int height, unsigned long flags, const char* window_name, DWORD background,
-               const std::vector<font>& fonts, const font& font)
+               const std::vector<feather_font>& fonts, const feather_font& font)
 {
     init();
     
@@ -11,10 +11,10 @@ window::window(int width, int height, unsigned long flags, const char* window_na
     this->x = 0;
     this->y = 0;
     this->background_color = background;
-    this->window_name = window_name;
-    this->window_flags = flags;
+    this->win_name = window_name;
+    this->win_flags = flags;
     this->title_font = font;
-    this->hwnd = CreateWindowExA(NULL, " ", window_name, window_flags, 0, 0, width, height, nullptr, nullptr, nullptr,
+    this->hwnd = CreateWindowExA(NULL, " ", window_name, win_flags, 0, 0, width, height, nullptr, nullptr, nullptr,
                                  nullptr);
 
     initialize_directx(fonts);
@@ -24,7 +24,7 @@ window::window(int width, int height, unsigned long flags, const char* window_na
 window::~window()
 {
     DestroyWindow(hwnd);
-    UnregisterClassA("", hinstance);
+    UnregisterClassA("", h_instance_);
 }
 
 void window::setup_window()
@@ -32,9 +32,8 @@ void window::setup_window()
     UpdateWindow(hwnd);
     ShowWindow(hwnd, SW_SHOWDEFAULT);
 
-    title_bar* dbox = new title_bar(0, 0, width, 30, color(255, 42, 42, 42), true, this);
-    user_interface.add_control(dbox);
-    user_interface.add_text(10, 6, *title_font.d3d_font, color(255, 255, 255, 255), "Feather UI");
+    u_interface.add_control(new title_bar(0, 0, width, 30, color(255, 42, 42, 42), true, this));
+    u_interface.add_text(10, 6, *title_font.d3d_font, color(255, 255, 255, 255), "Feather UI");
 }
 
 void window::handle_message()
@@ -44,10 +43,11 @@ void window::handle_message()
         TranslateMessage(&message_);
         DispatchMessage(&message_);
     }
+    
     render();
 }
 
-void window::initialize_directx(const std::vector<font>& fonts)
+void window::initialize_directx(const std::vector<feather_font>& fonts)
 {
     ZeroMemory(&p_params_, sizeof(p_params_));
 
@@ -61,13 +61,11 @@ void window::initialize_directx(const std::vector<font>& fonts)
     p_params_.BackBufferHeight = height;
 
     pObject->CreateDeviceEx(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &p_params_,
-                            0,
+                            nullptr,
                             &p_device_);
 
     draw.pDevice = p_device_;
 
-    //create line object
-    D3DXCreateLine(p_device_, &draw.pLine);
 
     for (auto& font : fonts)
     {
@@ -87,38 +85,39 @@ void window::initialize_directx(const std::vector<font>& fonts)
     p_device_->SetRenderState(D3DRS_DESTBLENDALPHA, D3DBLEND_ONE);
     p_device_->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
 
-    //set free our direct x object
+    //Set free our direct x object
     pObject->Release();
 }
 
 void window::render()
 {
-    p_device_->Clear(0, NULL, D3DCLEAR_TARGET, background_color, 1.f, 0);
+    p_device_->Clear(0, nullptr, D3DCLEAR_TARGET, background_color, 1.f, 0);
     if (p_device_->BeginScene() >= 0)
     {
-        user_interface.call_controls(hwnd);
+        u_interface.call_controls(hwnd);
 
         p_device_->EndScene();
     }
 
-    p_device_->Present(NULL, NULL, NULL, NULL);
+    p_device_->Present(nullptr, nullptr, nullptr, nullptr);
 }
 
 void window::init()
 {
     WNDCLASSEX wc = {0};
 
-    hinstance = GetModuleHandle(nullptr);
+    h_instance_ = GetModuleHandle(nullptr);
     wc.cbSize = sizeof(WNDCLASSEX);
     wc.style = CS_HREDRAW | CS_VREDRAW;
     wc.lpfnWndProc = DefWindowProc;
     wc.cbClsExtra = 0;
     wc.cbWndExtra = 0;
-    wc.hInstance = hinstance;
+    wc.hInstance = h_instance_;
     wc.hIcon = LoadIcon(nullptr, IDI_APPLICATION);
     wc.hbrBackground = nullptr;
     wc.lpszMenuName = nullptr;
     wc.lpszClassName = L" ";
+    wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
 
     RegisterClassEx(&wc);
 }

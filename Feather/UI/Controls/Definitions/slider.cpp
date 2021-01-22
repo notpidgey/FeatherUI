@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <iostream>
 
-slider::slider(float x, float y, float min, float max)
+slider::slider(float x, float y, float min, float max): being_dragged_(false)
 {
     this->x = x;
     this->y = y;
@@ -11,48 +11,53 @@ slider::slider(float x, float y, float min, float max)
     this->h = 20;
     this->min = min;
     this->max = max;
-    this->knob_progression = 0.0;
-    this->knob_pos = new POINT();
+    this->knob_progression_ = 0.0;
+    this->knob_pos_ = new POINT();
 }
 
 void slider::render()
 {
-    //Slider background
-    draw.rect_filled1(x, y, w, h, slider_bar_background);
+    knob_pos_->x = x + knob_padding_ + (knob_progression_ * (w - (knob_padding_ * 2) - knob_width_));
+    knob_pos_->y = y + (h - knob_height_) / 2;
 
-    //Slider knob. Add 2 for padding at start add 2 for padding at end. 4 Padding.
-    knob_pos->x = x + 2 + (knob_progression * (w-4-knob_width));
-    //Align in the middle
-    knob_pos->y = y + (h-knob_height)/2;
-    draw.rect_filled1(knob_pos->x, knob_pos->y, knob_width, knob_height, knob_color);
+    render_background();
+    render_knob();
+}
+
+void slider::render_background() const
+{
+    draw.rect_filled1(x, y, w, h, slider_bar_background);
+}
+
+void slider::render_knob() const
+{
+    draw.rect_filled1(knob_pos_->x, knob_pos_->y, knob_width_, knob_height_, knob_color);
 }
 
 void slider::handle_mouse()
 {
-    const auto pixels_per_value = w / max;
-
     const POINT mouse_point = k_manager->mouse_pos;
 
     if (k_manager->key_down(VK_LBUTTON))
     {
-        if (k_manager->mouse_in_region(knob_pos->x, knob_pos->y, w, h) || being_dragged)
+        if (k_manager->mouse_in_region(knob_pos_->x, knob_pos_->y, knob_width_, knob_height_) || being_dragged_)
         {
             if (k_manager->key_pressed(VK_LBUTTON) & 1)
             {
-                being_dragged = true;
+                being_dragged_ = true;
             }
 
-            knob_progression = std::clamp(std::clamp(mouse_point.x-x-4, (float)0, (float)w-knob_width)/(w-2-knob_width), 0.0f, 1.0f);
-            std::cout << get_value() << std::endl;
-        }       
+            const auto percentage = std::clamp(mouse_point.x - x - 4, static_cast<float>(0), static_cast<float>(w) - knob_width_) / (w - 2 - knob_width_);
+            knob_progression_ = std::clamp(percentage, 0.0f, 1.0f);
+        }
     }
     else
     {
-        being_dragged = false;
+        being_dragged_ = false;
     }
 }
 
-float slider::get_value()
+float slider::get_value() const
 {
-    return min + (knob_progression * (max-min));
+    return min + (knob_progression_ * (max - min));
 }

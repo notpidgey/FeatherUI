@@ -569,7 +569,7 @@
       <ImpLibCompiled></ImpLibCompiled>
       <AdditionalIncludeDirectories>;D:\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>
     </ClCompile>
-    <ClCompile Include="UI\Controls\Definitions\textbox.cpp">
+    <ClCompile Include="UI\Controls\Definitions\text_box.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <Optimization>Disabled</Optimization>
@@ -863,10 +863,10 @@
     <ClInclude Include="UI\Controls\Headers\outline.h" />
     <ClInclude Include="UI\Controls\Headers\slider.h" />
     <ClInclude Include="UI\Controls\Headers\text.h" />
-    <ClInclude Include="UI\Controls\Headers\textbox.h" />
+    <ClInclude Include="UI\Controls\Headers\text_box.h" />
     <ClInclude Include="UI\user_interface.h" />
     <ClInclude Include="UI\Utils\key_state_manager.h" />
-    <ClInclude Include="Window\Structs\font.h" />
+    <ClInclude Include="Window\Structs\feather_font.h" />
     <ClInclude Include="Window\window.h" />
   </ItemGroup>
   <ItemGroup>

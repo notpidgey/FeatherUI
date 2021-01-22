@@ -1,8 +1,8 @@
-#include "../Headers/textbox.h"
+#include "../Headers/text_box.h"
 
 #include <iostream>
 
-textbox::textbox(float x, float y, float width, float height, ID3DXFont* font)
+text_box::text_box(float x, float y, float width, float height, ID3DXFont* font)
 {
     this->x = x;
     this->y = y;
@@ -11,14 +11,14 @@ textbox::textbox(float x, float y, float width, float height, ID3DXFont* font)
     this->font = font;
 }
 
-void textbox::render()
+void text_box::render()
 {
     draw.rect_filled1(x, y, w, h, background_color);
     draw.rect1(x, y, w, h, background_color);
     draw.string_a(font, x, y, 0, false, color(255, 255, 255, 255), content.c_str());
 }
 
-void textbox::handle_mouse()
+void text_box::handle_mouse()
 {
     POINT point = k_manager->mouse_pos;
     

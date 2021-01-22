@@ -35,7 +35,7 @@ std::unique_ptr<outline> user_interface::add_outline(float x, float y, float wid
     outline line(x, y, width, height, color);
     line.k_manager = &key_manager;
 
-    std::unique_ptr<outline> unique = std::make_unique<class outline>(line);
+    auto unique = std::move(std::make_unique<class outline>(line));
     controls.emplace_back(std::move(unique));
 
     return unique;
@@ -52,31 +52,15 @@ std::unique_ptr<checkbox> user_interface::add_checkbox(float x, float y, float w
     return unique;
 }
 
-
-//TODO: Fix recursive inclusion in UserInterface and Window
-/*
-std::unique_ptr<draggable_box>* UserInterface::add_draggable_box(int x, int y, int width, int height, DWORD dword,
-    bool filled,
-    window* hwnd)
-    {
-    draggable_box draggable(x, y, width, height, dword, filled, hwnd);
-    std::unique_ptr<draggable_box> unique = std::make_unique<class draggable_box>(draggable);
-    controls.emplace_back(unique);
-
-    return &unique;
-}
-*/
-
-
-std::unique_ptr<slider> user_interface::add_slider(float x, float y, float min, float max)
+std::unique_ptr<slider>* user_interface::add_slider(float x, float y, float min, float max)
 {
     slider sliding_bar(x, y, min, max);
     sliding_bar.k_manager = &key_manager;
 
-    std::unique_ptr<slider> unique = std::make_unique<class slider>(sliding_bar);
+    auto unique = std::make_unique<class slider>(sliding_bar);
     controls.emplace_back(std::move(unique));
 
-    return unique;
+    return &unique;
 }
 
 void user_interface::call_controls(HWND hwnd)
