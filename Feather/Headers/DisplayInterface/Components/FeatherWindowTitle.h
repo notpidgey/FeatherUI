@@ -16,4 +16,5 @@ public:
     void Render() override;
     void OnMouseDown(FeatherTouch* touch) override;
     void OnMouseUp(FeatherTouch* touch) override;
+    void OnLeave(FeatherTouch* touch) override;
 };

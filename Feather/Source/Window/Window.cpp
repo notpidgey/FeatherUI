@@ -59,12 +59,8 @@ void Window::InitializeDirectx(const std::vector<FeatherFont>& fonts)
     pParams.BackBufferWidth = width;
     pParams.BackBufferHeight = height;
 
-    pObject->CreateDeviceEx(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &pParams,
-        nullptr,
-        &pDevice);
-
+    pObject->CreateDeviceEx(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &pParams,nullptr, &pDevice);
     g_render.pDevice = pDevice;
-
 
     for (auto& font : fonts)
     {
@@ -88,6 +84,7 @@ void Window::InitializeDirectx(const std::vector<FeatherFont>& fonts)
 void Window::Render()
 {
     pDevice->Clear(0, nullptr, D3DCLEAR_TARGET, backgroundColor, 1.f, 0);
+
     if (pDevice->BeginScene() >= 0)
     {
         keyStateManager.PollInput(&hwnd);

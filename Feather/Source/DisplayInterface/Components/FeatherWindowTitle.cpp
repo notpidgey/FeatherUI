@@ -21,25 +21,29 @@ void FeatherWindowTitle::Render()
 
 void FeatherWindowTitle::OnMouseDown(FeatherTouch* touch)
 {
-    std::cout << "Mouse DOwn" << std::endl;
     const auto [x, y] = touch->mousePos;
-    if (touch->MouseInRegion(truePosition, width, height) || beingDragged)
+
+    if (touch->KeyPressed(VK_LBUTTON) & 1)
     {
-        if (touch->KeyPressed(VK_LBUTTON) & 1)
-        {
-            anchorPoint.x = x;
-            anchorPoint.y = y;
-            beingDragged = true;
-        }
-
-        touch->window->position.x += x - anchorPoint.x;
-        touch->window->position.y += y - anchorPoint.y;
-
-        SetWindowPos(touch->window->hwnd, nullptr,  touch->window->position.x,  touch->window->position.y,  touch->window->width,  touch->window->height, NULL);
+        anchorPoint.x = x;
+        anchorPoint.y = y;
+        beingDragged = true;
     }
+
+    touch->window->position.x += x - anchorPoint.x;
+    touch->window->position.y += y - anchorPoint.y;
+
+    SetWindowPos(touch->window->hwnd, nullptr, touch->window->position.x, touch->window->position.y, touch->window->width, touch->window->height, NULL);
 }
 
 void FeatherWindowTitle::OnMouseUp(FeatherTouch* touch)
 {
     beingDragged = false;
+}
+
+void FeatherWindowTitle::OnLeave(FeatherTouch* touch)
+{
+    if (beingDragged)
+        OnMouseDown(touch);
+    mouseInRegion = true;
 }

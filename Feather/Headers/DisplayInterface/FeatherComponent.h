@@ -29,6 +29,8 @@ public:
 
     virtual void OnHover(FeatherTouch* touch) {};
 
+    virtual void OnMouseAway(FeatherTouch* touch) {};
+
     virtual void OnMouseDown(FeatherTouch* touch) {};
     virtual void OnMouseUp(FeatherTouch* touch) {};
 

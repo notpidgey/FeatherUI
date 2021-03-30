@@ -32,11 +32,11 @@ void FeatherComponent::HandleInput(FeatherTouch* touch) const
             {
                 if (!childComponent->mouseInRegion)
                 {
-                    childComponent->OnEnter(touch);
                     childComponent->mouseInRegion = true;
+                    childComponent->OnEnter(touch);
                 }
 
-                if (touch->KeyPressed(VK_MBUTTON))
+                if (touch->KeyDown(VK_LBUTTON))
                 {
                     childComponent->OnMouseDown(touch);
                 }
@@ -49,10 +49,10 @@ void FeatherComponent::HandleInput(FeatherTouch* touch) const
             }
             else if (childComponent->mouseInRegion)
             {
-                childComponent->OnLeave(touch);
                 childComponent->mouseInRegion = false;
+                childComponent->OnLeave(touch);
             }
-
+            
             childComponent->HandleInput(touch);
         }
 }
