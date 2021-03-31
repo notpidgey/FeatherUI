@@ -21,7 +21,9 @@ public:
     int width = 100;
     int height = 20;
 
-    POINT GetTruePosition(int xOffset, int yOffset) const;
+    POINT GetTruePosition(FeatherComponent* component, int xOffset, int yOffset) const;
+    void SetPosition(int x, int y);
+    
     virtual void HandleInput(FeatherTouch* touch) const;
     
     //Implemented Events
@@ -34,7 +36,7 @@ public:
     virtual void OnHover(FeatherTouch* touch) {};
 
     virtual void OnMouseAway(FeatherTouch* touch) {};
-
     virtual void OnMouseDown(FeatherTouch* touch) {};
     virtual void OnMouseUp(FeatherTouch* touch) {};
+    virtual void OnMousePressed(FeatherTouch* touch) {};
 };

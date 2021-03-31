@@ -11,9 +11,9 @@ FeatherWindowTitle::FeatherWindowTitle(const int posX, const int posY, const int
     this->width = width;
     this->height = height;
     this->backgroundColor = backgroundColor;
-    this->windowTitleText = windowTitleText;
     this->beingDragged = false;
-    this->childrenContainer = new FeatherContainer(this, new FeatherLabel(10, 6, font, windowTitleText, color));
+    this->windowTitle = new FeatherLabel(10, 6, font, windowTitleText, color);
+    this->childrenContainer = new FeatherContainer(this, windowTitle);
 }
 
 void FeatherWindowTitle::Render()
@@ -46,7 +46,7 @@ void FeatherWindowTitle::OnMouseUp(FeatherTouch* touch)
 
 void FeatherWindowTitle::OnLeave(FeatherTouch* touch)
 {
-    if (beingDragged)
+    if (beingDragged && GetFocus() == touch->window->hwnd)
         OnMouseDown(touch);
     mouseInRegion = true;
 }

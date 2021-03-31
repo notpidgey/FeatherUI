@@ -3,10 +3,12 @@
 #include <DisplayInterface/FeatherComponent.h>
 #include <Graphics/DirectX9/RenderEngine.h>
 
+#include "FeatherLabel.h"
+
 class FeatherWindowTitle : public FeatherComponent
 {
 public:
-    const char* windowTitleText;
+    FeatherLabel* windowTitle;
     DWORD backgroundColor;
     POINT anchorPoint {};
     bool beingDragged;

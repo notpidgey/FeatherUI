@@ -13,7 +13,7 @@ void FeatherContainer::HandleInput(FeatherTouch* touch) const
 {
     for (FeatherComponent* childComponent : children)
     {
-        const auto [x, y] = GetTruePosition(childComponent->vPosition.x, childComponent->vPosition.y);
+        const auto [x, y] = GetTruePosition(childComponent, childComponent->vPosition.x, childComponent->vPosition.y);
         
         childComponent->truePosition.x = x;
         childComponent->truePosition.y = y;
@@ -26,6 +26,11 @@ void FeatherContainer::HandleInput(FeatherTouch* touch) const
                 childComponent->OnEnter(touch);
             }
 
+            if(touch->KeyPressed(VK_LBUTTON))
+            {
+                childComponent->OnMousePressed(touch);
+            }
+            
             if (touch->KeyDown(VK_LBUTTON))
             {
                 childComponent->OnMouseDown(touch);
