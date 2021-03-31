@@ -56,3 +56,8 @@ void FeatherComponent::HandleInput(FeatherTouch* touch) const
             childComponent->HandleInput(touch);
         }
 }
+
+void FeatherComponent::Render()
+{
+    childrenContainer->Render();
+}

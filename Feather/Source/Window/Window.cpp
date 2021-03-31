@@ -27,12 +27,10 @@ Window::~Window()
     UnregisterClassA("", hInstance);
 }
 
-void Window::SetupWindow()
+void Window::SetupWindow() const
 {
     UpdateWindow(hwnd);
     ShowWindow(hwnd, SW_SHOWDEFAULT);
-
-    container.AddControl(new FeatherWindowTitle(0, 0, width, 30, COLOR(255, 0, 0, 0), windowName));
 }
 
 void Window::HandleMessage()

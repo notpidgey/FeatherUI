@@ -2,6 +2,7 @@
 #pragma once
 
 #include <DisplayInterface/FeatherForwards.h>
+#include <Graphics/DirectX9/RenderEngine.h>
 #include <Window/FeatherTouch.h>
 #include <Windef.h>
 
@@ -9,6 +10,9 @@ class FeatherComponent
 {
 public:
     virtual ~FeatherComponent() = default;
+
+    FeatherComponent* parent = nullptr;
+    FeatherContainer* childrenContainer = nullptr;
     
     POINT truePosition{};
     POINT vPosition{};
@@ -21,7 +25,7 @@ public:
     virtual void HandleInput(FeatherTouch* touch) const;
     
     //Implemented Events
-    virtual void Render() {};
+    virtual void Render();
 
     //Implemented Input Events
     virtual void OnEnter(FeatherTouch* touch) {};
@@ -33,8 +37,4 @@ public:
 
     virtual void OnMouseDown(FeatherTouch* touch) {};
     virtual void OnMouseUp(FeatherTouch* touch) {};
-
-private:
-    FeatherComponent* parent = nullptr;
-    FeatherContainer* childrenContainer = nullptr;
 };

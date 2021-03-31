@@ -1,11 +1,12 @@
 ﻿#include <memory>
 #include <DisplayInterface/Components/FeatherContainer.h>
 
-FeatherComponent* FeatherContainer::AddControl(FeatherComponent* control)
+FeatherComponent* FeatherContainer::AddControl(FeatherComponent* component)
 {
-    children.push_back(control);
+    component->parent = parent;
+    children.push_back(component);
 
-    return control;
+    return component;
 }
 
 void FeatherContainer::HandleInput(FeatherTouch* touch) const 

@@ -25,7 +25,7 @@ public:
     int height;
     int winFlags;
 
-    void SetupWindow();
+    void SetupWindow() const;
     void HandleMessage();
     void Render();
 

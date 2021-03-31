@@ -1,9 +1,10 @@
-﻿#include <iostream>
-#include <ostream>
-#include <DisplayInterface/Components/FeatherWindowTitle.h>
+﻿#include <DisplayInterface/Components/FeatherWindowTitle.h>
 #include <Window/Window.h>
 
-FeatherWindowTitle::FeatherWindowTitle(const int posX, const int posY, const int width, const int height, const DWORD backgroundColor, const char* windowTitleText)
+#include "DisplayInterface/Components/FeatherLabel.h"
+
+FeatherWindowTitle::FeatherWindowTitle(const int posX, const int posY, const int width, const int height, const DWORD backgroundColor,
+    ID3DXFont* font, const char* windowTitleText, const DWORD color)
 {
     this->vPosition.x = posX;
     this->vPosition.y = posY;
@@ -12,11 +13,13 @@ FeatherWindowTitle::FeatherWindowTitle(const int posX, const int posY, const int
     this->backgroundColor = backgroundColor;
     this->windowTitleText = windowTitleText;
     this->beingDragged = false;
+    this->childrenContainer = new FeatherContainer(this, new FeatherLabel(10, 6, font, windowTitleText, color));
 }
 
 void FeatherWindowTitle::Render()
 {
     g_render.RectFilled(truePosition.x, truePosition.y, width, height, backgroundColor);
+    FeatherComponent::Render();
 }
 
 void FeatherWindowTitle::OnMouseDown(FeatherTouch* touch)
