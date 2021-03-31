@@ -1,7 +1,6 @@
 ﻿#include <DisplayInterface/Components/FeatherWindowTitle.h>
+#include <DisplayInterface/Components/FeatherLabel.h>
 #include <Window/Window.h>
-
-#include "DisplayInterface/Components/FeatherLabel.h"
 
 FeatherWindowTitle::FeatherWindowTitle(const int posX, const int posY, const int width, const int height, const DWORD backgroundColor,
     ID3DXFont* font, const char* windowTitleText, const DWORD color)
@@ -18,7 +17,7 @@ FeatherWindowTitle::FeatherWindowTitle(const int posX, const int posY, const int
 
 void FeatherWindowTitle::Render()
 {
-    g_render.RectFilled(truePosition.x, truePosition.y, width, height, backgroundColor);
+    g_render.RectFilled(tPosition.x, tPosition.y, width, height, backgroundColor);
     FeatherComponent::Render();
 }
 

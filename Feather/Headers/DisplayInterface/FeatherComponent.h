@@ -14,17 +14,17 @@ public:
     FeatherComponent* parent = nullptr;
     FeatherContainer* childrenContainer = nullptr;
     
-    POINT truePosition{};
+    POINT tPosition{};
     POINT vPosition{};
-    float opacity = 1.f;
     bool mouseInRegion = false;
-    int width = 100;
-    int height = 20;
+    bool handlingMouseDownEvent = false;
+    int width = 0;
+    int height = 0;
 
     POINT GetTruePosition(FeatherComponent* component, int xOffset, int yOffset) const;
     void SetPosition(int x, int y);
     
-    virtual void HandleInput(FeatherTouch* touch) const;
+    virtual void HandleInput(FeatherTouch* touch);
     
     //Implemented Events
     virtual void Render();
@@ -36,7 +36,7 @@ public:
     virtual void OnHover(FeatherTouch* touch) {};
 
     virtual void OnMouseAway(FeatherTouch* touch) {};
+    virtual void OnMousePressed(FeatherTouch* touch) {};
     virtual void OnMouseDown(FeatherTouch* touch) {};
     virtual void OnMouseUp(FeatherTouch* touch) {};
-    virtual void OnMousePressed(FeatherTouch* touch) {};
 };

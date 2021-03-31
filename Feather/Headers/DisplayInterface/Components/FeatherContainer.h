@@ -39,6 +39,7 @@ public:
     std::vector<FeatherComponent*> children;
 
     FeatherComponent* AddControl(FeatherComponent* component);
-    void HandleInput(FeatherTouch* touch) const override;
+    void HandleInput(FeatherTouch* touch);
+    void HandleInput(FeatherTouch* touch, FeatherComponent* childComponent);
     void Render() override;
 };

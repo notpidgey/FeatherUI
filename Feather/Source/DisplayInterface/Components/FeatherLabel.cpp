@@ -11,5 +11,5 @@ FeatherLabel::FeatherLabel(const int x, const int y, ID3DXFont* font, const char
 
 void FeatherLabel::Render()
 {
-    g_render.StringA(font, truePosition.x, truePosition.y, NULL, false, color, labelText);
+    g_render.StringA(font, tPosition.x, tPosition.y, NULL, false, color, labelText);
 }

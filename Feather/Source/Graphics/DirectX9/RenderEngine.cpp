@@ -224,4 +224,28 @@ void RenderEngine::CircleFilled(const float x, const float y, const float size, 
 	vBuffer->Release();
 }
 
+int RenderEngine::GetTextWidth(const char *szText, ID3DXFont* pFont)
+{
+	RECT rcRect = {0,0,0,0};
+	if (pFont)
+	{
+		pFont->DrawTextA(nullptr, szText, strlen(szText), &rcRect, DT_CALCRECT,
+                    D3DCOLOR_XRGB(0, 0, 0));
+	}
+
+	return rcRect.right - rcRect.left;
+}
+
+int RenderEngine::GetTextHeight(const char *szText, ID3DXFont* pFont)
+{
+	RECT rcRect = {0,0,0,0};
+	if (pFont)
+	{
+		pFont->DrawTextA(nullptr, szText, strlen(szText), &rcRect, DT_CALCRECT,
+                    D3DCOLOR_XRGB(0, 0, 0));
+	}
+
+	return rcRect.bottom - rcRect.top;
+}
+
 RenderEngine g_render;

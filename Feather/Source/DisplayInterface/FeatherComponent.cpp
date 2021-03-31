@@ -24,7 +24,7 @@ void FeatherComponent::SetPosition(const int x, const int y)
     this->vPosition.y = y;
 }
 
-void FeatherComponent::HandleInput(FeatherTouch* touch) const
+void FeatherComponent::HandleInput(FeatherTouch* touch)
 {
     if (childrenContainer != nullptr)
         childrenContainer->HandleInput(touch);

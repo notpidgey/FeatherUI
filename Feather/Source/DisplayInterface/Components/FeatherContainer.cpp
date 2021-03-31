@@ -9,14 +9,14 @@ FeatherComponent* FeatherContainer::AddControl(FeatherComponent* component)
     return component;
 }
 
-void FeatherContainer::HandleInput(FeatherTouch* touch) const 
+void FeatherContainer::HandleInput(FeatherTouch* touch) 
 {
     for (FeatherComponent* childComponent : children)
     {
         const auto [x, y] = GetTruePosition(childComponent, childComponent->vPosition.x, childComponent->vPosition.y);
         
-        childComponent->truePosition.x = x;
-        childComponent->truePosition.y = y;
+        childComponent->tPosition.x = x;
+        childComponent->tPosition.y = y;
         
         if (touch->MouseInRegion(x, y, childComponent->width, childComponent->height))
         {
@@ -28,15 +28,17 @@ void FeatherContainer::HandleInput(FeatherTouch* touch) const
 
             if(touch->KeyPressed(VK_LBUTTON))
             {
+                childComponent->handlingMouseDownEvent = true;
                 childComponent->OnMousePressed(touch);
-            }
-            
+            }   
             if (touch->KeyDown(VK_LBUTTON))
             {
+                childComponent->handlingMouseDownEvent = true;
                 childComponent->OnMouseDown(touch);
             }
-            else
+            else if (touch->KeyReleased(VK_LBUTTON))
             {
+                childComponent->handlingMouseDownEvent = false;
                 childComponent->OnMouseUp(touch);
             }
 
@@ -48,8 +50,23 @@ void FeatherContainer::HandleInput(FeatherTouch* touch) const
             childComponent->OnLeave(touch);
         }
 
+        if(childComponent->handlingMouseDownEvent)
+        {
+            if (touch->KeyReleased(VK_LBUTTON))
+            {
+                childComponent->handlingMouseDownEvent = false;
+                childComponent->OnMouseUp(touch);
+            }
+        }
+
         childComponent->HandleInput(touch);
     }    
+}
+
+void FeatherContainer::HandleInput(FeatherTouch* touch, FeatherComponent* childComponent)
+{
+
+
 }
 
 void FeatherContainer::Render()

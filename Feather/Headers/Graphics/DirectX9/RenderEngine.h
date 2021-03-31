@@ -29,6 +29,8 @@ public:
     void RectFilled1(float x, float y, float w, float h, DWORD color) const;
     void Circle(float x, float y, float size, int resolution, DWORD color) const;
     void CircleFilled(float x, float y, float size, int resolution, DWORD color) const;
+    int GetTextWidth(const char* szText, ID3DXFont* pFont);
+    int GetTextHeight(const char* szText, ID3DXFont* pFont);
 };
 
 extern RenderEngine g_render;

@@ -1,6 +1,5 @@
 #include <Window/Window.h>
-
-#include "DisplayInterface/Components/FeatherWindowTitle.h"
+#include <DisplayInterface/Components/FeatherWindowTitle.h>
 
 Window::Window(const int width, const int height, const unsigned long flags, const char* windowName, const DWORD background, const std::vector<FeatherFont>& fonts, const FeatherFont& font)
 {

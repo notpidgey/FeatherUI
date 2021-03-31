@@ -15,10 +15,10 @@ FeatherCheckbox::FeatherCheckbox(const int x, const int y, bool* checkValue, ID3
 void FeatherCheckbox::Render()
 {
     //Render outline
-    g_render.Rect1(truePosition.x, truePosition.y, width, height, outlineColor);
+    g_render.Rect1(tPosition.x, tPosition.y, width, height, outlineColor);
     
     // Render Inside
-    g_render.RectFilled1(truePosition.x + 2, truePosition.y + 2, width - 4, height - 4, currentColor);
+    g_render.RectFilled1(tPosition.x + 2, tPosition.y + 2, width - 4, height - 4, currentColor);
 
     FeatherComponent::Render();
 }
