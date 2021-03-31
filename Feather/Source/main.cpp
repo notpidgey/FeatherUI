@@ -12,6 +12,11 @@ ID3DXFont* g_montserrat16Px = nullptr;
 const char* g_windowName = "Feather UI";
 bool g_checked = true;
 
+void OnClick()
+{
+    std::cout << "The Button Was Clicked!" << std::endl;
+}
+
 int main()
 {
     const std::vector fonts
@@ -25,7 +30,7 @@ int main()
 
     canvas->AddControl(new FeatherWindowTitle(0, 0, 750, 30, COLOR(255, 42, 42, 42), g_tahoma16Px, g_windowName));
     canvas->AddControl(new FeatherCheckbox(10, 35, &g_checked, g_tahoma16Px, "Check this checkbox!", COLOR(255,0,0,0)));
-    canvas->AddControl(new FeatherButton(10, 60, g_tahoma16Px, "Some Cool Text!", COLOR(255,255,255,255)));
+    canvas->AddControl(new FeatherButton(10, 60, &OnClick, g_tahoma16Px, "Some Cool Text!", COLOR(255,255,255,255)));
     
     while (true)
         main.HandleMessage();

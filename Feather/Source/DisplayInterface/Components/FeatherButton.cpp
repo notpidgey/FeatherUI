@@ -1,7 +1,7 @@
 ﻿#include <DisplayInterface/Components/FeatherButton.h>
 #include <DisplayInterface/Components/FeatherContainer.h>
 
-FeatherButton::FeatherButton(const int x, const int y, ID3DXFont* font, const char* buttonText, const DWORD color)
+FeatherButton::FeatherButton(const int x, const int y, void(*onClick)(), ID3DXFont* font, const char* buttonText, DWORD color)
 {
     const int textWidth = g_render.GetTextWidth(buttonText, font);
     const int textHeight = g_render.GetTextHeight(buttonText, font);
@@ -14,8 +14,7 @@ FeatherButton::FeatherButton(const int x, const int y, ID3DXFont* font, const ch
         (height / 2) - ( textHeight / 2),
         font, buttonText, color);
     this->childrenContainer = new FeatherContainer(this, label);
-
-
+    this->onClick = onClick;
     this->currentFill = fillColor;
 }
 
@@ -38,4 +37,5 @@ void FeatherButton::OnMousePressed(FeatherTouch* touch)
 void FeatherButton::OnMouseUp(FeatherTouch* touch)
 {
     currentFill = fillColor;
+    onClick();
 }
