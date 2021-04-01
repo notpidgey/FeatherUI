@@ -31,7 +31,7 @@ FeatherSlider::FeatherSlider(const int x, const int y, const int width, const SL
 
 float FeatherSlider::GetValue() const
 {
-    return 0;
+    return minValue + (sliderKnob->knobPercentage * (maxValue - minValue));
 }
 
 void FeatherSlider::Render()
@@ -41,9 +41,6 @@ void FeatherSlider::Render()
 
     FeatherComponent::Render();
 }
-
-void FeatherSlider::OnMouseDown(FeatherTouch* touch)
-{ }
 
 FeatherSliderKnob::FeatherSliderKnob(const int x, const int y, const int width, const int height)
 {

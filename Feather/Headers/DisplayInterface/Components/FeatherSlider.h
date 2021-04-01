@@ -34,7 +34,6 @@ public:
     FeatherSlider(int x, int y, int width, SLIDER_UNIT unit, float min, float max, ID3DXFont* font, const char* labelText);
     float GetValue() const;
     void Render() override;
-    void OnMouseDown(FeatherTouch* touch) override;
 };
 
 class FeatherSliderKnob : public FeatherComponent
