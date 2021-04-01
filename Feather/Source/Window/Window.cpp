@@ -58,6 +58,8 @@ void Window::InitializeDirectx(const std::vector<FeatherFont>& fonts)
 
     pObject->CreateDeviceEx(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &pParams,nullptr, &pDevice);
     g_render.pDevice = pDevice;
+    g_render.deviceWidth = width;
+    g_render.deviceHeight = height;
 
     for (auto& font : fonts)
     {
@@ -74,6 +76,7 @@ void Window::InitializeDirectx(const std::vector<FeatherFont>& fonts)
     pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
     pDevice->SetRenderState(D3DRS_DESTBLENDALPHA, D3DBLEND_ONE);
     pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+    pDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, true);
 
     pObject->Release();
 }

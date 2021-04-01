@@ -1,5 +1,4 @@
 ﻿#pragma once
-
 #include <DisplayInterface/FeatherForwards.h>
 #include <DisplayInterface/FeatherComponent.h>
 #include <vector>
@@ -13,33 +12,40 @@ public:
     {
         this->parent = nullptr;
     }
+    
     explicit FeatherContainer(FeatherComponent* parent)
     {
         this->parent = parent;
     }
+    
     FeatherContainer(FeatherComponent* parent, FeatherComponent* child)
     {
         this->parent = parent;
         
-        child->parent = parent;
-        
-        children.push_back(child);
+        AddControl(child);
     }
+    
     FeatherContainer(FeatherComponent* parent, FeatherComponent* child1, FeatherComponent* child2)
     {
         this->parent = parent;
-        
-        child1->parent = child1;
-        child2->parent = child2;
-        
-        children.push_back(child1);
-        children.push_back(child2);
+
+        AddControl(child1);
+        AddControl(child2);
     }
+
+    FeatherContainer(FeatherComponent* parent, FeatherComponent* child1, FeatherComponent* child2, FeatherComponent* child3)
+    {
+        this->parent = parent;
+
+        AddControl(child1);
+        AddControl(child2);
+        AddControl(child3);
+    }
+
 
     std::vector<FeatherComponent*> children;
 
     FeatherComponent* AddControl(FeatherComponent* component);
-    void HandleInput(FeatherTouch* touch);
-    void HandleInput(FeatherTouch* touch, FeatherComponent* childComponent);
+    void HandleInput(FeatherTouch* touch) override;
     void Render() override;
 };

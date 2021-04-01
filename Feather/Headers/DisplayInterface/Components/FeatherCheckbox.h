@@ -2,6 +2,9 @@
 #include <DisplayInterface/Components/FeatherLabel.h>
 #include <DisplayInterface/FeatherComponent.h>
 
+#define CHECKBOX_HEIGHT 20
+#define CHECKBOX_WIDTH 20
+
 class FeatherCheckbox : public FeatherComponent
 {
 public:

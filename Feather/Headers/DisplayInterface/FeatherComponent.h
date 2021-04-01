@@ -1,6 +1,5 @@
 ﻿// ReSharper disable CppFunctionIsNotImplemented
 #pragma once
-
 #include <DisplayInterface/FeatherForwards.h>
 #include <Graphics/DirectX9/RenderEngine.h>
 #include <Window/FeatherTouch.h>

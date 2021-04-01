@@ -12,7 +12,9 @@ class RenderEngine
 public:
     LPDIRECT3DDEVICE9 pDevice = nullptr;
     ID3DXLine* pLine = nullptr;
-    
+    int deviceWidth;
+    int deviceHeight;
+
     struct Vertex
     {
         float x, y, z = 0, rhw = 1;
