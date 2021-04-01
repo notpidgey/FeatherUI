@@ -9,6 +9,8 @@
 #define HORIZONTAL_PADDING 2
 #define VERTICAL_PADDING 2
 
+class FeatherSliderKnob;
+
 class FeatherSlider : public FeatherComponent
 {
 public:
@@ -23,6 +25,7 @@ public:
 
     FeatherLabel* sliderLabel;
     FeatherLabel* sliderValueLabel;
+    FeatherSliderKnob* sliderKnob;
     
     SLIDER_UNIT unit;
     float maxValue;

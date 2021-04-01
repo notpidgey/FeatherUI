@@ -15,6 +15,8 @@ FeatherSlider::FeatherSlider(const int x, const int y, const int width, const SL
     this->sliderLabel = new FeatherLabel(0, 0, font, labelText, COLOR(255, 0, 0, 0));
     this->sliderValueLabel = new FeatherLabel(0, 0, font, "Some Value", COLOR(255, 0, 0, 0));
     sliderValueLabel->vPosition.x = width - sliderValueLabel->GetTextWidth();
+    this->sliderKnob = new FeatherSliderKnob(HORIZONTAL_PADDING, TEXT_SLIDER_PADDING + VERTICAL_PADDING, width - (HORIZONTAL_PADDING * 2),
+            BACKGROUND_HEIGHT - (VERTICAL_PADDING * 2));
 
     this->width = width;
     this->height = sliderLabel->GetTextHeight() + (TEXT_SLIDER_PADDING - sliderLabel->GetTextHeight()) + BACKGROUND_HEIGHT;
@@ -23,8 +25,7 @@ FeatherSlider::FeatherSlider(const int x, const int y, const int width, const SL
         this,
         sliderLabel,
         sliderValueLabel,
-        new FeatherSliderKnob(HORIZONTAL_PADDING, TEXT_SLIDER_PADDING + VERTICAL_PADDING, width - (HORIZONTAL_PADDING * 2),
-            BACKGROUND_HEIGHT - (VERTICAL_PADDING * 2))
+        sliderKnob
     );
 }
 
@@ -82,7 +83,6 @@ void FeatherSliderKnob::OnMouseDown(FeatherTouch* touch)
     if (touch->MouseInRegion(tPosition.x + GetRenderOffset(), tPosition.y, KNOB_WIDTH, KNOB_HEIGHT))
     {
         knobPercentage = static_cast<float>(std::clamp(touch->mousePos.x + dragAnchor.x, tPosition.x, tPosition.x + width - KNOB_WIDTH) - tPosition.x) / (width - KNOB_WIDTH);
-        std::cout << knobPercentage << std::endl;
     }
 }
 
@@ -91,6 +91,5 @@ void FeatherSliderKnob::OnMouseAway(FeatherTouch* touch)
     if (touch->KeyDown(VK_LBUTTON) && beingDragged)
     {
         knobPercentage = static_cast<float>(std::clamp(touch->mousePos.x + dragAnchor.x, tPosition.x, tPosition.x + width - KNOB_WIDTH) - tPosition.x) / (width - KNOB_WIDTH);
-        std::cout << knobPercentage << std::endl;
     }
 }
