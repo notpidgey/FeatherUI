@@ -89,7 +89,8 @@ void Window::Render()
     {
         keyStateManager.PollInput(&hwnd);
 
-        container.HandleInput(&keyStateManager);
+        if(GetFocus() == hwnd)
+            container.HandleInput(&keyStateManager);
         container.Render();
 
         pDevice->EndScene();
