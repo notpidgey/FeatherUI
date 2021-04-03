@@ -28,11 +28,13 @@ public:
     FeatherSliderKnob* sliderKnob;
     
     SLIDER_UNIT unit;
+    std::string sliderValueText;
     float maxValue;
     float minValue;
     
     FeatherSlider(int x, int y, int width, SLIDER_UNIT unit, float min, float max, ID3DXFont* font, const char* labelText);
     float GetValue() const;
+    std::string FloatToString(float number, int precision);
     void Render() override;
 };
 

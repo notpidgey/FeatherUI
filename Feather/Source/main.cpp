@@ -38,7 +38,7 @@ int main()
     canvas->AddControl(new FeatherWindowTitle(0, 0, 750, 30, COLOR(255, 42, 42, 42), g_tahoma16Px, g_windowTitle.data()));
     canvas->AddControl(new FeatherCheckbox(10, 35, &g_checked, g_tahoma16Px, "Check this checkbox!", COLOR(255, 0, 0, 0)));
     canvas->AddControl(new FeatherButton(10, 60, &OnClick, g_tahoma16Px, "Some Cool Text!", COLOR(255,255,255,255)));
-    canvas->AddControl(new FeatherSlider(10, 90, 150, FeatherSlider::NONE, 100, 0, g_tahoma12Px, "Some Slider" ));
+    canvas->AddControl(new FeatherSlider(10, 90, 150, FeatherSlider::PERCENTAGE, 42, 7362, g_tahoma12Px, "Some Slider" ));
 
     while (true)
     {
