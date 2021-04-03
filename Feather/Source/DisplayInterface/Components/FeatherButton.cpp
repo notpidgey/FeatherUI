@@ -1,7 +1,7 @@
 ﻿#include <DisplayInterface/Components/FeatherButton.h>
 #include <DisplayInterface/Components/FeatherContainer.h>
 
-FeatherButton::FeatherButton(const int x, const int y, void(*onClick)(), ID3DXFont* font, const char* buttonText, DWORD color)
+FeatherButton::FeatherButton(const int x, const int y, void(*onClick)(), ID3DXFont* font, const char* buttonText, const DWORD color)
 {
     const int textWidth = g_render.GetTextWidth(buttonText, font);
     const int textHeight = g_render.GetTextHeight(buttonText, font);
@@ -9,6 +9,23 @@ FeatherButton::FeatherButton(const int x, const int y, void(*onClick)(), ID3DXFo
     this->SetPosition(x, y);
     this->width = 150;
     this->height = 25;
+    this->label = new FeatherLabel(
+        (width / 2) - ( textWidth / 2 ),
+        (height / 2) - ( textHeight / 2),
+        font, buttonText, color);
+    this->childrenContainer = new FeatherContainer(this, label);
+    this->onClick = onClick;
+    this->currentFill = fillColor;
+}
+
+FeatherButton::FeatherButton(const int x, const int y, const int width, const int height, void(* onClick)(), ID3DXFont* font, const char* buttonText, const DWORD color)
+{
+    const int textWidth = g_render.GetTextWidth(buttonText, font);
+    const int textHeight = g_render.GetTextHeight(buttonText, font);
+
+    this->SetPosition(x, y);
+    this->width = width;
+    this->height = height;
     this->label = new FeatherLabel(
         (width / 2) - ( textWidth / 2 ),
         (height / 2) - ( textHeight / 2),

@@ -9,6 +9,7 @@ public:
     FeatherLabel* label;
 
     FeatherButton(int x, int y, void (*onClick)(), ID3DXFont* font, const char* buttonText, DWORD color = COLOR(255, 255, 255, 255));
+    FeatherButton(int x, int y, int width, int height, void (*onClick)(), ID3DXFont* font, const char* buttonText, DWORD color = COLOR(255, 255, 255, 255));
     void Render() override;
     void OnMousePressed(FeatherTouch* touch) override;
     void OnMouseUp(FeatherTouch* touch) override;

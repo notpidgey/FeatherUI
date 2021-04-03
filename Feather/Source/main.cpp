@@ -32,7 +32,7 @@ int main()
         FeatherFont(&g_montserrat16Px, "Montserrat", 16)
     };
 
-    Window main(750, 430, WS_POPUP | WS_EX_TOPMOST, "Feather",COLOR(255, 255, 255, 255), fonts, FeatherFont(&g_montserrat16Px, "Montserrat", 16));
+    Window main(750, 430, WS_POPUP, "Feather",COLOR(255, 255, 255, 255), fonts, FeatherFont(&g_montserrat16Px, "Montserrat", 16));
     FeatherContainer* canvas = &main.container;
 
     canvas->AddControl(new FeatherWindowTitle(0, 0, 750, 30, COLOR(255, 42, 42, 42), g_tahoma16Px, g_windowTitle.data()));
