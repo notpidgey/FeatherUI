@@ -16,8 +16,8 @@ public:
     std::vector<FeatherTabViewTab> tabs;
     FeatherTabView(int x, int y, int width, int height, int buttonHeight, ID3DXFont* font, std::vector<const char*> tabNames);
 
-    void SetActiveTab(int tabId);
-    bool AddToTab(FeatherComponent* component, int tabId);
+    void SetActiveTab(int tabIndex);
+    bool AddToTab(FeatherComponent* component, int tabIndex);
 
 private:
     void OnTabButtonClick(FeatherButton* button);

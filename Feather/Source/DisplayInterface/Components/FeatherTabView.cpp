@@ -43,27 +43,26 @@ FeatherTabView::FeatherTabView(const int x, const int y, const int width, const 
     }
 }
 
-void FeatherTabView::SetActiveTab(const int tabId)
+void FeatherTabView::SetActiveTab(const int tabIndex)
 {
     for (FeatherTabViewTab tab : tabs)
     {
-        if (tab.tabId != tabId)
+        if (tab.tabId != tabIndex)
             tab.view->render = false;
         else
             tab.view->render = true;
     }
 }
 
-bool FeatherTabView::AddToTab(FeatherComponent* component, const int tabId)
+bool FeatherTabView::AddToTab(FeatherComponent* component, const int tabIndex)
 {
     for (FeatherTabViewTab tab : tabs)
     {
-        if (tab.tabId == tabId)
+        if (tab.tabId == tabIndex)
         {
             tab.view->AddControl(component);
+            return true;
         }
-        
-        return true;
     }
 
     return false;

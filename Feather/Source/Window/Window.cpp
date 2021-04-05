@@ -56,7 +56,7 @@ void Window::InitializeDirectx(const std::vector<FeatherFont>& fonts)
     pParams.BackBufferWidth = width;
     pParams.BackBufferHeight = height;
 
-    pObject->CreateDeviceEx(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &pParams,nullptr, &pDevice);
+    pObject->CreateDeviceEx(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &pParams, nullptr, &pDevice);
     g_render.pDevice = pDevice;
     g_render.deviceWidth = width;
     g_render.deviceHeight = height;
@@ -89,9 +89,8 @@ void Window::Render()
     {
         keyStateManager.PollInput(&hwnd);
 
-        container.FixPosition(0,0);
-        if(GetFocus() == hwnd)
-            container.HandleInput(&keyStateManager);
+        container.FixPosition(0, 0);
+        if (GetFocus() == hwnd) container.HandleInput(&keyStateManager);
         container.Render();
 
         pDevice->EndScene();

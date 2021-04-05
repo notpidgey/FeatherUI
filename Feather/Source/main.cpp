@@ -35,21 +35,18 @@ int main()
 
     Window main(750, 430, WS_POPUP, "Feather",COLOR(255, 255, 255, 255), fonts, FeatherFont(&g_montserrat16Px, "Montserrat", 16));
     FeatherContainer* canvas = &main.container;
-
+    
     canvas->AddControl(new FeatherWindowTitle(0, 0, 750, 30, COLOR(255, 42, 42, 42), g_tahoma16Px, g_windowTitle.data()));
 
-    FeatherTabView* tabMenu =
-        static_cast<FeatherTabView*>(canvas->AddControl(new FeatherTabView(0, 30, 750, 400, 25, g_tahoma16Px, std::vector({"Yes", "No", "Maybe"}))));
+    FeatherTabView* tabMenu = static_cast<FeatherTabView*>(
+        canvas->AddControl(new FeatherTabView(0, 30, 750, 400, 25, g_tahoma16Px, std::vector({"Yes", "No", "Maybe"})))
+    );
     tabMenu->SetActiveTab(0);
-    tabMenu->AddToTab(new FeatherCheckbox(10, 75, &g_checked, g_tahoma16Px, "Check this checkbox!", COLOR(255, 0, 0, 0)), 0);
-    
-    /*
-    canvas->AddControl(new FeatherCheckbox(10, 75, &g_checked, g_tahoma16Px, "Check this checkbox!", COLOR(255, 0, 0, 0)));
-    canvas->AddControl(new FeatherButton(10, 100, &OnClick, g_tahoma16Px, "Some Cool Text!", COLOR(255,255,255,255)));
-    canvas->AddControl(new FeatherSlider(10, 130, 150, FeatherSlider::PERCENTAGE, 42, 7362, g_tahoma12Px, "Some Slider" ));       
-     */
-  
-    
+
+    tabMenu->AddToTab(new FeatherCheckbox(10, 10, &g_checked, g_tahoma16Px, "Check this checkbox!", COLOR(255, 0, 0, 0)), 0);
+    tabMenu->AddToTab(new FeatherButton(10, 10, &OnClick, g_tahoma16Px, "Some Cool Text!", COLOR(255, 255, 255, 255)), 1);
+    tabMenu->AddToTab(new FeatherSlider(10, 10, 150, FeatherSlider::PERCENTAGE, 42, 7362, g_tahoma12Px, "Some Slider"), 2);
+
 
     while (true)
     {

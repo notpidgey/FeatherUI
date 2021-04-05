@@ -28,8 +28,8 @@ void FeatherComponent::FixPosition(const int x, const int y)
 {
     this->tPosition.x = x + vPosition.x;
     this->tPosition.y = y + vPosition.y;
-    
-    if(childrenContainer != nullptr)
+
+    if (childrenContainer != nullptr)
     {
         childrenContainer->FixPosition(this->tPosition.x, this->tPosition.y);
     }
@@ -39,12 +39,13 @@ void FeatherComponent::HandleInput(FeatherTouch* touch)
 {
     if (childrenContainer != nullptr)
     {
-        if(childrenContainer->render)
+        if (childrenContainer->render)
             childrenContainer->HandleInput(touch);
     }
 }
 
 void FeatherComponent::Render()
 {
-   childrenContainer->Render();
+    if (childrenContainer->render)
+        childrenContainer->Render();
 }

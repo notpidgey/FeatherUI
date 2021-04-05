@@ -92,26 +92,29 @@ void FeatherContainer::Render()
     RECT rect;
     for (FeatherComponent* child : children)
     {
-        if (this->parent != nullptr)
+        if (child->render)
         {
-            rect = {
-                this->tPosition.x, this->tPosition.y,
-                this->tPosition.x + this->width, this->tPosition.y + this->height,
-            };
+            if (this->parent != nullptr)
+            {
+                rect = {
+                    this->tPosition.x, this->tPosition.y,
+                    this->tPosition.x + this->width, this->tPosition.y + this->height,
+                };
+            }
+            else
+            {
+                rect = {
+                    0, 0,
+                    g_render.deviceWidth, g_render.deviceHeight
+                };
+            }
+
+            g_render.pDevice->SetScissorRect(&rect);
+
+            child->Render();
+
+            //g_render.Rect1(child->tPosition.x, child->tPosition.y, child->width, child->height, COLOR(255, 0, 255, 0));
         }
-        else
-        {
-            rect = {
-                0, 0,
-                g_render.deviceWidth, g_render.deviceHeight
-            };
-        }
-
-        g_render.pDevice->SetScissorRect(&rect);
-
-        child->Render();
-
-        g_render.Rect1(child->tPosition.x, child->tPosition.y, child->width, child->height, COLOR(255, 0, 255, 0));
     }
 }
 
