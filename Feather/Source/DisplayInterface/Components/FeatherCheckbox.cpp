@@ -3,12 +3,13 @@
 
 FeatherCheckbox::FeatherCheckbox(const int x, const int y, bool* checkValue, ID3DXFont* font, const char* labelText, const DWORD color)
 {
-    SetPosition(x, y);
+    FeatherComponent::SetPosition(x, y);
     this->value = checkValue;
     this->label = new FeatherLabel(25, 2, font, labelText, color);
     this->childrenContainer = new FeatherContainer(this, label);
     this->width = CHECKBOX_WIDTH + 15 + g_render.GetTextWidth(labelText, font),
     this->height = CHECKBOX_HEIGHT;
+
     SetValueFill();
 }
 

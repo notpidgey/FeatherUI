@@ -1,12 +1,12 @@
 ﻿#include <DisplayInterface/Components/FeatherButton.h>
 #include <DisplayInterface/Components/FeatherContainer.h>
 
-FeatherButton::FeatherButton(const int x, const int y, void(*onClick)(), ID3DXFont* font, const char* buttonText, const DWORD color)
+FeatherButton::FeatherButton(const int x, const int y, std::function<void(FeatherButton*)> onClick, ID3DXFont* font, const char* buttonText, const DWORD color)
 {
     const int textWidth = g_render.GetTextWidth(buttonText, font);
     const int textHeight = g_render.GetTextHeight(buttonText, font);
 
-    this->SetPosition(x, y);
+    FeatherComponent::SetPosition(x, y);
     this->width = 150;
     this->height = 25;
     this->label = new FeatherLabel(
@@ -18,12 +18,12 @@ FeatherButton::FeatherButton(const int x, const int y, void(*onClick)(), ID3DXFo
     this->currentFill = fillColor;
 }
 
-FeatherButton::FeatherButton(const int x, const int y, const int width, const int height, void(* onClick)(), ID3DXFont* font, const char* buttonText, const DWORD color)
+FeatherButton::FeatherButton(const int x, const int y, const int width, const int height, std::function<void(FeatherButton*)> onClick, ID3DXFont* font, const char* buttonText, const DWORD color)
 {
     const int textWidth = g_render.GetTextWidth(buttonText, font);
     const int textHeight = g_render.GetTextHeight(buttonText, font);
 
-    this->SetPosition(x, y);
+    FeatherComponent::SetPosition(x, y);
     this->width = width;
     this->height = height;
     this->label = new FeatherLabel(
@@ -54,5 +54,5 @@ void FeatherButton::OnMousePressed(FeatherTouch* touch)
 void FeatherButton::OnMouseUp(FeatherTouch* touch)
 {
     currentFill = fillColor;
-    onClick();
+    onClick(this);
 }

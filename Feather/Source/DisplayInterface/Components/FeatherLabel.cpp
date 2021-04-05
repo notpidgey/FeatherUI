@@ -3,8 +3,7 @@
 
 FeatherLabel::FeatherLabel(const int x, const int y, ID3DXFont* font, std::string labelText, const DWORD color)
 {
-    this->vPosition.x = x;
-    this->vPosition.y = y;
+    FeatherComponent::SetPosition(x, y);
     this->font = font;
     this->labelText = labelText.data();
     this->color = color;

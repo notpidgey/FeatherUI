@@ -5,8 +5,7 @@
 FeatherWindowTitle::FeatherWindowTitle(const int posX, const int posY, const int width, const int height, const DWORD backgroundColor,
     ID3DXFont* font, const char* windowTitleText, const DWORD color)
 {
-    this->vPosition.x = posX;
-    this->vPosition.y = posY;
+    FeatherComponent::SetPosition(posX, posY);
     this->width = width;
     this->height = height;
     this->backgroundColor = backgroundColor;

@@ -76,7 +76,7 @@ void Window::InitializeDirectx(const std::vector<FeatherFont>& fonts)
     pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
     pDevice->SetRenderState(D3DRS_DESTBLENDALPHA, D3DBLEND_ONE);
     pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
-    pDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, true);
+    //pDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, true);
 
     pObject->Release();
 }
@@ -89,6 +89,7 @@ void Window::Render()
     {
         keyStateManager.PollInput(&hwnd);
 
+        container.FixPosition(0,0);
         if(GetFocus() == hwnd)
             container.HandleInput(&keyStateManager);
         container.Render();

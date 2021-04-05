@@ -1,6 +1,7 @@
 #include <DisplayInterface/Components/FeatherCheckbox.h>
 #include <DisplayInterface/Components/FeatherWindowTitle.h>
 #include <DisplayInterface/Components/FeatherButton.h>
+#include <DisplayInterface/Components/FeatherSlider.h>
 
 #include <Window/Window.h>
 #include <Graphics/DirectX9/RenderEngine.h>
@@ -9,7 +10,7 @@
 #include <iostream>
 #include <stdint.h>
 
-#include "DisplayInterface/Components/FeatherSlider.h"
+#include "DisplayInterface/Components/FeatherTabView.h"
 
 ID3DXFont* g_tahoma16Px = nullptr;
 ID3DXFont* g_tahoma12Px = nullptr;
@@ -18,7 +19,7 @@ ID3DXFont* g_montserrat16Px = nullptr;
 std::string g_windowTitle = "Feather UI";
 bool g_checked = true;
 
-void OnClick()
+void OnClick(FeatherButton* button)
 {
     std::cout << "The Button Was Clicked!" << std::endl;
 }
@@ -36,12 +37,22 @@ int main()
     FeatherContainer* canvas = &main.container;
 
     canvas->AddControl(new FeatherWindowTitle(0, 0, 750, 30, COLOR(255, 42, 42, 42), g_tahoma16Px, g_windowTitle.data()));
-    canvas->AddControl(new FeatherCheckbox(10, 35, &g_checked, g_tahoma16Px, "Check this checkbox!", COLOR(255, 0, 0, 0)));
-    canvas->AddControl(new FeatherButton(10, 60, &OnClick, g_tahoma16Px, "Some Cool Text!", COLOR(255,255,255,255)));
-    canvas->AddControl(new FeatherSlider(10, 90, 150, FeatherSlider::PERCENTAGE, 42, 7362, g_tahoma12Px, "Some Slider" ));
+
+    FeatherTabView* tabMenu =
+        static_cast<FeatherTabView*>(canvas->AddControl(new FeatherTabView(0, 30, 750, 400, 25, g_tahoma16Px, std::vector({"Yes", "No", "Maybe"}))));
+    tabMenu->SetActiveTab(0);
+    tabMenu->AddToTab(new FeatherCheckbox(10, 75, &g_checked, g_tahoma16Px, "Check this checkbox!", COLOR(255, 0, 0, 0)), 0);
+    
+    /*
+    canvas->AddControl(new FeatherCheckbox(10, 75, &g_checked, g_tahoma16Px, "Check this checkbox!", COLOR(255, 0, 0, 0)));
+    canvas->AddControl(new FeatherButton(10, 100, &OnClick, g_tahoma16Px, "Some Cool Text!", COLOR(255,255,255,255)));
+    canvas->AddControl(new FeatherSlider(10, 130, 150, FeatherSlider::PERCENTAGE, 42, 7362, g_tahoma12Px, "Some Slider" ));       
+     */
+  
+    
 
     while (true)
     {
         main.HandleMessage();
-    } 
+    }
 }

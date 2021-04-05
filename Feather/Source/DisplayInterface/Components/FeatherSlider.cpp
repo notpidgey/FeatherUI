@@ -8,8 +8,7 @@
 
 FeatherSlider::FeatherSlider(const int x, const int y, const int width, const SLIDER_UNIT unit, const float min, const float max, ID3DXFont* font, const char* labelText)
 {
-    this->SetPosition(x, y);
-
+    FeatherComponent::SetPosition(x, y);
     this->unit = unit;
     this->minValue = min;
     this->maxValue = max;
@@ -78,7 +77,7 @@ void FeatherSlider::Render()
 
 FeatherSliderKnob::FeatherSliderKnob(const int x, const int y, const int width, const int height)
 {
-    this->SetPosition(x, y);
+    FeatherComponent::SetPosition(x, y);
     this->width = width;
     this->height = height;
     this->knobPercentage = 0;
