@@ -9,6 +9,21 @@ FeatherComponent* FeatherContainer::AddControl(FeatherComponent* component)
     return component;
 }
 
+void FeatherContainer::ClampRect(FeatherComponent* child, RECT* currentScissor)
+{
+    RECT clampedScissor;
+
+    clampedScissor = {
+        std::clamp(child->tPosition.x, currentScissor->left, currentScissor->right),
+        std::clamp(child->tPosition.y, currentScissor->top, currentScissor->bottom),
+        std::clamp(child->tPosition.x + child->width, currentScissor->left, currentScissor->right),
+        std::clamp(child->tPosition.y + child->height, currentScissor->top, currentScissor->bottom)
+    };
+
+    g_render.Rect1(clampedScissor.left, clampedScissor.top, clampedScissor.right-clampedScissor.left, clampedScissor.bottom - clampedScissor.top, COLOR(255, 0, 255, 0));
+    g_render.pDevice->SetScissorRect(&clampedScissor);
+}
+
 void FeatherContainer::Transform(const int x, const int y)
 {
     this->vPosition.x += x;
@@ -90,16 +105,15 @@ void FeatherContainer::HandleInput(FeatherTouch* touch)
 void FeatherContainer::Render()
 {
     RECT rect;
+    g_render.pDevice->GetScissorRect(&rect);
+
     for (FeatherComponent* child : children)
     {
         if (child->render)
         {
             if (this->parent != nullptr)
             {
-                rect = {
-                    this->tPosition.x, this->tPosition.y,
-                    this->tPosition.x + this->width, this->tPosition.y + this->height,
-                };
+                ClampRect(child, &rect);
             }
             else
             {
@@ -107,13 +121,11 @@ void FeatherContainer::Render()
                     0, 0,
                     g_render.deviceWidth, g_render.deviceHeight
                 };
+
+                g_render.pDevice->SetScissorRect(&rect);
             }
 
-            g_render.pDevice->SetScissorRect(&rect);
-
-            child->Render();
-
-            //g_render.Rect1(child->tPosition.x, child->tPosition.y, child->width, child->height, COLOR(255, 0, 255, 0));
+            child->Render();        
         }
     }
 }

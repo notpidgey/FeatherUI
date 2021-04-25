@@ -41,7 +41,7 @@ int main()
     FeatherTabView* tabMenu = static_cast<FeatherTabView*>(
         canvas->AddControl(new FeatherTabView(0, 30, 750, 400, 25, g_tahoma16Px, std::vector({"Yes", "No", "Maybe"})))
     );
-    tabMenu->SetActiveTab(0);
+    tabMenu->SetActiveTab(2);
 
     tabMenu->AddToTab(new FeatherCheckbox(10, 10, &g_checked, g_tahoma16Px, "Check this checkbox!", COLOR(255, 0, 0, 0)), 0);
     tabMenu->AddToTab(new FeatherButton(10, 10, &OnClick, g_tahoma16Px, "Some Cool Text!", COLOR(255, 255, 255, 255)), 1);

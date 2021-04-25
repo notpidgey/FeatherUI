@@ -46,6 +46,7 @@ public:
     std::vector<FeatherComponent*> children;
 
     FeatherComponent* AddControl(FeatherComponent* component);
+    void ClampRect(FeatherComponent* child, RECT* currentScissor);
     void Transform(int x, int y);
     void FixPosition(int x, int y) override;
     void HandleInput(FeatherTouch* touch) override;
