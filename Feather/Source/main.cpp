@@ -11,6 +11,7 @@
 #include <stdint.h>
 
 #include "DisplayInterface/Components/FeatherTabView.h"
+#include "DisplayInterface/Components/FeatherTextBox.h"
 
 ID3DXFont* g_tahoma16Px = nullptr;
 ID3DXFont* g_tahoma12Px = nullptr;
@@ -41,13 +42,14 @@ int main()
     FeatherTabView* tabMenu = static_cast<FeatherTabView*>(
         canvas->AddControl(new FeatherTabView(0, 30, 750, 400, 25, g_tahoma16Px, std::vector({"Yes", "No", "Maybe"})))
     );
-    tabMenu->SetActiveTab(2);
 
     tabMenu->AddToTab(new FeatherCheckbox(10, 10, &g_checked, g_tahoma16Px, "Check this checkbox!", COLOR(255, 0, 0, 0)), 0);
+    tabMenu->AddToTab(new FeatherTextBox(10, 40, 200, 22, g_tahoma16Px, "Placeholder"), 0);
     tabMenu->AddToTab(new FeatherButton(10, 10, &OnClick, g_tahoma16Px, "Some Cool Text!", COLOR(255, 255, 255, 255)), 1);
     tabMenu->AddToTab(new FeatherSlider(10, 10, 150, FeatherSlider::PERCENTAGE, 42, 7362, g_tahoma12Px, "Some Slider"), 2);
 
-
+    tabMenu->SetActiveTab(0);
+    
     while (true)
     {
         main.HandleMessage();

@@ -9,7 +9,7 @@ FeatherComponent* FeatherContainer::AddControl(FeatherComponent* component)
     return component;
 }
 
-void FeatherContainer::ClampRect(FeatherComponent* child, RECT* currentScissor)
+void FeatherContainer::ClampRect(FeatherComponent* child, RECT* currentScissor) const
 {
     RECT clampedScissor;
 
@@ -20,7 +20,7 @@ void FeatherContainer::ClampRect(FeatherComponent* child, RECT* currentScissor)
         std::clamp(child->tPosition.y + child->height, currentScissor->top, currentScissor->bottom)
     };
 
-    g_render.Rect1(clampedScissor.left, clampedScissor.top, clampedScissor.right-clampedScissor.left, clampedScissor.bottom - clampedScissor.top, COLOR(255, 0, 255, 0));
+    //g_render.Rect1(clampedScissor.left, clampedScissor.top, clampedScissor.right-clampedScissor.left, clampedScissor.bottom - clampedScissor.top, COLOR(255, 0, 255, 0));
     g_render.pDevice->SetScissorRect(&clampedScissor);
 }
 

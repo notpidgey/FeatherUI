@@ -12,9 +12,6 @@ public:
     FeatherButton(int x, int y, std::function<void(FeatherButton*)>, ID3DXFont* font, const char* buttonText, DWORD color = COLOR(255, 255, 255, 255));
     FeatherButton(int x, int y, int width, int height, std::function<void(FeatherButton*)>, ID3DXFont* font, const char* buttonText, DWORD color = COLOR(255, 255, 255, 255));
 
-    void Render() override;
-    void OnMousePressed(FeatherTouch* touch) override;
-    void OnMouseUp(FeatherTouch* touch) override;
 private:
     std::function<void(FeatherButton*)> onClick;
 
@@ -23,4 +20,8 @@ private:
     DWORD fillOnMousePress = COLOR(255, 22, 22, 22);
 
     DWORD outlineColor = COLOR(255, 22, 22, 22);
+
+    void Render() override;
+    void OnMousePressed(FeatherTouch* touch) override;
+    void OnMouseUp(FeatherTouch* touch) override;
 };

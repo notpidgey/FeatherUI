@@ -22,18 +22,21 @@ public:
         MILLIMETERS,
         NONE
     };
-
-    FeatherLabel* sliderLabel;
-    FeatherLabel* sliderValueLabel;
-    FeatherSliderKnob* sliderKnob;
     
+    FeatherSlider(int x, int y, int width, SLIDER_UNIT unit, float min, float max, ID3DXFont* font, const char* labelText);
+
+    float GetValue() const;
+
+private:
     SLIDER_UNIT unit;
     std::string sliderValueText;
     float maxValue;
     float minValue;
     
-    FeatherSlider(int x, int y, int width, SLIDER_UNIT unit, float min, float max, ID3DXFont* font, const char* labelText);
-    float GetValue() const;
+    FeatherLabel* sliderLabel;
+    FeatherLabel* sliderValueLabel;
+    FeatherSliderKnob* sliderKnob;
+
     std::string FloatToString(float number, int precision);
     void Render() override;
 };
@@ -41,9 +44,6 @@ public:
 class FeatherSliderKnob : public FeatherComponent
 {
 public:
-    POINT dragAnchor;
-    int hPadding;
-    bool beingDragged;
     float knobPercentage;
     
     FeatherSliderKnob(int x, int y, int width, int height);
@@ -55,5 +55,9 @@ public:
     void OnMouseAway(FeatherTouch* touch) override;
 
 private:
+    POINT dragAnchor;
+    int hPadding;
+    bool beingDragged;
+    
     float GetRenderOffset() const;
 };

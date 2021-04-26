@@ -8,12 +8,12 @@
 class FeatherWindowTitle : public FeatherComponent
 {
 public:
+    FeatherWindowTitle(int posX, int posY, int width, int height, DWORD backgroundColor, ID3DXFont* font, const char* windowTitleText, DWORD color = COLOR(255, 255, 255, 255));
+private:
     FeatherLabel* windowTitle;
     DWORD backgroundColor;
     POINT anchorPoint {};
     bool beingDragged;
-
-    FeatherWindowTitle(int posX, int posY, int width, int height, DWORD backgroundColor, ID3DXFont* font, const char* windowTitleText, DWORD color = COLOR(255, 255, 255, 255));
     
     void Render() override;
     void OnMouseDown(FeatherTouch* touch) override;

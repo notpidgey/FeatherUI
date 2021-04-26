@@ -6,14 +6,16 @@ class FeatherLabel : public FeatherComponent
 {
 public:
     ID3DXFont* font;
-    DWORD color;
-    const char* labelText;
+    std::string* labelText;
     
-    FeatherLabel(int x, int y, ID3DXFont* font, std::string labelText, DWORD color = COLOR(255, 255, 255, 255));
+    FeatherLabel(int x, int y, ID3DXFont* font, std::string* labelText, DWORD color = COLOR(255, 255, 255, 255));
     FeatherLabel(int x, int y, ID3DXFont* font, const char* labelText, DWORD color = COLOR(255, 255, 255, 255));
     
     int GetTextWidth() const;
     int GetTextHeight() const;
     
     void Render() override;
+
+private:
+    DWORD color;
 };

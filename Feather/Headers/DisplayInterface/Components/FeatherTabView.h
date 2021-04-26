@@ -13,12 +13,13 @@ struct FeatherTabViewTab
 class FeatherTabView : public FeatherComponent
 {
 public:
-    std::vector<FeatherTabViewTab> tabs;
     FeatherTabView(int x, int y, int width, int height, int buttonHeight, ID3DXFont* font, std::vector<const char*> tabNames);
 
     void SetActiveTab(int tabIndex);
     bool AddToTab(FeatherComponent* component, int tabIndex);
 
 private:
+    std::vector<FeatherTabViewTab> tabs;
+    
     void OnTabButtonClick(FeatherButton* button);
 };
