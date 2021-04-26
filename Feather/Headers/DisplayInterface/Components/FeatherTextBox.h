@@ -20,6 +20,7 @@ private:
     ID3DXFont* font;
     std::string placeHolder;
     std::string input;
+    int maxCharacters;
     bool selected;
     bool placeHolderActive = true;
     std::optional<std::chrono::system_clock::time_point> firstBackspace;

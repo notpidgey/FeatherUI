@@ -15,6 +15,7 @@ FeatherTextBox::FeatherTextBox(const int x, const int y, const int width, const 
     this->input = placeHolder;
     this->childrenContainer = new FeatherContainer(this, text);
     this->lastBackspace = std::chrono::system_clock::now();
+    this->maxCharacters = 0;
 }
 
 void FeatherTextBox::Render()
@@ -71,6 +72,9 @@ void FeatherTextBox::HandleInput(FeatherTouch* touch)
             lastBackspace = std::chrono::system_clock::now();
             input.pop_back();
         }
+
+        if(maxCharacters != 0 && input.size() >= maxCharacters)
+            return;
         
         if (touch->KeyPressed(0x20))
             input += ' ';
