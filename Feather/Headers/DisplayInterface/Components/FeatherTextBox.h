@@ -1,5 +1,8 @@
 ﻿#pragma once
 #include <DisplayInterface/FeatherComponent.h>
+#include <chrono>
+#include <optional>
+
 
 #include "FeatherLabel.h"
 
@@ -19,4 +22,6 @@ private:
     std::string input;
     bool selected;
     bool placeHolderActive = true;
+    std::optional<std::chrono::system_clock::time_point> firstBackspace;
+    std::chrono::system_clock::time_point lastBackspace;
 };

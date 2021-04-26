@@ -3,16 +3,12 @@
 
 FeatherButton::FeatherButton(const int x, const int y, std::function<void(FeatherButton*)> onClick, ID3DXFont* font, const char* buttonText, const DWORD color)
 {
-    const int textWidth = g_render.GetTextWidth(buttonText, font);
-    const int textHeight = g_render.GetTextHeight(buttonText, font);
-
     FeatherComponent::SetPosition(x, y);
     this->width = 150;
     this->height = 25;
-    this->label = new FeatherLabel(
-        (width / 2) - ( textWidth / 2 ),
-        (height / 2) - ( textHeight / 2),
-        font, buttonText, color);
+    this->label = new FeatherLabel(0,0,font, buttonText, color);
+    this->label->vPosition.x = (width / 2) - ( label->GetTextWidth() / 2 );
+    this->label->vPosition.y = (height / 2) - ( label->GetTextHeight() / 2);
     this->childrenContainer = new FeatherContainer(this, label);
     this->onClick = onClick;
     this->currentFill = fillColor;
@@ -20,16 +16,12 @@ FeatherButton::FeatherButton(const int x, const int y, std::function<void(Feathe
 
 FeatherButton::FeatherButton(const int x, const int y, const int width, const int height, std::function<void(FeatherButton*)> onClick, ID3DXFont* font, const char* buttonText, const DWORD color)
 {
-    const int textWidth = g_render.GetTextWidth(buttonText, font);
-    const int textHeight = g_render.GetTextHeight(buttonText, font);
-
     FeatherComponent::SetPosition(x, y);
     this->width = width;
     this->height = height;
-    this->label = new FeatherLabel(
-        (width / 2) - ( textWidth / 2 ),
-        (height / 2) - ( textHeight / 2),
-        font, buttonText, color);
+    this->label = new FeatherLabel(0,0,font, buttonText, color);
+    this->label->vPosition.x = (width / 2) - ( label->GetTextWidth() / 2 );
+    this->label->vPosition.y = (height / 2) - ( label->GetTextHeight() / 2);
     this->childrenContainer = new FeatherContainer(this, label);
     this->onClick = onClick;
     this->currentFill = fillColor;

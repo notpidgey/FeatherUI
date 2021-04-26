@@ -18,8 +18,8 @@ FeatherLabel::FeatherLabel(const int x, const int y, ID3DXFont* font, const char
     this->font = font;
     this->labelText = new std::string(labelText);
     this->color = color;
-    this->width = g_render.GetTextWidth(labelText, font);
-    this->height = g_render.GetTextHeight(labelText, font);
+    this->width = g_render.GetTextWidth(const_cast<char*>(labelText), font);
+    this->height = g_render.GetTextHeight(const_cast<char*>(labelText), font);
 }
 
 void FeatherLabel::Render()

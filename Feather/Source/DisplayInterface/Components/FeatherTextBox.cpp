@@ -1,6 +1,7 @@
 ﻿#include <DisplayInterface/Components/FeatherTextBox.h>
 #include <DisplayInterface/Components/FeatherContainer.h>
 #include <algorithm>
+#include <iostream>
 
 FeatherTextBox::FeatherTextBox(const int x, const int y, const int width, const int height, ID3DXFont* font, const std::string placeHolder)
 {
@@ -13,6 +14,7 @@ FeatherTextBox::FeatherTextBox(const int x, const int y, const int width, const 
     this->text->height = height - 4;
     this->input = placeHolder;
     this->childrenContainer = new FeatherContainer(this, text);
+    this->lastBackspace = std::chrono::system_clock::now();
 }
 
 void FeatherTextBox::Render()
@@ -21,8 +23,8 @@ void FeatherTextBox::Render()
 
     if(selected)
     {
-        const int cursorOffset = std::clamp(text->GetTextWidth(), 0, width);
-        g_render.RectFilled1(tPosition.x + cursorOffset, tPosition.y + 2, 2, height-4, COLOR(255,255,255,255));
+        const int cursorOffset = std::clamp(text->GetTextWidth(), 0, width) + 2;
+        g_render.RectFilled1(tPosition.x + cursorOffset, tPosition.y + 3, 2, height-6, COLOR(255,255,255,255));
     }
 
     FeatherComponent::Render();
@@ -53,11 +55,27 @@ void FeatherTextBox::HandleInput(FeatherTouch* touch)
 {
     if (selected)
     {
+        if(touch->KeyReleased(0x08))
+        {
+            firstBackspace = std::nullopt;
+        }
+        else if(touch->KeyPressed(0x08) && input.size() > 0)
+        {
+            firstBackspace = std::chrono::system_clock::now();
+            input.pop_back();
+        }
+        else if (touch->KeyDown(0x08) && input.size() > 0 &&
+            (std::chrono::system_clock::now() - firstBackspace.value()).count() >= 3000000  &&
+            (std::chrono::system_clock::now() - lastBackspace).count() >= 150000)
+        {
+            lastBackspace = std::chrono::system_clock::now();
+            input.pop_back();
+        }
+        
         if (touch->KeyPressed(0x20))
             input += ' ';
-        if (touch->KeyDown(0x08) && input.size() > 0)
-            input.pop_back();
         else
+        {
             for (int i = 0x41; i <= 0x5A; i ++)
             {
                 if (touch->KeyPressed(i))
@@ -68,7 +86,9 @@ void FeatherTextBox::HandleInput(FeatherTouch* touch)
                     else input += tolower(character);
                 }
             }
+        }
     }
 
+   
     FeatherComponent::HandleInput(touch);
 }
