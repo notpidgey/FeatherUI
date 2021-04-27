@@ -2,6 +2,7 @@
 #include <ostream>
 #include <string>
 #include <Graphics/DirectX9/RenderEngine.h>
+#include <DisplayInterface/FeatherComponent.h>
 
 void RenderEngine::SetPointers(const LPDIRECT3DDEVICE9 pDev, ID3DXLine* pLin)
 {
@@ -18,6 +19,27 @@ void RenderEngine::Line(const float x, const float y, const float x1, const floa
     pLine->Draw(vertices, 2, color);
     pLine->End();
 }
+
+void RenderEngine::StringA(ID3DXFont* font, FeatherComponent* component, const DWORD flags, const bool shadow, const DWORD color, const char* string, ...)
+{
+    RECT r = {component->tPosition.x, component->tPosition.y, component->tPosition.x + component->width, component->tPosition.y + component->height};
+
+    static char buf[200] = {0};
+
+    va_list argList;
+    va_start(argList, string);
+    vsnprintf(buf, sizeof(buf), string, argList);
+    va_end(argList);
+
+    if (shadow)
+    {
+        RECT r1 = {r.left + 2, r.top, r.right, r.bottom};
+        font->DrawTextA(nullptr, buf, -1, &r1, flags, 0xFF636363);
+    }
+
+    font->DrawTextA(nullptr, buf, -1, &r, flags, color);
+}
+
 
 void RenderEngine::StringA(ID3DXFont* font, const float x, const float y, const DWORD flags, const bool shadow, const DWORD color, const char* string, ...)
 {
@@ -49,7 +71,6 @@ void RenderEngine::StringW(ID3DXFont* font, const float x, const float y, const 
     va_start(args, string);
     vswprintf(b, 200, string, args);
     va_end(args);
-
 
     if (shadow)
     {

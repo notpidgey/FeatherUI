@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 
+#include "DisplayInterface/FeatherComponent.h"
+
 #define COLOR(a,r,g,b) D3DCOLOR_ARGB(a,r,g,b)
 #pragma comment (lib, "d3d9.lib")
 #pragma comment (lib, "d3dx9.lib")
@@ -25,7 +27,8 @@ public:
     void SetPointers(LPDIRECT3DDEVICE9 pDev, ID3DXLine* pLin);
     
     void Line(float x, float y, float x1, float y1, bool aa, DWORD color, float width = 1.f) const;
-    
+    void StringA(ID3DXFont* font, FeatherComponent* component, DWORD flags, bool shadow, DWORD color, const char* string, ...);
+
     void StringA(ID3DXFont* font, float x, float y, DWORD flags, bool shadow, DWORD color, const char* string, ...);
     void StringW(ID3DXFont* font, float x, float y, DWORD flags, bool shadow, DWORD color, const wchar_t* string, ...) const;
     
