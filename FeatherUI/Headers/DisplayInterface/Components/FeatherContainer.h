@@ -16,6 +16,8 @@ public:
     std::vector<std::unique_ptr<FeatherComponent>> children;
 
     FeatherComponent* AddControl(FeatherComponent* component);
+    bool RemoveControl(FeatherComponent* component);
+    
     void Transform(int x, int y);
     void FixPosition(int x, int y) override;
     void HandleInput(FeatherTouch* touch) override;
