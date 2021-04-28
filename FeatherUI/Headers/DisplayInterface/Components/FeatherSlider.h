@@ -33,9 +33,9 @@ private:
     float maxValue;
     float minValue;
     
-    FeatherLabel* sliderLabel;
-    FeatherLabel* sliderValueLabel;
-    FeatherSliderKnob* sliderKnob;
+    std::shared_ptr<FeatherLabel> sliderLabel;
+    std::shared_ptr<FeatherLabel> sliderValueLabel;
+    std::shared_ptr<FeatherSliderKnob> sliderKnob;
 
     std::string FloatToString(float number, int precision);
     void Render() override;

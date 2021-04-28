@@ -1,16 +1,16 @@
 ﻿#pragma once
+#include <memory>
 #include <string>
+#include <DisplayInterface/Components/FeatherLabel.h>
 #include <DisplayInterface/FeatherComponent.h>
 #include <Graphics/DirectX9/RenderEngine.h>
-
-#include "FeatherLabel.h"
 
 class FeatherWindowTitle : public FeatherComponent
 {
 public:
     FeatherWindowTitle(int posX, int posY, int width, int height, DWORD backgroundColor, ID3DXFont* font, const char* windowTitleText, DWORD color = COLOR(255, 255, 255, 255));
 private:
-    FeatherLabel* windowTitle;
+    std::unique_ptr<FeatherLabel> windowTitle;
     DWORD backgroundColor;
     POINT anchorPoint {};
     bool beingDragged;

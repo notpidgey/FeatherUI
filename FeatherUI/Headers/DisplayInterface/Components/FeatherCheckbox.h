@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <memory>
 #include <DisplayInterface/Components/FeatherLabel.h>
 #include <DisplayInterface/FeatherComponent.h>
 
@@ -8,7 +9,7 @@
 class FeatherCheckbox : public FeatherComponent
 {
 public:
-    FeatherLabel* label;
+    std::shared_ptr<FeatherLabel> label;
     bool* value;
     
     FeatherCheckbox(int x, int y, bool* checkValue, ID3DXFont* font, const char* labelText, DWORD color = COLOR(255,0,0,0));

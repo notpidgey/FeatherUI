@@ -6,13 +6,13 @@ POINT FeatherComponent::GetTruePosition(FeatherComponent* component, const int x
     int totalX = 0;
     int totalY = 0;
 
-    FeatherComponent* nextParent = component->parent;
-    while (nextParent != nullptr)
+    std::shared_ptr<FeatherComponent> nextParent = component->parent.lock();
+    while (nextParent)
     {
         totalX += nextParent->vPosition.x;
         totalY += nextParent->vPosition.y;
 
-        nextParent = nextParent->parent;
+        nextParent = nextParent->parent.lock();
     }
 
     return {totalX + xOffset, totalY + yOffset};

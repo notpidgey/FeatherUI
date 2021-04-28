@@ -7,7 +7,7 @@
 class FeatherButton : public FeatherComponent
 {
 public:
-    FeatherLabel* label;
+    std::shared_ptr<FeatherLabel> label;
 
     FeatherButton(int x, int y, std::function<void(FeatherButton*)>, ID3DXFont* font, const char* buttonText, DWORD color = COLOR(255, 255, 255, 255));
     FeatherButton(int x, int y, int width, int height, std::function<void(FeatherButton*)>, ID3DXFont* font, const char* buttonText, DWORD color = COLOR(255, 255, 255, 255));

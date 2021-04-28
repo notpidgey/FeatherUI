@@ -8,17 +8,20 @@ FeatherTabView::FeatherTabView(const int x, const int y, const int width, const 
     FeatherComponent::SetPosition(x, y);
     this->width = width;
     this->height = height;
-    this->childrenContainer = new FeatherContainer(this);
+    this->childrenContainer = std::make_unique<FeatherContainer>(shared);
 
-    FeatherContainer* tabContainer = (FeatherContainer*)this->childrenContainer->AddControl(new FeatherContainer(childrenContainer));
+    FeatherContainer* tabContainer = (FeatherContainer*)this->childrenContainer->AddControl(
+        new FeatherContainer(std::unique_ptr<FeatherContainer>(childrenContainer.get()))
+    );
     tabContainer->height = buttonHeight;
     tabContainer->width = width;
 
-    FeatherContainer* viewContainer = (FeatherContainer*)this->childrenContainer->AddControl(new FeatherContainer(childrenContainer));
+    FeatherContainer* viewContainer = (FeatherContainer*)this->childrenContainer->AddControl(
+        new FeatherContainer(std::unique_ptr<FeatherContainer>(childrenContainer.get()))
+    );
     viewContainer->Transform(0, buttonHeight + 1);
     viewContainer->height = height - buttonHeight;
     viewContainer->width = width;
-
 
     int i = 0;
     const int sizePerButton = width / tabNames.size();
@@ -30,9 +33,9 @@ FeatherTabView::FeatherTabView(const int x, const int y, const int width, const 
         newTab.button = static_cast<FeatherButton*>(tabContainer->AddControl(
             new FeatherButton(i * sizePerButton, 0, sizePerButton, buttonHeight, std::bind(&FeatherTabView::OnTabButtonClick, this, std::placeholders::_1), font, tabName)
         ));
-        
+
         newTab.view = static_cast<FeatherContainer*>(viewContainer->AddControl(
-                new FeatherContainer(this))
+                new FeatherContainer(std::shared_ptr<FeatherComponent>(this)))
         );
         newTab.view->render = false;
 

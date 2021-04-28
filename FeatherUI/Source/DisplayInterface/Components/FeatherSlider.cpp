@@ -13,19 +13,19 @@ FeatherSlider::FeatherSlider(const int x, const int y, const int width, const SL
     this->minValue = min;
     this->maxValue = max;
 
-    this->sliderLabel = new FeatherLabel(0, 0, font, labelText, COLOR(255, 0, 0, 0));
-    this->sliderValueLabel = new FeatherLabel(0, 0, font, sliderValueText.data(), COLOR(255, 0, 0, 0));
-    this->sliderKnob = new FeatherSliderKnob(HORIZONTAL_PADDING, TEXT_SLIDER_PADDING + VERTICAL_PADDING, width - (HORIZONTAL_PADDING * 2),
+    this->sliderLabel = std::make_shared<FeatherLabel>(0, 0, font, labelText, COLOR(255, 0, 0, 0));
+    this->sliderValueLabel = std::make_shared<FeatherLabel>(0, 0, font, sliderValueText.data(), COLOR(255, 0, 0, 0));
+    this->sliderKnob = std::make_shared<FeatherSliderKnob>(HORIZONTAL_PADDING, TEXT_SLIDER_PADDING + VERTICAL_PADDING, width - (HORIZONTAL_PADDING * 2),
         BACKGROUND_HEIGHT - (VERTICAL_PADDING * 2));
 
     this->width = width;
     this->height = sliderLabel->GetTextHeight() + (TEXT_SLIDER_PADDING - sliderLabel->GetTextHeight()) + BACKGROUND_HEIGHT;
 
-    this->childrenContainer = new FeatherContainer(
-        this,
-        sliderLabel,
-        sliderValueLabel,
-        sliderKnob
+    this->childrenContainer = std::make_unique<FeatherContainer>(
+        shared,
+        sliderLabel.get(),
+        sliderValueLabel.get(),
+        sliderKnob.get()
     );
 }
 
@@ -58,7 +58,7 @@ void FeatherSlider::Render()
         break;
     case FEET:
         sliderValueText = FloatToString(GetValue());
-        sliderValueText.append( " FT");
+        sliderValueText.append(" FT");
         break;
     case METERS:
         sliderValueText = FloatToString(GetValue());
@@ -66,12 +66,12 @@ void FeatherSlider::Render()
         break;
     case MILLIMETERS:
         sliderValueText = FloatToString(GetValue());
-        sliderValueText.append( " MM");
+        sliderValueText.append(" MM");
         break;
     }
 
     sliderValueLabel->vPosition.x = width - sliderValueLabel->GetTextWidth();
-    
+
     FeatherComponent::Render();
 }
 

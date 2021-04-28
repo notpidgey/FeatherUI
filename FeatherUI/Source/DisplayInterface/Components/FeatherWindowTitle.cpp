@@ -10,8 +10,8 @@ FeatherWindowTitle::FeatherWindowTitle(const int posX, const int posY, const int
     this->height = height;
     this->backgroundColor = backgroundColor;
     this->beingDragged = false;
-    this->windowTitle = new FeatherLabel(10, 6, font, windowTitleText, color);
-    this->childrenContainer = new FeatherContainer(this, windowTitle);
+    this->windowTitle = std::make_unique<FeatherLabel>(10, 6, font, windowTitleText, color);
+    this->childrenContainer = std::make_unique<FeatherContainer>(shared, windowTitle.get());
 }
 
 void FeatherWindowTitle::Render()

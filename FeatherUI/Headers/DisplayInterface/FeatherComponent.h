@@ -1,5 +1,6 @@
 ﻿// ReSharper disable CppFunctionIsNotImplemented
 #pragma once
+#include <memory>
 #include <DisplayInterface/FeatherForwards.h>
 #include <Graphics/DirectX9/RenderEngine.h>
 #include <Window/FeatherTouch.h>
@@ -10,11 +11,12 @@ class FeatherComponent
 public:
     virtual ~FeatherComponent() = default;
 
-    FeatherComponent* parent = nullptr;
-    FeatherContainer* childrenContainer = nullptr;
+    std::weak_ptr<FeatherComponent> parent;
+    std::shared_ptr<FeatherComponent> shared = std::shared_ptr<FeatherComponent>(this);
+    std::unique_ptr<FeatherContainer> childrenContainer = nullptr;
     
-    POINT tPosition{};
-    POINT vPosition{};
+    POINT tPosition {};
+    POINT vPosition {};
     bool render = true;
     bool mouseInRegion = false;
     bool handlingMouseDownEvent = false;

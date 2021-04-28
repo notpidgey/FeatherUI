@@ -9,11 +9,11 @@ FeatherTextBox::FeatherTextBox(const int x, const int y, const int width, const 
     this->width = width;
     this->height = height;
     this->font = font;
-    this->text = new FeatherLabel(2, 2, font, &input, COLOR(255, 255, 255, 255));
+    this->text = std::make_shared<FeatherLabel>(2, 2, font, &input, COLOR(255, 255, 255, 255));
     this->text->width = width - 4;
     this->text->height = height - 4;
     this->input = placeHolder;
-    this->childrenContainer = new FeatherContainer(this, text);
+    this->childrenContainer = std::make_unique<FeatherContainer>(shared, text.get());
     this->lastBackspace = std::chrono::system_clock::now();
     this->maxCharacters = 0;
 }

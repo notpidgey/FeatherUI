@@ -1,38 +1,63 @@
 ﻿#include <algorithm>
 #include <DisplayInterface/Components/FeatherContainer.h>
 
+FeatherContainer::FeatherContainer()
+{
+    
+}
+
+FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent> parent)
+{
+    this->parent = std::weak_ptr(parent);
+    SetInitialProperties();
+}
+
+FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent> parent, FeatherComponent* child)
+{
+    this->parent = std::weak_ptr(parent);
+    SetInitialProperties();
+        
+    AddControl(child);
+}
+
+FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent> parent, FeatherComponent* child1, FeatherComponent* child2)
+{
+    this->parent = std::weak_ptr(parent);
+    SetInitialProperties();
+
+    AddControl(child1);
+    AddControl(child2);
+}
+
+FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent> parent, FeatherComponent* child1, FeatherComponent* child2, FeatherComponent* child3)
+{
+    this->parent = std::weak_ptr(parent);
+    SetInitialProperties();
+
+    AddControl(child1);
+    AddControl(child2);
+    AddControl(child3);
+}
+
 FeatherComponent* FeatherContainer::AddControl(FeatherComponent* component)
 {
-    component->parent = this;
-    children.push_back(component);
+    component->parent = shared;
+    children.push_back(std::unique_ptr<FeatherComponent>(component));
 
     return component;
 }
 
-void FeatherContainer::ClampRect(FeatherComponent* child, RECT* currentScissor) const
-{
-    RECT clampedScissor;
-
-    clampedScissor = {
-        std::clamp(child->tPosition.x, currentScissor->left, currentScissor->right),
-        std::clamp(child->tPosition.y, currentScissor->top, currentScissor->bottom),
-        std::clamp(child->tPosition.x + child->width, currentScissor->left, currentScissor->right),
-        std::clamp(child->tPosition.y + child->height, currentScissor->top, currentScissor->bottom)
-    };
-
-    //g_render.Rect1(clampedScissor.left, clampedScissor.top, clampedScissor.right-clampedScissor.left, clampedScissor.bottom - clampedScissor.top, COLOR(255, 0, 255, 0));
-    g_render.pDevice->SetScissorRect(&clampedScissor);
-}
-
 void FeatherContainer::Transform(const int x, const int y)
 {
+    std::shared_ptr<FeatherComponent> pParent = parent.lock();
+    
     this->vPosition.x += x;
     this->vPosition.y += y;
-    this->vPosition.x = std::clamp((int)vPosition.x, 0, parent->width);
-    this->vPosition.y = std::clamp((int)vPosition.y, 0, parent->height);
+    this->vPosition.x = std::clamp(static_cast<int>(vPosition.x), 0, pParent->width);
+    this->vPosition.y = std::clamp(static_cast<int>(vPosition.y), 0, pParent->height);
 
-    this->width = parent->width - vPosition.x;
-    this->height = parent->height - vPosition.y;
+    this->width = pParent->width - vPosition.x;
+    this->height = pParent->height - vPosition.y;
 }
 
 void FeatherContainer::FixPosition(const int x, const int y)
@@ -40,7 +65,7 @@ void FeatherContainer::FixPosition(const int x, const int y)
     this->tPosition.x = x + vPosition.x;
     this->tPosition.y = y + vPosition.y;
 
-    for (FeatherComponent* child : children)
+    for (std::unique_ptr<FeatherComponent>& child : children)
     {
         child->FixPosition(this->tPosition.x, this->tPosition.y);
     }
@@ -48,7 +73,7 @@ void FeatherContainer::FixPosition(const int x, const int y)
 
 void FeatherContainer::HandleInput(FeatherTouch* touch)
 {
-    for (FeatherComponent* childComponent : children)
+    for (std::unique_ptr<FeatherComponent>& childComponent : children)
     {
         if (childComponent->render)
         {
@@ -107,13 +132,22 @@ void FeatherContainer::Render()
     RECT rect;
     g_render.pDevice->GetScissorRect(&rect);
 
-    for (FeatherComponent* child : children)
+    for (std::unique_ptr<FeatherComponent>& child : children)
     {
         if (child->render)
         {
-            if (this->parent != nullptr)
+            if (this->parent.lock() != nullptr)
             {
-                ClampRect(child, &rect);
+                RECT clampedScissor;
+
+                clampedScissor = {
+                    std::clamp(child->tPosition.x, rect.left, rect.right),
+                    std::clamp(child->tPosition.y, rect.top, rect.bottom),
+                    std::clamp(child->tPosition.x + child->width, rect.left, rect.right),
+                    std::clamp(child->tPosition.y + child->height, rect.top, rect.bottom)
+                };
+
+                g_render.pDevice->SetScissorRect(&clampedScissor);
             }
             else
             {
@@ -132,6 +166,8 @@ void FeatherContainer::Render()
 
 void FeatherContainer::SetInitialProperties()
 {
-    this->width = parent->width;
-    this->height = parent->height;
+    std::shared_ptr<FeatherComponent> pParent = parent.lock();
+    
+    this->width = pParent->width;
+    this->height = pParent->height;
 }

@@ -6,10 +6,10 @@ FeatherButton::FeatherButton(const int x, const int y, std::function<void(Feathe
     FeatherComponent::SetPosition(x, y);
     this->width = 150;
     this->height = 25;
-    this->label = new FeatherLabel(0,0,font, buttonText, color);
+    this->label = std::make_shared<FeatherLabel>(0,0,font, buttonText, color);
     this->label->vPosition.x = (width / 2) - ( label->GetTextWidth() / 2 );
     this->label->vPosition.y = (height / 2) - ( label->GetTextHeight() / 2);
-    this->childrenContainer = new FeatherContainer(this, label);
+    this->childrenContainer = std::make_unique<FeatherContainer>(shared, label.get());
     this->onClick = onClick;
     this->currentFill = fillColor;
 }
@@ -19,10 +19,10 @@ FeatherButton::FeatherButton(const int x, const int y, const int width, const in
     FeatherComponent::SetPosition(x, y);
     this->width = width;
     this->height = height;
-    this->label = new FeatherLabel(0,0,font, buttonText, color);
+    this->label = std::make_shared<FeatherLabel>(0,0,font, buttonText, color);
     this->label->vPosition.x = (width / 2) - ( label->GetTextWidth() / 2 );
     this->label->vPosition.y = (height / 2) - ( label->GetTextHeight() / 2);
-    this->childrenContainer = new FeatherContainer(this, label);
+    this->childrenContainer = std::make_unique<FeatherContainer>(shared, label.get());
     this->onClick = onClick;
     this->currentFill = fillColor;
 }
