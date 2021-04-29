@@ -3,40 +3,40 @@
 #include <DisplayInterface/Components/FeatherButton.h>
 #include <functional>
 
-FeatherTabView::FeatherTabView(const int x, const int y, const int width, const int height, const int buttonHeight, ID3DXFont* font, std::vector<const char*> tabNames)
+FeatherTabView::FeatherTabView(const int x, const int y, const int width, const int height, const int buttonHeight, ID3DXFont* font, std::vector<std::string> tabNames)
 {
     FeatherComponent::SetPosition(x, y);
     this->width = width;
     this->height = height;
     this->childrenContainer = std::make_unique<FeatherContainer>(shared);
 
-    FeatherContainer* tabContainer = (FeatherContainer*)this->childrenContainer->AddControl(
-        new FeatherContainer(std::unique_ptr<FeatherContainer>(childrenContainer.get()))
-    );
+    auto tabContainer = std::dynamic_pointer_cast<FeatherContainer>(this->childrenContainer->AddControl(
+        std::make_shared<FeatherContainer>(std::shared_ptr<FeatherComponent>(childrenContainer.get())
+    )));
     tabContainer->height = buttonHeight;
     tabContainer->width = width;
 
-    FeatherContainer* viewContainer = (FeatherContainer*)this->childrenContainer->AddControl(
-        new FeatherContainer(std::unique_ptr<FeatherContainer>(childrenContainer.get()))
-    );
+    auto viewContainer = std::dynamic_pointer_cast<FeatherContainer>(this->childrenContainer->AddControl(
+        std::make_shared<FeatherContainer>(std::shared_ptr<FeatherComponent>(childrenContainer.get())
+    )));
     viewContainer->Transform(0, buttonHeight + 1);
     viewContainer->height = height - buttonHeight;
     viewContainer->width = width;
 
     int i = 0;
     const int sizePerButton = width / tabNames.size();
-    for (const char* tabName : tabNames)
+    for (auto tabName : tabNames)
     {
         FeatherTabViewTab newTab{};
         newTab.tabId = i;
 
-        newTab.button = static_cast<FeatherButton*>(tabContainer->AddControl(
-            new FeatherButton(i * sizePerButton, 0, sizePerButton, buttonHeight, std::bind(&FeatherTabView::OnTabButtonClick, this, std::placeholders::_1), font, tabName)
-        ));
+        newTab.button = std::dynamic_pointer_cast<FeatherButton>(tabContainer->AddControl(
+            std::make_shared<FeatherButton>(i * sizePerButton, 0, sizePerButton, buttonHeight, std::bind(&FeatherTabView::OnTabButtonClick, this, std::placeholders::_1), font, tabName)
+        )).get();
 
-        newTab.view = static_cast<FeatherContainer*>(viewContainer->AddControl(
-                new FeatherContainer(std::shared_ptr<FeatherComponent>(this)))
-        );
+        newTab.view = std::dynamic_pointer_cast<FeatherContainer>(viewContainer->AddControl(
+                std::make_shared<FeatherContainer>(std::shared_ptr<FeatherComponent>(this)))
+        ).get();
         newTab.view->render = false;
 
         //newTab.view->backgroundColor = COLOR(255,255,255,255);
@@ -63,7 +63,7 @@ bool FeatherTabView::AddToTab(FeatherComponent* component, const int tabIndex)
     {
         if (tab.tabId == tabIndex)
         {
-            tab.view->AddControl(component);
+            tab.view->AddControl(std::shared_ptr<FeatherComponent>(component));
             return true;
         }
     }

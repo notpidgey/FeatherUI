@@ -20,13 +20,15 @@ int main()
         FeatherFont(&montserrat16Px, "Montserrat", 16)
     };
 
-    Window window(1280, 720, WS_POPUP, "Feather",COLOR(255, 255, 255, 255), fonts, fonts.at(2));
-    FeatherWindowTitle* yes = (FeatherWindowTitle*)
-    window.container->AddControl(new FeatherWindowTitle(0, 0, 1280, 30, COLOR(255, 42, 42, 42), tahoma16Px, "Feather Sandbox"));
-
-    //Fucky wucky 😳
-    window.container->RemoveControl(yes);
+    std::string windowTitle = "Feather Sandbox";
     
-    while(1)
+    Window window(1280, 720, WS_POPUP, "Feather",COLOR(255, 255, 255, 255), fonts, fonts.at(2));
+    std::shared_ptr<FeatherComponent> container = window.container->AddControl(
+        std::make_shared<FeatherWindowTitle>(0, 0, 1280, 30, COLOR(255, 42, 42, 42), tahoma16Px, windowTitle)
+    );
+
+    //window.container->RemoveControl(container);
+    
+    while(true)
         window.HandleMessage();
 }

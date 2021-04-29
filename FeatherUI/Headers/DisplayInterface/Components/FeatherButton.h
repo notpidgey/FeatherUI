@@ -9,8 +9,8 @@ class FeatherButton : public FeatherComponent
 public:
     std::shared_ptr<FeatherLabel> label;
 
-    FeatherButton(int x, int y, std::function<void(FeatherButton*)>, ID3DXFont* font, const char* buttonText, DWORD color = COLOR(255, 255, 255, 255));
-    FeatherButton(int x, int y, int width, int height, std::function<void(FeatherButton*)>, ID3DXFont* font, const char* buttonText, DWORD color = COLOR(255, 255, 255, 255));
+    FeatherButton(int x, int y, std::function<void(FeatherButton*)>, ID3DXFont* font, std::string& buttonText, DWORD color = COLOR(255, 255, 255, 255));
+    FeatherButton(int x, int y, int width, int height, std::function<void(FeatherButton*)>, ID3DXFont* font, std::string& buttonText, DWORD color = COLOR(255, 255, 255, 255));
 
 private:
     std::function<void(FeatherButton*)> onClick;

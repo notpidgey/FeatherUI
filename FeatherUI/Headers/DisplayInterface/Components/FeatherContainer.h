@@ -8,15 +8,15 @@ class FeatherContainer : public FeatherComponent
 {
 public:
     FeatherContainer();
-    FeatherContainer(const std::shared_ptr<FeatherComponent>& parent);
-    FeatherContainer(const std::shared_ptr<FeatherComponent>& parent, FeatherComponent* child);
-    FeatherContainer(const std::shared_ptr<FeatherComponent>& parent, FeatherComponent* child1, FeatherComponent* child2);
-    FeatherContainer(const std::shared_ptr<FeatherComponent>& parent, FeatherComponent* child1, FeatherComponent* child2, FeatherComponent* child3);
+    explicit FeatherContainer(std::shared_ptr<FeatherComponent> parent);
+    FeatherContainer(std::shared_ptr<FeatherComponent> parent, FeatherComponent* child);
+    FeatherContainer(std::shared_ptr<FeatherComponent> parent, FeatherComponent* child1, FeatherComponent* child2);
+    FeatherContainer(std::shared_ptr<FeatherComponent> parent, FeatherComponent* child1, FeatherComponent* child2, FeatherComponent* child3);
 
-    std::vector<std::unique_ptr<FeatherComponent>> children;
+    std::vector<std::shared_ptr<FeatherComponent>> children;
 
-    FeatherComponent* AddControl(FeatherComponent* component);
-    bool RemoveControl(FeatherComponent* component);
+    std::shared_ptr<FeatherComponent> AddControl(std::shared_ptr<FeatherComponent> component);
+    bool RemoveControl(std::shared_ptr<FeatherComponent> component);
     
     void Transform(int x, int y);
     void FixPosition(int x, int y) override;

@@ -1,7 +1,7 @@
 #include <Window/Window.h>
 #include <DisplayInterface/Components/FeatherWindowTitle.h>
 
-Window::Window(const int width, const int height, const unsigned long flags, const char* windowName, const DWORD background, const std::vector<FeatherFont>& fonts, const FeatherFont& font)
+Window::Window(const int width, const int height, const unsigned long flags, std::string windowName, const DWORD background, const std::vector<FeatherFont>& fonts, const FeatherFont& font)
 {
     Init();
 
@@ -13,7 +13,7 @@ Window::Window(const int width, const int height, const unsigned long flags, con
     this->windowName = windowName;
     this->winFlags = flags;
     this->titleFont = font;
-    this->hwnd = CreateWindowExA(NULL, " ", windowName, winFlags, 0, 0, width, height, nullptr, nullptr, nullptr, nullptr);
+    this->hwnd = CreateWindowExA(NULL, " ", windowName.data(), winFlags, 0, 0, width, height, nullptr, nullptr, nullptr, nullptr);
     this->keyStateManager.window = this;
     this->container = std::make_shared<FeatherContainer>();
 

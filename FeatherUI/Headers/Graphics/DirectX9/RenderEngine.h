@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include <d3dx9.h>
 #include <d3d9.h>
-#include <vector>
 #include <string>
 
 #include "DisplayInterface/FeatherComponent.h"
@@ -41,8 +40,8 @@ public:
     void Circle(float x, float y, float size, int resolution, DWORD color) const;
     void CircleFilled(float x, float y, float size, int resolution, DWORD color) const;
     
-    int GetTextWidth(char* text, ID3DXFont* pFont);
-    int GetTextHeight(char* text, ID3DXFont* pFont);
+    int GetTextWidth(std::string& text, ID3DXFont* pFont);
+    int GetTextHeight(std::string& text, ID3DXFont* pFont);
 };
 
 extern RenderEngine g_render;

@@ -13,7 +13,7 @@ struct FeatherTabViewTab
 class FeatherTabView : public FeatherComponent
 {
 public:
-    FeatherTabView(int x, int y, int width, int height, int buttonHeight, ID3DXFont* font, std::vector<const char*> tabNames);
+    FeatherTabView(int x, int y, int width, int height, int buttonHeight, ID3DXFont* font, std::vector<std::string> tabNames);
 
     void SetActiveTab(int tabIndex);
     bool AddToTab(FeatherComponent* component, int tabIndex);

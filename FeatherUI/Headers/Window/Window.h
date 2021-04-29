@@ -1,14 +1,13 @@
 #pragma once
 #include <vector>
 #include <Windows.h>
-#include <Graphics/DirectX9/RenderEngine.h>
 #include <Graphics/DirectX9/Structs/FeatherFont.h>
 #include <DisplayInterface/Components/FeatherContainer.h>
 
 class Window
 {
 public:
-    Window(int width, int height, unsigned long flags, const char* windowName, DWORD background,
+    Window(int width, int height, unsigned long flags, std::string windowName, DWORD background,
         const std::vector<FeatherFont>& fonts, const FeatherFont& font);
     ~Window();
     
@@ -20,7 +19,7 @@ public:
     POINT position;
     HWND hwnd;
 
-    const char* windowName;
+    std::string windowName;
     int width;
     int height;
     int winFlags;
