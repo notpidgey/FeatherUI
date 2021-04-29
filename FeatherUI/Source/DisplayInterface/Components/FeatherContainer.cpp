@@ -47,17 +47,6 @@ std::shared_ptr<FeatherComponent> FeatherContainer::AddControl(std::shared_ptr<F
 
 bool FeatherContainer::RemoveControl(const std::shared_ptr<FeatherComponent> component)
 {
-    /*auto itr = std::find_if(
-        std::begin(children),
-        std::end(children),
-        [component](auto element){ return element.get() == component; });
-
-    if (itr != children.end())
-    {
-        children.erase(itr);
-        return true;
-    }*/
-
     for (auto child : children)
     {
         if (child == component)
