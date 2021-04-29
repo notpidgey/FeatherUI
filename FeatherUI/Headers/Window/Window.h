@@ -11,9 +11,9 @@ public:
     Window(int width, int height, unsigned long flags, const char* windowName, DWORD background,
         const std::vector<FeatherFont>& fonts, const FeatherFont& font);
     ~Window();
-
+    
+    std::shared_ptr<FeatherContainer> container;
     FeatherTouch keyStateManager;
-    FeatherContainer container;
     FeatherFont titleFont;
     
     D3DCOLOR backgroundColor;

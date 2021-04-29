@@ -8,10 +8,10 @@ class FeatherContainer : public FeatherComponent
 {
 public:
     FeatherContainer();
-    FeatherContainer(std::shared_ptr<FeatherComponent> parent);
-    FeatherContainer(std::shared_ptr<FeatherComponent> parent, FeatherComponent* child);
-    FeatherContainer(std::shared_ptr<FeatherComponent> parent, FeatherComponent* child1, FeatherComponent* child2);
-    FeatherContainer(std::shared_ptr<FeatherComponent> parent, FeatherComponent* child1, FeatherComponent* child2, FeatherComponent* child3);
+    FeatherContainer(const std::shared_ptr<FeatherComponent>& parent);
+    FeatherContainer(const std::shared_ptr<FeatherComponent>& parent, FeatherComponent* child);
+    FeatherContainer(const std::shared_ptr<FeatherComponent>& parent, FeatherComponent* child1, FeatherComponent* child2);
+    FeatherContainer(const std::shared_ptr<FeatherComponent>& parent, FeatherComponent* child1, FeatherComponent* child2, FeatherComponent* child3);
 
     std::vector<std::unique_ptr<FeatherComponent>> children;
 

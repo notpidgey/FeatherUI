@@ -9,7 +9,7 @@
 class FeatherComponent
 {
 public:
-    virtual ~FeatherComponent() = default;
+    virtual ~FeatherComponent();
 
     std::weak_ptr<FeatherComponent> parent;
     std::shared_ptr<FeatherComponent> shared = std::shared_ptr<FeatherComponent>(this);

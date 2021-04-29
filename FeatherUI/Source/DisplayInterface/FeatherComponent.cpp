@@ -1,6 +1,11 @@
 ﻿#include <DisplayInterface/FeatherComponent.h>
 #include <DisplayInterface/Components/FeatherContainer.h>
 
+FeatherComponent::~FeatherComponent()
+{
+    
+}
+
 POINT FeatherComponent::GetTruePosition(FeatherComponent* component, const int xOffset = 0, const int yOffset = 0) const
 {
     int totalX = 0;

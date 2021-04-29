@@ -15,6 +15,7 @@ Window::Window(const int width, const int height, const unsigned long flags, con
     this->titleFont = font;
     this->hwnd = CreateWindowExA(NULL, " ", windowName, winFlags, 0, 0, width, height, nullptr, nullptr, nullptr, nullptr);
     this->keyStateManager.window = this;
+    this->container = std::make_shared<FeatherContainer>();
 
     InitializeDirectx(fonts);
     SetupWindow();
@@ -90,12 +91,12 @@ void Window::Render()
     if (pDevice->BeginScene() >= 0)
     {
         keyStateManager.PollInput(&hwnd);
-        container.FixPosition(0, 0);
+        container->FixPosition(0, 0);
         
         if (GetFocus() == hwnd)
-            container.HandleInput(&keyStateManager);
+            container->HandleInput(&keyStateManager);
 
-        container.Render();
+        container->Render();
 
         pDevice->EndScene();
     }
