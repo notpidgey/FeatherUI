@@ -4,58 +4,66 @@
 FeatherContainer::FeatherContainer()
 { }
 
-FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent>& parent)
+FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent> parent)
 {
     this->parent = std::weak_ptr(parent);
     SetInitialProperties();
 }
 
-FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent>& parent, FeatherComponent* child)
+FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent> parent, FeatherComponent* child)
 {
     this->parent = std::weak_ptr(parent);
     SetInitialProperties();
 
-    AddControl(child);
+    AddControl(std::shared_ptr<FeatherComponent>(child));
 }
 
-FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent>& parent, FeatherComponent* child1, FeatherComponent* child2)
+FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent> parent, FeatherComponent* child1, FeatherComponent* child2)
 {
     this->parent = std::weak_ptr(parent);
     SetInitialProperties();
 
-    AddControl(child1);
-    AddControl(child2);
+    AddControl(std::shared_ptr<FeatherComponent>(child1));
+    AddControl(std::shared_ptr<FeatherComponent>(child2));
 }
 
-FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent>& parent, FeatherComponent* child1, FeatherComponent* child2, FeatherComponent* child3)
+FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent> parent, FeatherComponent* child1, FeatherComponent* child2, FeatherComponent* child3)
 {
     this->parent = std::weak_ptr(parent);
     SetInitialProperties();
 
-    AddControl(child1);
-    AddControl(child2);
-    AddControl(child3);
+    AddControl(std::shared_ptr<FeatherComponent>(child1));
+    AddControl(std::shared_ptr<FeatherComponent>(child2));
+    AddControl(std::shared_ptr<FeatherComponent>(child3));
 }
 
-FeatherComponent* FeatherContainer::AddControl(FeatherComponent* component)
+std::shared_ptr<FeatherComponent> FeatherContainer::AddControl(std::shared_ptr<FeatherComponent> component)
 {
     component->parent = shared;
-    children.push_back(std::unique_ptr<FeatherComponent>(component));
+    children.push_back(std::shared_ptr<FeatherComponent>(component));
 
     return component;
 }
 
-bool FeatherContainer::RemoveControl(FeatherComponent* component)
+bool FeatherContainer::RemoveControl(const std::shared_ptr<FeatherComponent> component)
 {
-    auto itr = std::find_if(
+    /*auto itr = std::find_if(
         std::begin(children),
         std::end(children),
-        [component](auto& element){ return element.get() == component; });
+        [component](auto element){ return element.get() == component; });
 
     if (itr != children.end())
     {
         children.erase(itr);
         return true;
+    }*/
+
+    for (auto child : children)
+    {
+        if (child == component)
+        {
+            children.erase(std::ranges::remove(children, child).begin(), children.end());
+        }
     }
 
     return false;
@@ -79,7 +87,7 @@ void FeatherContainer::FixPosition(const int x, const int y)
     this->tPosition.x = x + vPosition.x;
     this->tPosition.y = y + vPosition.y;
 
-    for (std::unique_ptr<FeatherComponent>& child : children)
+    for (auto child : children)
     {
         child->FixPosition(this->tPosition.x, this->tPosition.y);
     }
@@ -87,7 +95,7 @@ void FeatherContainer::FixPosition(const int x, const int y)
 
 void FeatherContainer::HandleInput(FeatherTouch* touch)
 {
-    for (std::unique_ptr<FeatherComponent>& childComponent : children)
+    for (auto childComponent : children)
     {
         if (childComponent->render)
         {
@@ -146,7 +154,7 @@ void FeatherContainer::Render()
     RECT rect;
     g_render.pDevice->GetScissorRect(&rect);
 
-    for (std::unique_ptr<FeatherComponent>& child : children)
+    for (auto child : children)
     {
         if (child->render)
         {

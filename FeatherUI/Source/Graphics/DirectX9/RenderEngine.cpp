@@ -1,5 +1,5 @@
-#include <iostream>
 #include <ostream>
+#include <vector>
 #include <string>
 #include <Graphics/DirectX9/RenderEngine.h>
 #include <DisplayInterface/FeatherComponent.h>
@@ -248,12 +248,12 @@ void RenderEngine::CircleFilled(const float x, const float y, const float size, 
     vBuffer->Release();
 }
 
-int RenderEngine::GetTextWidth(char* text, ID3DXFont* pFont)
+int RenderEngine::GetTextWidth(std::string& text, ID3DXFont* pFont)
 {
     RECT rcRect = {0, 0, 0, 0};
     if (pFont)
     {
-        const int strl = strlen(text);
+        const int strl = text.length();
         bool trailing = false;
         if(text[strl - 1] == ' ')
         {
@@ -261,7 +261,7 @@ int RenderEngine::GetTextWidth(char* text, ID3DXFont* pFont)
             text[strl - 1] = '.';
         }
             
-        pFont->DrawTextA(nullptr, text, strl, &rcRect, DT_CALCRECT | DT_SINGLELINE,D3DCOLOR_XRGB(0, 0, 0));
+        pFont->DrawTextA(nullptr, text.data(), strl, &rcRect, DT_CALCRECT | DT_SINGLELINE,D3DCOLOR_XRGB(0, 0, 0));
 
         if(trailing)
             text[strl - 1] = ' ';
@@ -270,12 +270,12 @@ int RenderEngine::GetTextWidth(char* text, ID3DXFont* pFont)
     return rcRect.right - rcRect.left;
 }
 
-int RenderEngine::GetTextHeight(char* text, ID3DXFont* pFont)
+int RenderEngine::GetTextHeight(std::string& text, ID3DXFont* pFont)
 {
     RECT rcRect = {0, 0, 0, 0};
     if (pFont)
     {
-        pFont->DrawTextA(nullptr, text, strlen(text), &rcRect, DT_CALCRECT,D3DCOLOR_XRGB(0, 0, 0));
+        pFont->DrawTextA(nullptr, text.data(), text.length(), &rcRect, DT_CALCRECT,D3DCOLOR_XRGB(0, 0, 0));
     }
 
     return rcRect.bottom - rcRect.top;

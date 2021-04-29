@@ -9,7 +9,7 @@
 class FeatherTextBox : public FeatherComponent
 {
 public:
-    FeatherTextBox(int x, int y, int width, int height, ID3DXFont* font, std::string placeHolder);
+    FeatherTextBox(int x, int y, int width, int height, ID3DXFont* font, std::string& placeHolder);
     
     void Render() override;
     void OnMousePressed(FeatherTouch* touch) override;

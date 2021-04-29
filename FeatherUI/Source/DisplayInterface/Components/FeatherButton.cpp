@@ -1,7 +1,7 @@
 ﻿#include <DisplayInterface/Components/FeatherButton.h>
 #include <DisplayInterface/Components/FeatherContainer.h>
 
-FeatherButton::FeatherButton(const int x, const int y, std::function<void(FeatherButton*)> onClick, ID3DXFont* font, const char* buttonText, const DWORD color)
+FeatherButton::FeatherButton(const int x, const int y, std::function<void(FeatherButton*)> onClick, ID3DXFont* font, std::string& buttonText, const DWORD color)
 {
     FeatherComponent::SetPosition(x, y);
     this->width = 150;
@@ -14,7 +14,7 @@ FeatherButton::FeatherButton(const int x, const int y, std::function<void(Feathe
     this->currentFill = fillColor;
 }
 
-FeatherButton::FeatherButton(const int x, const int y, const int width, const int height, std::function<void(FeatherButton*)> onClick, ID3DXFont* font, const char* buttonText, const DWORD color)
+FeatherButton::FeatherButton(const int x, const int y, const int width, const int height, std::function<void(FeatherButton*)> onClick, ID3DXFont* font, std::string& buttonText, const DWORD color)
 {
     FeatherComponent::SetPosition(x, y);
     this->width = width;

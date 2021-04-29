@@ -8,7 +8,7 @@
 class FeatherWindowTitle : public FeatherComponent
 {
 public:
-    FeatherWindowTitle(int posX, int posY, int width, int height, DWORD backgroundColor, ID3DXFont* font, const char* windowTitleText, DWORD color = COLOR(255, 255, 255, 255));
+    FeatherWindowTitle(int posX, int posY, int width, int height, DWORD backgroundColor, ID3DXFont* font, std::string& windowTitleText, DWORD color = COLOR(255, 255, 255, 255));
 private:
     std::shared_ptr<FeatherLabel> windowTitle;
     DWORD backgroundColor;

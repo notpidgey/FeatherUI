@@ -1,12 +1,13 @@
 ﻿#include <DisplayInterface/Components/FeatherSlider.h>
 #include <DisplayInterface/Components/FeatherLabel.h>
 #include <DisplayInterface/Components/FeatherContainer.h>
+#include <Graphics/DirectX9/RenderEngine.h>
 #include <algorithm>
 #include <sstream>
 #include <iomanip>
 
 
-FeatherSlider::FeatherSlider(const int x, const int y, const int width, const SLIDER_UNIT unit, const float min, const float max, ID3DXFont* font, const char* labelText)
+FeatherSlider::FeatherSlider(const int x, const int y, const int width, const SLIDER_UNIT unit, const float min, const float max, ID3DXFont* font, std::string& labelText)
 {
     FeatherComponent::SetPosition(x, y);
     this->unit = unit;
@@ -14,7 +15,7 @@ FeatherSlider::FeatherSlider(const int x, const int y, const int width, const SL
     this->maxValue = max;
 
     this->sliderLabel = std::make_shared<FeatherLabel>(0, 0, font, labelText, COLOR(255, 0, 0, 0));
-    this->sliderValueLabel = std::make_shared<FeatherLabel>(0, 0, font, sliderValueText.data(), COLOR(255, 0, 0, 0));
+    this->sliderValueLabel = std::make_shared<FeatherLabel>(0, 0, font, sliderValueText, COLOR(255, 0, 0, 0));
     this->sliderKnob = std::make_shared<FeatherSliderKnob>(HORIZONTAL_PADDING, TEXT_SLIDER_PADDING + VERTICAL_PADDING, width - (HORIZONTAL_PADDING * 2),
         BACKGROUND_HEIGHT - (VERTICAL_PADDING * 2));
 
