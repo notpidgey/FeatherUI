@@ -13,15 +13,15 @@ FeatherTabView::FeatherTabView(const int x, const int y, const int width, const 
     auto tabContainer = std::dynamic_pointer_cast<FeatherContainer>(this->childrenContainer->AddControl(
         std::make_shared<FeatherContainer>(std::shared_ptr<FeatherComponent>(childrenContainer.get())
     )));
-    tabContainer->height = buttonHeight;
-    tabContainer->width = width;
+    tabContainer->SetHeight(buttonHeight);
+    tabContainer->SetWidth(width);
 
     auto viewContainer = std::dynamic_pointer_cast<FeatherContainer>(this->childrenContainer->AddControl(
         std::make_shared<FeatherContainer>(std::shared_ptr<FeatherComponent>(childrenContainer.get())
     )));
     viewContainer->Transform(0, buttonHeight + 1);
-    viewContainer->height = height - buttonHeight;
-    viewContainer->width = width;
+    viewContainer->SetHeight(height - buttonHeight);
+    viewContainer->SetWidth(width);
 
     int i = 0;
     const int sizePerButton = width / tabNames.size();
@@ -37,7 +37,7 @@ FeatherTabView::FeatherTabView(const int x, const int y, const int width, const 
         newTab.view = std::dynamic_pointer_cast<FeatherContainer>(viewContainer->AddControl(
                 std::make_shared<FeatherContainer>(std::shared_ptr<FeatherComponent>(this)))
         ).get();
-        newTab.view->render = false;
+        newTab.view->SetRenderState(false);
 
         //newTab.view->backgroundColor = COLOR(255,255,255,255);
 
@@ -51,9 +51,9 @@ void FeatherTabView::SetActiveTab(const int tabIndex)
     for (FeatherTabViewTab tab : tabs)
     {
         if (tab.tabId != tabIndex)
-            tab.view->render = false;
+            tab.view->SetRenderState(false);
         else
-            tab.view->render = true;
+            tab.view->SetRenderState(true);
     }
 }
 

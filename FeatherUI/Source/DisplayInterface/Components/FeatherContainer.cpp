@@ -39,7 +39,7 @@ FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent> paren
 
 std::shared_ptr<FeatherComponent> FeatherContainer::AddControl(std::shared_ptr<FeatherComponent> component)
 {
-    component->parent = shared;
+    component->SetParent(shared);
     children.push_back(std::shared_ptr<FeatherComponent>(component));
 
     return component;
@@ -64,11 +64,11 @@ void FeatherContainer::Transform(const int x, const int y)
 
     this->vPosition.x += x;
     this->vPosition.y += y;
-    this->vPosition.x = std::clamp(static_cast<int>(vPosition.x), 0, pParent->width);
-    this->vPosition.y = std::clamp(static_cast<int>(vPosition.y), 0, pParent->height);
+    this->vPosition.x = std::clamp(static_cast<int>(vPosition.x), 0, pParent->GetWidth());
+    this->vPosition.y = std::clamp(static_cast<int>(vPosition.y), 0, pParent->GetHeight());
 
-    this->width = pParent->width - vPosition.x;
-    this->height = pParent->height - vPosition.y;
+    this->width = pParent->GetWidth() - vPosition.x;
+    this->height = pParent->GetHeight()- vPosition.y;
 }
 
 void FeatherContainer::FixPosition(const int x, const int y)
@@ -84,47 +84,47 @@ void FeatherContainer::FixPosition(const int x, const int y)
 
 void FeatherContainer::HandleInput(FeatherTouch* touch)
 {
-    for (auto childComponent : children)
+    for (std::shared_ptr<FeatherComponent> childComponent : children)
     {
-        if (childComponent->render)
+        if (childComponent->GetRenderState())
         {
-            if (touch->MouseInRegion(childComponent->tPosition.x, childComponent->tPosition.y, childComponent->width, childComponent->height))
+            if (touch->MouseInRegion(childComponent->GetTrueX(), childComponent->GetTrueY(), childComponent->GetWidth(), childComponent->GetHeight()))
             {
-                if (!childComponent->mouseInRegion)
+                if (!childComponent->MouseInRegion())
                 {
-                    childComponent->mouseInRegion = true;
+                    childComponent->SetMouseInRegion(true);
                     childComponent->OnEnter(touch);
                 }
 
                 if (touch->KeyPressed(VK_LBUTTON))
                 {
-                    childComponent->handlingMouseDownEvent = true;
+                    childComponent->SetHandlingMouseDownEvent(true);
                     childComponent->OnMousePressed(touch);
                 }
                 if (touch->KeyDown(VK_LBUTTON))
                 {
-                    childComponent->handlingMouseDownEvent = true;
+                    childComponent->SetHandlingMouseDownEvent(true);
                     childComponent->OnMouseDown(touch);
                 }
                 else if (touch->KeyReleased(VK_LBUTTON))
                 {
-                    childComponent->handlingMouseDownEvent = false;
+                    childComponent->SetHandlingMouseDownEvent(false);
                     childComponent->OnMouseUp(touch);
                 }
 
                 childComponent->OnHover(touch);
             }
-            else if (childComponent->mouseInRegion)
+            else if (childComponent->MouseInRegion())
             {
-                childComponent->mouseInRegion = false;
+                childComponent->SetMouseInRegion(false);
                 childComponent->OnLeave(touch);
             }
 
-            if (childComponent->handlingMouseDownEvent)
+            if (childComponent->HandlingMouseDownEvent())
             {
                 if (touch->KeyReleased(VK_LBUTTON))
                 {
-                    childComponent->handlingMouseDownEvent = false;
+                    childComponent->SetHandlingMouseDownEvent(false);
                     childComponent->OnMouseUp(touch);
                 }
                 else
@@ -145,17 +145,17 @@ void FeatherContainer::Render()
 
     for (auto child : children)
     {
-        if (child->render)
+        if (child->GetRenderState())
         {
             if (this->parent.lock() != nullptr)
             {
                 RECT clampedScissor;
 
                 clampedScissor = {
-                    std::clamp(child->tPosition.x, rect.left, rect.right),
-                    std::clamp(child->tPosition.y, rect.top, rect.bottom),
-                    std::clamp(child->tPosition.x + child->width, rect.left, rect.right),
-                    std::clamp(child->tPosition.y + child->height, rect.top, rect.bottom)
+                    std::clamp(static_cast<long>(child->GetTrueX()), rect.left, rect.right),
+                    std::clamp(static_cast<long>(child->GetTrueY()), rect.top, rect.bottom),
+                    std::clamp(static_cast<long>(child->GetTrueX()) + child->GetWidth(), rect.left, rect.right),
+                    std::clamp(static_cast<long>(child->GetTrueY()) + child->GetHeight(), rect.top, rect.bottom)
                 };
 
                 g_render.pDevice->SetScissorRect(&clampedScissor);
@@ -177,8 +177,8 @@ void FeatherContainer::Render()
 
 void FeatherContainer::SetInitialProperties()
 {
-    std::shared_ptr<FeatherComponent> pParent = parent.lock();
+    const std::shared_ptr<FeatherComponent> pParent = parent.lock();
 
-    this->width = pParent->width;
-    this->height = pParent->height;
+    this->width = pParent->GetWidth();
+    this->height = pParent->GetHeight();
 }

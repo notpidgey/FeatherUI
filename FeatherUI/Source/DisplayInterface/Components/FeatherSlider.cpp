@@ -71,7 +71,7 @@ void FeatherSlider::Render()
         break;
     }
 
-    sliderValueLabel->vPosition.x = width - sliderValueLabel->GetTextWidth();
+    sliderValueLabel->SetX(width - sliderValueLabel->GetTextWidth());
 
     FeatherComponent::Render();
 }

@@ -7,12 +7,17 @@
 class FeatherButton : public FeatherComponent
 {
 public:
+    FeatherButton(int x, int y, std::function<void(FeatherButton*)>, ID3DXFont* font, const std::string& buttonText, DWORD color = COLOR(255, 255, 255, 255));
+    FeatherButton(int x, int y, int width, int height, std::function<void(FeatherButton*)>, ID3DXFont* font, const std::string& buttonText, DWORD color = COLOR(255, 255, 255, 255));
+
+    void SetClickEvent(std::function<void(FeatherButton*)> function);
+
+    void SetFillColor(D3DCOLOR color);
+    void SetMouseClickColor(D3DCOLOR color);
+    void SetOutlineColor(D3DCOLOR color);
+
+protected:
     std::shared_ptr<FeatherLabel> label;
-
-    FeatherButton(int x, int y, std::function<void(FeatherButton*)>, ID3DXFont* font, std::string& buttonText, DWORD color = COLOR(255, 255, 255, 255));
-    FeatherButton(int x, int y, int width, int height, std::function<void(FeatherButton*)>, ID3DXFont* font, std::string& buttonText, DWORD color = COLOR(255, 255, 255, 255));
-
-private:
     std::function<void(FeatherButton*)> onClick;
 
     DWORD currentFill;

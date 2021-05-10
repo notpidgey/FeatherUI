@@ -10,8 +10,8 @@ FeatherTextBox::FeatherTextBox(const int x, const int y, const int width, const 
     this->height = height;
     this->font = font;
     this->text = std::make_shared<FeatherLabel>(2, 2, font, "", COLOR(255, 255, 255, 255));
-    this->text->width = width - 4;
-    this->text->height = height - 4;
+    this->text->SetWidth(width - 4);
+    this->text->SetHeight(height - 4);
     this->childrenContainer = std::make_unique<FeatherContainer>(shared, text.get());
     this->lastBackspace = std::chrono::system_clock::now();
     this->maxCharacters = 0;
@@ -43,34 +43,33 @@ void FeatherTextBox::HandleInput(FeatherTouch* touch)
         {
             firstBackspace = std::nullopt;
         }
-        else if(touch->KeyPressed(0x08) && text->labelText.size() > 0)
+        else if(touch->KeyPressed(0x08) &&  text->GetLabelText().size() > 0)
         {
             firstBackspace = std::chrono::system_clock::now();
-            text->labelText.pop_back();
+            text->GetLabelText().pop_back();
         }
-        else if (touch->KeyDown(0x08) && text->labelText.size() > 0 &&
+        else if (touch->KeyDown(0x08) && text->GetLabelText().size() > 0 &&
             (std::chrono::system_clock::now() - firstBackspace.value()).count() >= 3000000  &&
             (std::chrono::system_clock::now() - lastBackspace).count() >= 150000)
         {
             lastBackspace = std::chrono::system_clock::now();
-            text->labelText.pop_back();
+            text->GetLabelText().pop_back();
         }
 
-        if(maxCharacters != 0 && text->labelText.size() >= maxCharacters)
+        if(maxCharacters != 0 && text->GetLabelText().size() >= maxCharacters)
             return;
         
         if (touch->KeyPressed(0x20))
-            text->labelText += ' ';
+            text->GetLabelText() += ' ';
         else if (!touch->KeyPressed(VK_CONTROL))
         {
             for (int i = 0x41; i <= 0x5A; i ++)
             {
                 if (touch->KeyPressed(i))
                 {
-                    const char character = static_cast<char>(MapVirtualKeyA(i, MAPVK_VK_TO_CHAR));
-                    if (touch->KeyDown(0x10))
-                        text->labelText += character;
-                    else text->labelText += tolower(character);
+                    if (const char character = static_cast<char>(MapVirtualKeyA(i, MAPVK_VK_TO_CHAR)); touch->KeyDown(0x10))
+                        text->GetLabelText() += character;
+                    else text->GetLabelText() += tolower(character);
                 }
             }
         }

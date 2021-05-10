@@ -22,7 +22,7 @@ void RenderEngine::Line(const float x, const float y, const float x1, const floa
 
 void RenderEngine::StringA(ID3DXFont* font, FeatherComponent* component, const DWORD flags, const bool shadow, const DWORD color, const char* string, ...)
 {
-    RECT r = {component->tPosition.x, component->tPosition.y, component->tPosition.x + component->width, component->tPosition.y + component->height};
+    RECT r = {component->GetTrueX(), component->GetTrueY(), component->GetTrueX() + component->GetWidth(), component->GetTrueY() + component->GetHeight()};
 
     static char buf[200] = {0};
 
