@@ -17,20 +17,22 @@ public:
     
     POINT tPosition {};
     POINT vPosition {};
+    
     bool render = true;
-    bool mouseInRegion = false;
-    bool handlingMouseDownEvent = false;
     int width = 0;
     int height = 0;
 
+    bool mouseInRegion = false;
+    bool handlingMouseDownEvent = false;
+    
     POINT GetTruePosition(FeatherComponent* component, int xOffset, int yOffset) const;
-    virtual void SetPosition(int x, int y);
+    void SetPosition(int x, int y);
 
     virtual void FixPosition(int x, int y);
-    virtual void HandleInput(FeatherTouch* touch);
     
     //Implemented Events
     virtual void Render();
+    virtual void HandleInput(FeatherTouch* touch);
 
     //Implemented Input Events
     virtual void OnEnter(FeatherTouch* touch) {};

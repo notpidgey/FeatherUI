@@ -15,9 +15,8 @@ public:
     ID3DXFont* font;
     std::string labelText;
     
-    //FeatherLabel(int x, int y, ID3DXFont* font, std::string* labelText, DWORD color = COLOR(255, 255, 255, 255), ALIGN_LABEL align = LEFT);
-    FeatherLabel(int x, int y, ID3DXFont* font, std::string& labelText, DWORD color = COLOR(255, 255, 255, 255), ALIGN_LABEL align = LEFT);
-    FeatherLabel(int x, int y, int width, int height, ID3DXFont* font, std::string& labelText, DWORD color, ALIGN_LABEL align);
+    FeatherLabel(int x, int y,                        ID3DXFont* font, const std::string& labelText, DWORD color = COLOR(255, 255, 255, 255), ALIGN_LABEL align = LEFT);
+    FeatherLabel(int x, int y, int width, int height, ID3DXFont* font, const std::string& labelText, DWORD color = COLOR(255, 255, 255, 255), ALIGN_LABEL align = LEFT);
     
     int GetTextWidth();
     int GetTextHeight();

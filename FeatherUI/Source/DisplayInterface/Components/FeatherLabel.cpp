@@ -13,19 +13,18 @@
     this->textAlign = align;
 }*/
 
-FeatherLabel::FeatherLabel(const int x, const int y, ID3DXFont* font, std::string& labelText, const DWORD color, const ALIGN_LABEL align)
+FeatherLabel::FeatherLabel(const int x, const int y, ID3DXFont* font, const std::string& labelText, const DWORD color, const ALIGN_LABEL align)
 {
-    this->vPosition.x = x;
-    this->vPosition.y = y;
+    FeatherComponent::SetPosition(x, y);
     this->font = font;
     this->labelText = labelText;
     this->color = color;
-    this->width = g_render.GetTextWidth(labelText, font);
-    this->height = g_render.GetTextHeight(labelText, font);
+    this->width = g_render.GetTextWidth(this->labelText, font);
+    this->height = g_render.GetTextHeight(this->labelText, font);
     this->textAlign = align;
 }
 
-FeatherLabel::FeatherLabel(const int x, const int y, const int width, const int height, ID3DXFont* font, std::string& labelText, const DWORD color, const ALIGN_LABEL align)
+FeatherLabel::FeatherLabel(const int x, const int y, const int width, const int height, ID3DXFont* font, const std::string& labelText, const DWORD color, const ALIGN_LABEL align)
 {
     FeatherComponent::SetPosition(x, y);
     this->font = font;

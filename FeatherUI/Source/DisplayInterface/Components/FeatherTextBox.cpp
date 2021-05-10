@@ -3,16 +3,15 @@
 #include <algorithm>
 #include <iostream>
 
-FeatherTextBox::FeatherTextBox(const int x, const int y, const int width, const int height, ID3DXFont* font, std::string& placeHolder)
+FeatherTextBox::FeatherTextBox(const int x, const int y, const int width, const int height, ID3DXFont* font)
 {
     this->FeatherComponent::SetPosition(x, y);
     this->width = width;
     this->height = height;
     this->font = font;
-    this->text = std::make_shared<FeatherLabel>(2, 2, font, input, COLOR(255, 255, 255, 255));
+    this->text = std::make_shared<FeatherLabel>(2, 2, font, "", COLOR(255, 255, 255, 255));
     this->text->width = width - 4;
     this->text->height = height - 4;
-    this->input = placeHolder;
     this->childrenContainer = std::make_unique<FeatherContainer>(shared, text.get());
     this->lastBackspace = std::chrono::system_clock::now();
     this->maxCharacters = 0;
@@ -34,22 +33,6 @@ void FeatherTextBox::Render()
 void FeatherTextBox::OnMousePressed(FeatherTouch* touch)
 {
     selected = !selected;
-
-    if (placeHolderActive)
-    {
-        if (selected)
-        {
-            placeHolderActive = false;
-            input = "";
-        }
-    }
-    else if (input.length() == 0)
-    {
-        if (!selected)
-        {
-            input = placeHolder;
-        }
-    }
 }
 
 void FeatherTextBox::HandleInput(FeatherTouch* touch)
@@ -60,25 +43,25 @@ void FeatherTextBox::HandleInput(FeatherTouch* touch)
         {
             firstBackspace = std::nullopt;
         }
-        else if(touch->KeyPressed(0x08) && input.size() > 0)
+        else if(touch->KeyPressed(0x08) && text->labelText.size() > 0)
         {
             firstBackspace = std::chrono::system_clock::now();
-            input.pop_back();
+            text->labelText.pop_back();
         }
-        else if (touch->KeyDown(0x08) && input.size() > 0 &&
+        else if (touch->KeyDown(0x08) && text->labelText.size() > 0 &&
             (std::chrono::system_clock::now() - firstBackspace.value()).count() >= 3000000  &&
             (std::chrono::system_clock::now() - lastBackspace).count() >= 150000)
         {
             lastBackspace = std::chrono::system_clock::now();
-            input.pop_back();
+            text->labelText.pop_back();
         }
 
-        if(maxCharacters != 0 && input.size() >= maxCharacters)
+        if(maxCharacters != 0 && text->labelText.size() >= maxCharacters)
             return;
         
         if (touch->KeyPressed(0x20))
-            input += ' ';
-        else
+            text->labelText += ' ';
+        else if (!touch->KeyPressed(VK_CONTROL))
         {
             for (int i = 0x41; i <= 0x5A; i ++)
             {
@@ -86,8 +69,8 @@ void FeatherTextBox::HandleInput(FeatherTouch* touch)
                 {
                     const char character = static_cast<char>(MapVirtualKeyA(i, MAPVK_VK_TO_CHAR));
                     if (touch->KeyDown(0x10))
-                        input += character;
-                    else input += tolower(character);
+                        text->labelText += character;
+                    else text->labelText += tolower(character);
                 }
             }
         }

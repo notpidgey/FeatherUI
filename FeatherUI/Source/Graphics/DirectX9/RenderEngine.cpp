@@ -255,12 +255,12 @@ int RenderEngine::GetTextWidth(std::string& text, ID3DXFont* pFont)
     {
         const int strl = text.length();
         bool trailing = false;
-        if(text[strl - 1] == ' ')
+        if(strl > 0 && text[strl - 1] == ' ')
         {
             trailing = true;
             text[strl - 1] = '.';
         }
-            
+
         pFont->DrawTextA(nullptr, text.data(), strl, &rcRect, DT_CALCRECT | DT_SINGLELINE,D3DCOLOR_XRGB(0, 0, 0));
 
         if(trailing)
