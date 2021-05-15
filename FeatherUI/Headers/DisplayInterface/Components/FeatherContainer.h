@@ -22,6 +22,7 @@ public:
     void FixPosition(int x, int y) override;
     void HandleInput(FeatherTouch* touch) override;
     void Render() override;
+    void SetComponentWindow(Window* window) override;
 
 private:
     void SetInitialProperties();

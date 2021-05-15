@@ -1,5 +1,8 @@
+#include <condition_variable>
+#include <pplwin.h>
 #include <Window/Window.h>
 #include <DisplayInterface/Components/FeatherWindowTitle.h>
+#include <concurrent_queue.h>
 
 Window::Window(const int width, const int height, const unsigned long flags, const std::string& windowName, const DWORD background, const std::vector<FeatherFont>& fonts)
 {
@@ -15,6 +18,7 @@ Window::Window(const int width, const int height, const unsigned long flags, con
     this->hwnd = CreateWindowExA(NULL, " ", windowName.data(), winFlags, 0, 0, width, height, nullptr, nullptr, nullptr, nullptr);
     this->keyStateManager.window = this;
     this->container = std::make_shared<FeatherContainer>();
+    this->container->SetComponentWindow(this);
 
     InitializeDirectx(fonts);
     SetupWindow();
@@ -34,13 +38,25 @@ void Window::SetupWindow() const
 
 void Window::HandleMessage()
 {
-    while (PeekMessage(&message, hwnd, 0, 0, PM_REMOVE))
+    while (PeekMessage(&this->message, this->hwnd, 0, 0, PM_REMOVE))
     {
-        TranslateMessage(&message);
-        DispatchMessage(&message);
+        TranslateMessage(&this->message);
+        DispatchMessage(&this->message);
     }
 
-    Render();
+    this->Render();
+
+    if(!postRenderQueue.empty())
+    {
+        for(int i = 0; i < postRenderQueue.unsafe_size(); i++)
+        {
+            std::function<void()> func;
+            if(postRenderQueue.try_pop(func))
+            {
+                func();
+            }
+        }
+    }
 }
 
 void Window::InitializeDirectx(const std::vector<FeatherFont>& fonts)
@@ -83,7 +99,7 @@ void Window::InitializeDirectx(const std::vector<FeatherFont>& fonts)
 
 void Window::Render()
 {
-    RECT base = {0,0, width, height};
+    RECT base = {0, 0, width, height};
     pDevice->SetScissorRect(&base);
     pDevice->Clear(0, nullptr, D3DCLEAR_TARGET, backgroundColor, 1.f, 0);
 
@@ -91,7 +107,7 @@ void Window::Render()
     {
         keyStateManager.PollInput(&hwnd);
         container->FixPosition(0, 0);
-        
+
         if (GetFocus() == hwnd)
             container->HandleInput(&keyStateManager);
 

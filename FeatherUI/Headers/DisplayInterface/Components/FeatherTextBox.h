@@ -13,8 +13,9 @@ public:
     
     void Render() override;
     void OnMousePressed(FeatherTouch* touch) override;
+    void OnMouseClickAway(FeatherTouch* touch) override;
     void HandleInput(FeatherTouch* touch) override;
-
+    std::string* GetText() const;
 private:
     std::shared_ptr<FeatherLabel> text;
     ID3DXFont* font;

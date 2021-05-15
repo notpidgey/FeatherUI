@@ -1,5 +1,8 @@
-﻿#include <algorithm>
+#include <algorithm>
+#include <concurrent_queue.h>
+#include <mutex>
 #include <DisplayInterface/Components/FeatherContainer.h>
+#include <Window/Window.h>
 
 FeatherContainer::FeatherContainer()
 { }
@@ -40,7 +43,18 @@ FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent> paren
 std::shared_ptr<FeatherComponent> FeatherContainer::AddControl(std::shared_ptr<FeatherComponent> component)
 {
     component->SetParent(shared);
-    children.push_back(std::shared_ptr<FeatherComponent>(component));
+
+    if (window == nullptr)
+    {
+        component->SetComponentWindow(window);
+        this->children.push_back(std::shared_ptr<FeatherComponent>(component));
+    }
+    else
+    {
+        window->postRenderQueue.push([=, this]{
+            this->children.push_back(std::shared_ptr<FeatherComponent>(component));
+        });
+    }
 
     return component;
 }
@@ -51,7 +65,9 @@ bool FeatherContainer::RemoveControl(const std::shared_ptr<FeatherComponent> com
     {
         if (child == component)
         {
-            children.erase(std::ranges::remove(children, child).begin(), children.end());
+            window->postRenderQueue.push([=, this]{
+                children.erase(std::ranges::remove(children, child).begin(), children.end());
+            });
         }
     }
 
@@ -68,7 +84,7 @@ void FeatherContainer::Transform(const int x, const int y)
     this->vPosition.y = std::clamp(static_cast<int>(vPosition.y), 0, pParent->GetHeight());
 
     this->width = pParent->GetWidth() - vPosition.x;
-    this->height = pParent->GetHeight()- vPosition.y;
+    this->height = pParent->GetHeight() - vPosition.y;
 }
 
 void FeatherContainer::FixPosition(const int x, const int y)
@@ -118,6 +134,10 @@ void FeatherContainer::HandleInput(FeatherTouch* touch)
             {
                 childComponent->SetMouseInRegion(false);
                 childComponent->OnLeave(touch);
+            }
+            else if (touch->KeyPressed(VK_LBUTTON))
+            {
+                childComponent->OnMouseClickAway(touch);
             }
 
             if (childComponent->HandlingMouseDownEvent())
@@ -172,6 +192,15 @@ void FeatherContainer::Render()
 
             child->Render();
         }
+    }
+}
+
+void FeatherContainer::SetComponentWindow(Window* window)
+{
+    FeatherComponent::SetComponentWindow(window);
+    for (auto child : children)
+    {
+        child->SetComponentWindow(window);
     }
 }
 

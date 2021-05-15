@@ -20,7 +20,7 @@ public:
     bool GetRenderState() const;
     POINT GetPosition() const;
     POINT GetTruePosition(FeatherComponent* component, int xOffset, int yOffset) const;
-
+    
     void SetX(int x);
     void SetY(int y);
     void SetPosition(int x, int y);
@@ -39,6 +39,7 @@ public:
     virtual void Render();
     virtual void FixPosition(int x, int y);
     virtual void HandleInput(FeatherTouch* touch);
+    virtual void SetComponentWindow(Window* window);
 
     //Implemented Input Events
     virtual void OnEnter(FeatherTouch* touch) {};
@@ -50,8 +51,11 @@ public:
     virtual void OnMousePressed(FeatherTouch* touch) {};
     virtual void OnMouseDown(FeatherTouch* touch) {};
     virtual void OnMouseUp(FeatherTouch* touch) {};
+    virtual void OnMouseClickAway(FeatherTouch* touch) {};
 
 protected:
+    Window* window = nullptr;
+    
     std::weak_ptr<FeatherComponent> parent;
     std::shared_ptr<FeatherComponent> shared = std::shared_ptr<FeatherComponent>(this);
     std::unique_ptr<FeatherContainer> childrenContainer = nullptr;

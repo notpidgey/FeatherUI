@@ -1,8 +1,11 @@
 #pragma once
+#include <mutex>
 #include <vector>
 #include <Windows.h>
 #include <Graphics/DirectX9/Structs/FeatherFont.h>
 #include <DisplayInterface/Components/FeatherContainer.h>
+#include <concurrent_queue.h>
+#include <functional>
 
 class Window
 {
@@ -18,6 +21,8 @@ public:
     POINT position;
     HWND hwnd;
 
+    concurrency::concurrent_queue<std::function<void()>> postRenderQueue;
+ 
     std::string windowName;
     int width;
     int height;
@@ -26,6 +31,7 @@ public:
     void SetupWindow() const;
     void HandleMessage();
     void Render();
+
 
 private:
     IDirect3D9Ex* pObject = nullptr;
@@ -36,6 +42,7 @@ private:
     HINSTANCE hInstance;
     MSG message = {nullptr};
 
+    
     void Init();
     void InitializeDirectx(const std::vector<FeatherFont>& fonts);
 };

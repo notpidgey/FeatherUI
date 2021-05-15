@@ -56,6 +56,15 @@ POINT FeatherComponent::GetTruePosition(FeatherComponent* component, const int x
     return {totalX + xOffset, totalY + yOffset};
 }
 
+void FeatherComponent::SetComponentWindow(Window* window)
+{
+    this->window = window;
+    if(childrenContainer != nullptr)
+    {
+        childrenContainer->SetComponentWindow(window);
+    }
+}
+
 void FeatherComponent::SetPosition(const int x, const int y)
 {
     this->vPosition.x = x;
