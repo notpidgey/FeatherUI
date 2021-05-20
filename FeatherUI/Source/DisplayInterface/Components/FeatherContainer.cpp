@@ -42,16 +42,16 @@ FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent> paren
 
 std::shared_ptr<FeatherComponent> FeatherContainer::AddControl(std::shared_ptr<FeatherComponent> component)
 {
-    component->SetParent(shared);
-
     if (window == nullptr)
     {
+        component->SetParent(shared);
         component->SetComponentWindow(window);
         this->children.push_back(std::shared_ptr<FeatherComponent>(component));
     }
     else
     {
         window->postRenderQueue.push([=, this]{
+            component->SetParent(shared);
             this->children.push_back(std::shared_ptr<FeatherComponent>(component));
         });
     }
@@ -61,15 +61,15 @@ std::shared_ptr<FeatherComponent> FeatherContainer::AddControl(std::shared_ptr<F
 
 bool FeatherContainer::RemoveControl(const std::shared_ptr<FeatherComponent> component)
 {
-    for (auto child : children)
-    {
-        if (child == component)
+    window->postRenderQueue.push([=, this] {
+        for (auto child : children)
         {
-            window->postRenderQueue.push([=, this]{
+            if (child == component)
+            {
                 children.erase(std::ranges::remove(children, child).begin(), children.end());
-            });
+            }
         }
-    }
+    });
 
     return false;
 }

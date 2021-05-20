@@ -38,6 +38,17 @@ void Window::SetupWindow() const
 
 void Window::HandleMessage()
 {
+    if(!postRenderQueue.empty())
+    {
+        for(int i = 0; i < postRenderQueue.unsafe_size(); i++)
+        {
+            if(std::function<void()> func; postRenderQueue.try_pop(func))
+            {
+                func();
+            }
+        }
+    }
+    
     while (PeekMessage(&this->message, this->hwnd, 0, 0, PM_REMOVE))
     {
         TranslateMessage(&this->message);
@@ -45,18 +56,6 @@ void Window::HandleMessage()
     }
 
     this->Render();
-
-    if(!postRenderQueue.empty())
-    {
-        for(int i = 0; i < postRenderQueue.unsafe_size(); i++)
-        {
-            std::function<void()> func;
-            if(postRenderQueue.try_pop(func))
-            {
-                func();
-            }
-        }
-    }
 }
 
 void Window::InitializeDirectx(const std::vector<FeatherFont>& fonts)

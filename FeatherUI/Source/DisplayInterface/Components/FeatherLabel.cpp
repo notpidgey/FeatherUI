@@ -6,7 +6,7 @@ FeatherLabel::FeatherLabel(const int x, const int y, ID3DXFont* font, const std:
 {
     FeatherComponent::SetPosition(x, y);
     this->labelFont = font;
-    this->labelText = labelText;
+    this->labelText = std::string(labelText);
     this->color = color;
     this->width = g_render.GetTextWidth(this->labelText, font);
     this->height = g_render.GetTextHeight(this->labelText, font);
