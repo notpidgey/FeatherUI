@@ -3,7 +3,7 @@
 #include <Window/Window.h>
 
 FeatherWindowTitle::FeatherWindowTitle(const int posX, const int posY, const int width, const int height, const DWORD backgroundColor,
-    ID3DXFont* font, std::string& windowTitleText, const DWORD color)
+    ID3DXFont* font, const std::string& windowTitleText, const DWORD color)
 {
     FeatherComponent::SetPosition(posX, posY);
     this->width = width;

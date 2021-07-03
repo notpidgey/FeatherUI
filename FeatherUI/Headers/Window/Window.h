@@ -10,8 +10,10 @@
 class Window
 {
 public:
-    Window(int width, int height, unsigned long flags, const std::string& windowName, DWORD background, const std::vector<FeatherFont>& fonts);
+    Window(int width, int height, unsigned long flags, const std::string& windowName, DWORD background);
     ~Window();
+
+    void InitializeDirectX(const std::vector<FeatherFont>& fonts);
     
     std::shared_ptr<FeatherContainer> container;
     FeatherTouch keyStateManager;

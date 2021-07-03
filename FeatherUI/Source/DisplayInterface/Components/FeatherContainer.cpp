@@ -1,8 +1,14 @@
 #include <algorithm>
 #include <concurrent_queue.h>
 #include <mutex>
-#include <DisplayInterface/Components/FeatherContainer.h>
 #include <Window/Window.h>
+
+#include <DisplayInterface/Components/FeatherContainer.h>
+#include <DisplayInterface/Components/FeatherButton.h>
+#include <DisplayInterface/Components/FeatherLabel.h>
+#include <DisplayInterface/Components/FeatherTabView.h>
+#include <DisplayInterface/Components/FeatherButton.h>
+#include <DisplayInterface/Components/FeatherTextBox.h>
 
 FeatherContainer::FeatherContainer()
 { }
@@ -18,7 +24,7 @@ FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent> paren
     this->parent = std::weak_ptr(parent);
     SetInitialProperties();
 
-    AddControl(std::shared_ptr<FeatherComponent>(child));
+    AddControl<FeatherComponent>(std::shared_ptr<FeatherComponent>(child));
 }
 
 FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent> parent, FeatherComponent* child1, FeatherComponent* child2)
@@ -26,8 +32,8 @@ FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent> paren
     this->parent = std::weak_ptr(parent);
     SetInitialProperties();
 
-    AddControl(std::shared_ptr<FeatherComponent>(child1));
-    AddControl(std::shared_ptr<FeatherComponent>(child2));
+    AddControl<FeatherComponent>(std::shared_ptr<FeatherComponent>(child1));
+    AddControl<FeatherComponent>(std::shared_ptr<FeatherComponent>(child2));
 }
 
 FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent> parent, FeatherComponent* child1, FeatherComponent* child2, FeatherComponent* child3)
@@ -35,29 +41,12 @@ FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent> paren
     this->parent = std::weak_ptr(parent);
     SetInitialProperties();
 
-    AddControl(std::shared_ptr<FeatherComponent>(child1));
-    AddControl(std::shared_ptr<FeatherComponent>(child2));
-    AddControl(std::shared_ptr<FeatherComponent>(child3));
+    AddControl<FeatherComponent>(std::shared_ptr<FeatherComponent>(child1));
+    AddControl<FeatherComponent>(std::shared_ptr<FeatherComponent>(child2));
+    AddControl<FeatherComponent>(std::shared_ptr<FeatherComponent>(child3));
 }
 
-std::shared_ptr<FeatherComponent> FeatherContainer::AddControl(std::shared_ptr<FeatherComponent> component)
-{
-    if (window == nullptr)
-    {
-        component->SetParent(shared);
-        component->SetComponentWindow(window);
-        this->children.push_back(std::shared_ptr<FeatherComponent>(component));
-    }
-    else
-    {
-        window->postRenderQueue.push([=, this]{
-            component->SetParent(shared);
-            this->children.push_back(std::shared_ptr<FeatherComponent>(component));
-        });
-    }
 
-    return component;
-}
 
 bool FeatherContainer::RemoveControl(const std::shared_ptr<FeatherComponent> component)
 {
@@ -210,4 +199,9 @@ void FeatherContainer::SetInitialProperties()
 
     this->width = pParent->GetWidth();
     this->height = pParent->GetHeight();
+}
+
+void FeatherContainer::PushToQueue(std::function<void()> func)
+{
+    window->postRenderQueue.push(func);
 }

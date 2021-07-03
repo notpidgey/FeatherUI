@@ -4,7 +4,7 @@
 #include <DisplayInterface/Components/FeatherWindowTitle.h>
 #include <concurrent_queue.h>
 
-Window::Window(const int width, const int height, const unsigned long flags, const std::string& windowName, const DWORD background, const std::vector<FeatherFont>& fonts)
+Window::Window(const int width, const int height, const unsigned long flags, const std::string& windowName, const DWORD background)
 {
     Init();
 
@@ -15,19 +15,22 @@ Window::Window(const int width, const int height, const unsigned long flags, con
     this->backgroundColor = background;
     this->windowName = windowName;
     this->winFlags = flags;
-    this->hwnd = CreateWindowExA(NULL, " ", windowName.data(), winFlags, 0, 0, width, height, nullptr, nullptr, nullptr, nullptr);
     this->keyStateManager.window = this;
     this->container = std::make_shared<FeatherContainer>();
     this->container->SetComponentWindow(this);
-
-    InitializeDirectx(fonts);
-    SetupWindow();
 }
 
 Window::~Window()
 {
     DestroyWindow(hwnd);
     UnregisterClassA("", hInstance);
+}
+
+void Window::InitializeDirectX(const std::vector<FeatherFont>& fonts)
+{
+    this->hwnd = CreateWindowExA(NULL, " ", windowName.data(), winFlags, 0, 0, width, height, nullptr, nullptr, nullptr, nullptr);
+    InitializeDirectx(fonts);
+    SetupWindow();
 }
 
 void Window::SetupWindow() const

@@ -19,6 +19,9 @@ public:
     bool AddToTab(FeatherComponent* component, int tabIndex);
 
 private:
+    std::shared_ptr<FeatherContainer> tabButtonContainer;
+    std::shared_ptr<FeatherContainer> viewContainer;
+    
     std::vector<FeatherTabViewTab> tabs;
     
     void OnTabButtonClick(FeatherButton* button);

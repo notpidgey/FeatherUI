@@ -7,7 +7,7 @@
 #include <iomanip>
 
 
-FeatherSlider::FeatherSlider(const int x, const int y, const int width, const SLIDER_UNIT unit, const float min, const float max, ID3DXFont* font, std::string& labelText)
+FeatherSlider::FeatherSlider(const int x, const int y, const int width, const SLIDER_UNIT unit, const float min, const float max, ID3DXFont* font, const std::string& labelText)
 {
     FeatherComponent::SetPosition(x, y);
     this->unit = unit;

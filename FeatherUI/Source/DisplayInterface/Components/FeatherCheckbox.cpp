@@ -1,13 +1,13 @@
 ﻿#include <DisplayInterface/Components/FeatherCheckbox.h>
 #include <DisplayInterface/Components/FeatherContainer.h>
 
-FeatherCheckbox::FeatherCheckbox(const int x, const int y, bool* checkValue, ID3DXFont* font, std::string& labelText, const DWORD color)
+FeatherCheckbox::FeatherCheckbox(const int x, const int y, bool* checkValue, ID3DXFont* font, const std::string& labelText, const DWORD color)
 {
     FeatherComponent::SetPosition(x, y);
     this->value = checkValue;
     this->label = std::make_shared<FeatherLabel>(25, 2, font, labelText, color);
     this->childrenContainer = std::make_unique<FeatherContainer>(shared, label.get());
-    this->width = CHECKBOX_WIDTH + 15 + g_render.GetTextWidth(labelText, font),
+    this->width = CHECKBOX_WIDTH + 15 + label->GetTextWidth(),
     this->height = CHECKBOX_HEIGHT;
 
     SetValueFill();
