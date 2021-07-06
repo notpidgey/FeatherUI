@@ -7,12 +7,13 @@
 #include <iomanip>
 
 
-FeatherSlider::FeatherSlider(const int x, const int y, const int width, const SLIDER_UNIT unit, const float min, const float max, ID3DXFont* font, const std::string& labelText)
+FeatherSlider::FeatherSlider(const int x, const int y, const int width, const SLIDER_UNIT unit, const float min, const float max, float* out, ID3DXFont* font, const std::string& labelText)
 {
     FeatherComponent::SetPosition(x, y);
     this->unit = unit;
     this->minValue = min;
     this->maxValue = max;
+    this->sliderValue = out;
 
     this->sliderLabel = std::make_shared<FeatherLabel>(0, 0, font, labelText, COLOR(255, 0, 0, 0));
     this->sliderValueLabel = std::make_shared<FeatherLabel>(0, 0, font, sliderValueText, COLOR(255, 0, 0, 0));
@@ -32,7 +33,10 @@ FeatherSlider::FeatherSlider(const int x, const int y, const int width, const SL
 
 float FeatherSlider::GetValue() const
 {
-    return minValue + (sliderKnob->knobPercentage * (maxValue - minValue));
+    const float curr = minValue + (sliderKnob->knobPercentage * (maxValue - minValue));
+    *sliderValue = curr;
+    
+    return curr;
 }
 
 std::string FeatherSlider::FloatToString(const float number, int precision = 2)

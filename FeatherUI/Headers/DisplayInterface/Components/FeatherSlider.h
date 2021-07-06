@@ -23,7 +23,7 @@ public:
         NONE
     };
     
-    FeatherSlider(int x, int y, int width, SLIDER_UNIT unit, float min, float max, ID3DXFont* font, const std::string& labelText);
+    FeatherSlider(int x, int y, int width, SLIDER_UNIT unit, float min, float max, float* out, ID3DXFont* font, const std::string& labelText);
 
     float GetValue() const;
 
@@ -32,6 +32,7 @@ private:
     std::string sliderValueText;
     float maxValue;
     float minValue;
+    float* sliderValue;
     
     std::shared_ptr<FeatherLabel> sliderLabel;
     std::shared_ptr<FeatherLabel> sliderValueLabel;
