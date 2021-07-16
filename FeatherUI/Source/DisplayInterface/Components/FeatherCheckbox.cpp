@@ -1,7 +1,7 @@
 ﻿#include <DisplayInterface/Components/FeatherCheckbox.h>
 #include <DisplayInterface/Components/FeatherContainer.h>
 
-FeatherCheckbox::FeatherCheckbox(const int x, const int y, bool* checkValue, ID3DXFont* font, const std::string& labelText, const DWORD color)
+FeatherCheckbox::FeatherCheckbox(const int x, const int y, std::atomic<bool>* checkValue, ID3DXFont* font, const std::string& labelText, const DWORD color)
 {
     FeatherComponent::SetPosition(x, y);
     this->value = checkValue;
@@ -26,13 +26,13 @@ void FeatherCheckbox::Render()
 
 void FeatherCheckbox::OnMousePressed(FeatherTouch* touch)
 {
-    *value = !*value;
+    *value = !value->load();
     SetValueFill();
 }
 
 void FeatherCheckbox::SetValueFill()
 {
-    if (*value)
+    if (value->load())
         currentColor = checkedColor;
     else
         currentColor = uncheckedColor;

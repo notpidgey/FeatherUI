@@ -14,31 +14,21 @@ class FeatherSliderKnob;
 class FeatherSlider : public FeatherComponent
 {
 public:
-    enum SLIDER_UNIT
-    {
-        PERCENTAGE,
-        FEET,
-        METERS,
-        MILLIMETERS,
-        NONE
-    };
-    
-    FeatherSlider(int x, int y, int width, SLIDER_UNIT unit, float min, float max, float* out, ID3DXFont* font, const std::string& labelText);
+    FeatherSlider(int x, int y, int width, short decimalPlaces, float min, float max, std::atomic<float>* out, ID3DXFont* font, const std::string& labelText);
 
     float GetValue() const;
 
 private:
-    SLIDER_UNIT unit;
-    std::string sliderValueText;
+    short decimalPlaces;
+    std::string sliderTextValueless;
     float maxValue;
     float minValue;
-    float* sliderValue;
+    std::atomic<float>* sliderValue;
     
     std::shared_ptr<FeatherLabel> sliderLabel;
-    std::shared_ptr<FeatherLabel> sliderValueLabel;
     std::shared_ptr<FeatherSliderKnob> sliderKnob;
 
-    static std::string FloatToString(float number, int precision);
+    std::string FloatToString(const float number) const;
     void Render() override;
 };
 
