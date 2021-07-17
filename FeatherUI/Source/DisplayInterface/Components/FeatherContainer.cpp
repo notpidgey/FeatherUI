@@ -50,7 +50,7 @@ FeatherContainer::FeatherContainer(const std::shared_ptr<FeatherComponent> paren
 
 bool FeatherContainer::RemoveControl(const std::shared_ptr<FeatherComponent> component)
 {
-    window->postRenderQueue.push([=, this] {
+    window->postRenderQueue.enqueue([=, this] {
         for (auto child : children)
         {
             if (child == component)
@@ -203,5 +203,5 @@ void FeatherContainer::SetInitialProperties()
 
 void FeatherContainer::PushToQueue(std::function<void()> func)
 {
-    window->postRenderQueue.push(func);
+    window->postRenderQueue.enqueue(func);
 }

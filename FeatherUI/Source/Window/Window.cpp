@@ -41,17 +41,15 @@ void Window::SetupWindow() const
 
 void Window::HandleMessage()
 {
-    if(!postRenderQueue.empty())
+    while (true)
     {
-        for(int i = 0; i < postRenderQueue.unsafe_size(); i++)
-        {
-            if(std::function<void()> func; postRenderQueue.try_pop(func))
-            {
-                func();
-            }
-        }
+        std::function<void()> queue;
+        if (postRenderQueue.try_dequeue(queue))
+            queue();
+        else
+            break;
     }
-    
+
     while (PeekMessage(&this->message, this->hwnd, 0, 0, PM_REMOVE))
     {
         TranslateMessage(&this->message);

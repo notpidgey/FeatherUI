@@ -177,6 +177,7 @@
     <ClInclude Include="Headers\DisplayInterface\FeatherForwards.h" />
     <ClInclude Include="Headers\Graphics\DirectX9\RenderEngine.h" />
     <ClInclude Include="Headers\Graphics\DirectX9\Structs\FeatherFont.h" />
+    <ClInclude Include="Headers\Util\ConcurrentQueue.h" />
     <ClInclude Include="Headers\Window\FeatherTouch.h" />
     <ClInclude Include="Headers\Window\Window.h" />
   </ItemGroup>

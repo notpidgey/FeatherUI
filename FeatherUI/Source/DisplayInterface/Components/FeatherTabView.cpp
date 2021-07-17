@@ -53,7 +53,7 @@ void FeatherTabView::SetActiveTab(const int tabIndex)
     }
 }
 
-bool FeatherTabView::AddToTab(FeatherComponent* component, const int tabIndex)
+bool FeatherTabView::AddToTab(const std::shared_ptr<FeatherComponent> component, const int tabIndex)
 {
     for (auto [tabId, button, view] : tabs)
     {

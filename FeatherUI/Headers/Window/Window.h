@@ -7,6 +7,8 @@
 #include <concurrent_queue.h>
 #include <functional>
 
+#include "Util/ConcurrentQueue.h"
+
 class Window
 {
 public:
@@ -23,7 +25,7 @@ public:
     POINT position;
     HWND hwnd;
 
-    concurrency::concurrent_queue<std::function<void()>> postRenderQueue;
+    moodycamel::ConcurrentQueue<std::function<void()>> postRenderQueue;
  
     std::string windowName;
     int width;
