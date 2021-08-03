@@ -133,7 +133,7 @@ void Window::Init()
     wc.hIcon = LoadIcon(nullptr, IDI_APPLICATION);
     wc.hbrBackground = nullptr;
     wc.lpszMenuName = nullptr;
-    wc.lpszClassName = L" ";
+    wc.lpszClassName = " ";
     wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
 
     RegisterClassEx(&wc);
