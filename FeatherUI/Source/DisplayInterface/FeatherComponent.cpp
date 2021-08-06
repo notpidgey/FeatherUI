@@ -2,7 +2,9 @@
 #include <DisplayInterface/Components/FeatherContainer.h>
 
 FeatherComponent::~FeatherComponent()
-{ }
+{
+    this->shared.reset();
+}
 
 int FeatherComponent::GetX() const
 {

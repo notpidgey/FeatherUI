@@ -13,7 +13,6 @@ class Window
 {
 public:
     Window(int width, int height, unsigned long flags, const std::string& windowName, DWORD background);
-    ~Window();
 
     void InitializeDirectX(const std::vector<FeatherFont>& fonts);
     
@@ -33,9 +32,9 @@ public:
     int winFlags;
 
     void SetupWindow() const;
+    void CloseWindow() const;
     void HandleMessage();
     void Render();
-
 
 private:
     IDirect3D9Ex* pObject = nullptr;
@@ -46,7 +45,6 @@ private:
     HINSTANCE hInstance;
     MSG message = {nullptr};
 
-    
     void Init();
     void InitializeDirectx(const std::vector<FeatherFont>& fonts);
 };

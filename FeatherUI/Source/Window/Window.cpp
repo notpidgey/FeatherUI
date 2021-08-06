@@ -20,12 +20,6 @@ Window::Window(const int width, const int height, const unsigned long flags, con
     this->container->SetComponentWindow(this);
 }
 
-Window::~Window()
-{
-    DestroyWindow(hwnd);
-    UnregisterClassA("", hInstance);
-}
-
 void Window::InitializeDirectX(const std::vector<FeatherFont>& fonts)
 {
     this->hwnd = CreateWindowExA(NULL, " ", windowName.data(), winFlags, 0, 0, width, height, nullptr, nullptr, nullptr, nullptr);
@@ -37,6 +31,12 @@ void Window::SetupWindow() const
 {
     UpdateWindow(hwnd);
     ShowWindow(hwnd, SW_SHOWDEFAULT);
+}
+
+void Window::CloseWindow() const
+{
+    DestroyWindow(hwnd);
+    UnregisterClassA("", hInstance);
 }
 
 void Window::HandleMessage()
