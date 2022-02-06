@@ -3,7 +3,7 @@
 #include <d3d9.h>
 #include <string>
 
-#include "DisplayInterface/FeatherComponent.h"
+#include "FeatherUI/DisplayInterface/FeatherComponent.h"
 
 #define COLOR(a,r,g,b) D3DCOLOR_ARGB(a,r,g,b)
 #pragma comment (lib, "d3d9.lib")

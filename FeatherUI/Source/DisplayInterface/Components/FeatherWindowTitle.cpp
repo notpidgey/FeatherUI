@@ -1,6 +1,6 @@
-﻿#include <DisplayInterface/Components/FeatherWindowTitle.h>
-#include <DisplayInterface/Components/FeatherLabel.h>
-#include <Window/Window.h>
+﻿#include <FeatherUI/DisplayInterface/Components/FeatherWindowTitle.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherLabel.h>
+#include <FeatherUI/Window/Window.h>
 
 FeatherWindowTitle::FeatherWindowTitle(const int posX, const int posY, const int width, const int height, const DWORD backgroundColor,
     ID3DXFont* font, const std::string& windowTitleText, const DWORD color)

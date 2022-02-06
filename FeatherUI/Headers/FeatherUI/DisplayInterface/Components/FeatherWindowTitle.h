@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include <memory>
 #include <string>
-#include <DisplayInterface/Components/FeatherLabel.h>
-#include <DisplayInterface/FeatherComponent.h>
-#include <Graphics/DirectX9/RenderEngine.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherLabel.h>
+#include <FeatherUI/DisplayInterface/FeatherComponent.h>
+#include <FeatherUI/Graphics/DirectX9/RenderEngine.h>
 
 class FeatherWindowTitle : public FeatherComponent
 {

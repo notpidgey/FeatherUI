@@ -1,6 +1,6 @@
-﻿#include <DisplayInterface/Components/FeatherTabView.h>
-#include <DisplayInterface/Components/FeatherContainer.h>
-#include <DisplayInterface/Components/FeatherButton.h>
+﻿#include <FeatherUI/DisplayInterface/Components/FeatherTabView.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherContainer.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherButton.h>
 #include <functional>
 
 FeatherTabView::FeatherTabView(const int x, const int y, const int width, const int height, const int buttonHeight, ID3DXFont* font, std::vector<std::string> tabNames)

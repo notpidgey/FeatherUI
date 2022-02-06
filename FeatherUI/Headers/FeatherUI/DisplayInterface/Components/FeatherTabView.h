@@ -1,7 +1,7 @@
 ﻿#pragma once
-#include <DisplayInterface/FeatherComponent.h>
-#include <DisplayInterface/Components/FeatherButton.h>
-#include <DisplayInterface/Components/FeatherContainer.h>
+#include <FeatherUI/DisplayInterface/FeatherComponent.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherButton.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherContainer.h>
 
 struct FeatherTabViewTab
 {

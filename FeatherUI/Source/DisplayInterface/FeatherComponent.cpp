@@ -1,5 +1,5 @@
-﻿#include <DisplayInterface/FeatherComponent.h>
-#include <DisplayInterface/Components/FeatherContainer.h>
+﻿#include <FeatherUI/DisplayInterface/FeatherComponent.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherContainer.h>
 
 FeatherComponent::~FeatherComponent()
 {

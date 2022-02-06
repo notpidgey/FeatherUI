@@ -1,5 +1,5 @@
-﻿#include <DisplayInterface/Components/FeatherButton.h>
-#include <DisplayInterface/Components/FeatherContainer.h>
+﻿#include <FeatherUI/DisplayInterface/Components/FeatherButton.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherContainer.h>
 
 FeatherButton::FeatherButton(const int x, const int y, std::function<void(FeatherButton*)> onClick, ID3DXFont* font, const std::string& buttonText, const DWORD color)
 {

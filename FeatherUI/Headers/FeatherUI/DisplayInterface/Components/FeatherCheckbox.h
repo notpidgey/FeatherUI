@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <memory>
-#include <DisplayInterface/Components/FeatherLabel.h>
-#include <DisplayInterface/FeatherComponent.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherLabel.h>
+#include <FeatherUI/DisplayInterface/FeatherComponent.h>
 
 #define CHECKBOX_HEIGHT 20
 #define CHECKBOX_WIDTH 20

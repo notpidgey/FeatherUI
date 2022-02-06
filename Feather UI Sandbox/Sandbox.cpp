@@ -1,11 +1,11 @@
 ﻿#include <iostream>
 #include <vector>
 
-#include <DisplayInterface/Components/FeatherContainer.h>
-#include <DisplayInterface/Components/FeatherWindowTitle.h>
-#include <Graphics/DirectX9/RenderEngine.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherContainer.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherWindowTitle.h>
+#include <FeatherUI/Graphics/DirectX9/RenderEngine.h>
 
-#include <Window/Window.h>
+#include <FeatherUI/Window/Window.h>
 
 ID3DXFont* tahoma16Px = nullptr;
 ID3DXFont* tahoma12Px = nullptr;

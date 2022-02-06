@@ -1,7 +1,7 @@
-﻿#include <DisplayInterface/Components/FeatherSlider.h>
-#include <DisplayInterface/Components/FeatherLabel.h>
-#include <DisplayInterface/Components/FeatherContainer.h>
-#include <Graphics/DirectX9/RenderEngine.h>
+﻿#include <FeatherUI/DisplayInterface/Components/FeatherSlider.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherLabel.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherContainer.h>
+#include <FeatherUI/Graphics/DirectX9/RenderEngine.h>
 #include <algorithm>
 #include <sstream>
 #include <iomanip>

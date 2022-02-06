@@ -1,14 +1,14 @@
 #include <algorithm>
 #include <concurrent_queue.h>
 #include <mutex>
-#include <Window/Window.h>
+#include <FeatherUI/Window/Window.h>
 
-#include <DisplayInterface/Components/FeatherContainer.h>
-#include <DisplayInterface/Components/FeatherButton.h>
-#include <DisplayInterface/Components/FeatherLabel.h>
-#include <DisplayInterface/Components/FeatherTabView.h>
-#include <DisplayInterface/Components/FeatherButton.h>
-#include <DisplayInterface/Components/FeatherTextBox.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherContainer.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherButton.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherLabel.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherTabView.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherButton.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherTextBox.h>
 
 FeatherContainer::FeatherContainer()
 { }

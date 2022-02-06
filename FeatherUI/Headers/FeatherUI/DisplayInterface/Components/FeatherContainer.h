@@ -1,8 +1,8 @@
 ﻿#pragma once
 #include <functional>
 #include <memory>
-#include <DisplayInterface/FeatherForwards.h>
-#include <DisplayInterface/FeatherComponent.h>
+#include <FeatherUI/DisplayInterface/FeatherForwards.h>
+#include <FeatherUI/DisplayInterface/FeatherComponent.h>
 #include <vector>
 
 class FeatherContainer;

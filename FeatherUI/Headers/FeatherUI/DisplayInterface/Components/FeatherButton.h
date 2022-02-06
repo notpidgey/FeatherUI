@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <functional>
-#include <DisplayInterface/FeatherComponent.h>
+#include <FeatherUI/DisplayInterface/FeatherComponent.h>
 
 #include "FeatherLabel.h"
 

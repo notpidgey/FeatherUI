@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <DisplayInterface/FeatherComponent.h>
+#include <FeatherUI/DisplayInterface/FeatherComponent.h>
 #include <chrono>
 #include <optional>
 

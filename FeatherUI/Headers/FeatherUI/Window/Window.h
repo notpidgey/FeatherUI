@@ -2,12 +2,12 @@
 #include <mutex>
 #include <vector>
 #include <Windows.h>
-#include <Graphics/DirectX9/Structs/FeatherFont.h>
-#include <DisplayInterface/Components/FeatherContainer.h>
 #include <concurrent_queue.h>
 #include <functional>
 
-#include "Util/ConcurrentQueue.h"
+#include <FeatherUI/Graphics/DirectX9/Structs/FeatherFont.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherContainer.h>
+#include <FeatherUI/Util/ConcurrentQueue.h>
 
 class Window
 {

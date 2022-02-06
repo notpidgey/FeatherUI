@@ -1,8 +1,8 @@
 #include <ostream>
 #include <vector>
 #include <string>
-#include <Graphics/DirectX9/RenderEngine.h>
-#include <DisplayInterface/FeatherComponent.h>
+#include <FeatherUI/Graphics/DirectX9/RenderEngine.h>
+#include <FeatherUI/DisplayInterface/FeatherComponent.h>
 
 void RenderEngine::SetPointers(const LPDIRECT3DDEVICE9 pDev, ID3DXLine* pLin)
 {

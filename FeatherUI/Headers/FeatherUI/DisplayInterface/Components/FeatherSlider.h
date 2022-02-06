@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include <DisplayInterface/FeatherComponent.h>
-#include <DisplayInterface/Components/FeatherLabel.h>
+#include <FeatherUI/DisplayInterface/FeatherComponent.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherLabel.h>
 
 #define TEXT_SLIDER_PADDING 15
 #define BACKGROUND_HEIGHT 20

@@ -1,6 +1,6 @@
 ﻿#include <iterator>
-#include <DisplayInterface/Components/FeatherLabel.h>
-#include <DisplayInterface/Components/FeatherContainer.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherLabel.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherContainer.h>
 
 FeatherLabel::FeatherLabel(const int x, const int y, ID3DXFont* font, const std::string& labelText, const DWORD color, const ALIGN_LABEL align)
 {

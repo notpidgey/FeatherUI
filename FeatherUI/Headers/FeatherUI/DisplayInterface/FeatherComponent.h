@@ -1,10 +1,10 @@
 ﻿// ReSharper disable CppFunctionIsNotImplemented
 #pragma once
 #include <memory>
-#include <DisplayInterface/FeatherForwards.h>
-#include <Graphics/DirectX9/RenderEngine.h>
-#include <Window/FeatherTouch.h>
-#include <Windef.h>
+#include <FeatherUI/DisplayInterface/FeatherForwards.h>
+#include <FeatherUI/Graphics/DirectX9/RenderEngine.h>
+#include <FeatherUI/Window/FeatherTouch.h>
+#include <windef.h>
 
 class FeatherComponent
 {

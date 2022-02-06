@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include <DisplayInterface/FeatherComponent.h>
-#include <Graphics/DirectX9/Structs/FeatherFont.h>
+#include <FeatherUI/DisplayInterface/FeatherComponent.h>
+#include <FeatherUI/Graphics/DirectX9/Structs/FeatherFont.h>
 
 class FeatherLabel : public FeatherComponent
 {

@@ -1,5 +1,5 @@
-﻿#include <DisplayInterface/Components/FeatherCheckbox.h>
-#include <DisplayInterface/Components/FeatherContainer.h>
+﻿#include <FeatherUI/DisplayInterface/Components/FeatherCheckbox.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherContainer.h>
 
 FeatherCheckbox::FeatherCheckbox(const int x, const int y, std::atomic<bool>* checkValue, ID3DXFont* font, const std::string& labelText, const DWORD color)
 {

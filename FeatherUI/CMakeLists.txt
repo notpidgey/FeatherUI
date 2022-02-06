@@ -8,7 +8,7 @@ file(
 
 add_library(FeatherUI STATIC ${featherui_SRC})
 target_include_directories(FeatherUI PUBLIC Headers PRIVATE Headers/FeatherUI PUBLIC ${DIRECTX_PATH}Include)
-target_link_directories(FeatherUI PUBLIC ${DIRECTX_PATH}Lib\\x64)
+target_link_directories(FeatherUI PRIVATE ${DIRECTX_PATH}Lib\\x64)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDebug")

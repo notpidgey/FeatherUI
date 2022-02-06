@@ -1,7 +1,7 @@
 #include <condition_variable>
 #include <pplwin.h>
-#include <Window/Window.h>
-#include <DisplayInterface/Components/FeatherWindowTitle.h>
+#include <FeatherUI/Window/Window.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherWindowTitle.h>
 #include <concurrent_queue.h>
 
 Window::Window(const int width, const int height, const unsigned long flags, const std::string& windowName, const DWORD background)
