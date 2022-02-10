@@ -15,12 +15,14 @@ class FeatherSlider : public FeatherComponent
 {
 public:
     FeatherSlider(int x, int y, int width, short decimalPlaces, float min, float max, std::atomic<float>* out, ID3DXFont* font, const std::string& labelText);
+	FeatherSlider(int x, int y, int width, short decimalPlaces, float min, float max, std::atomic<float>* out, ID3DXFont* font, const std::wstring& labelText);
 
     float GetValue() const;
-
 private:
+	std::optional<std::string> sliderTextValueless;
+	std::optional<std::wstring> sliderTextValuelessW;
+
     short decimalPlaces;
-    std::string sliderTextValueless;
     float maxValue;
     float minValue;
     std::atomic<float>* sliderValue;
@@ -29,6 +31,7 @@ private:
     std::shared_ptr<FeatherSliderKnob> sliderKnob;
 
     std::string FloatToString(const float number) const;
+	std::wstring FloatToStringW(const float number) const;
     void Render() override;
 };
 

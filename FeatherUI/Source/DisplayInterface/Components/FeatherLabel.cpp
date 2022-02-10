@@ -1,78 +1,120 @@
-﻿#include <iterator>
-#include <FeatherUI/DisplayInterface/Components/FeatherLabel.h>
+﻿#include <FeatherUI/DisplayInterface/Components/FeatherLabel.h>
 #include <FeatherUI/DisplayInterface/Components/FeatherContainer.h>
 
-FeatherLabel::FeatherLabel(const int x, const int y, ID3DXFont* font, const std::string& labelText, const DWORD color, const ALIGN_LABEL align)
+FeatherLabel::FeatherLabel(const int x, const int y, ID3DXFont* font, const std::string& labelText, const DWORD color,
+	const ALIGN_LABEL align)
 {
-    FeatherComponent::SetPosition(x, y);
-    this->labelFont = font;
-    this->labelText = std::string(labelText);
-    this->color = color;
-    this->width = g_render.GetTextWidth(this->labelText, font);
-    this->height = g_render.GetTextHeight(this->labelText, font);
-    this->labelAlign = align;
+	FeatherComponent::SetPosition(x, y);
+
+	this->labelFont = font;
+	this->labelText = labelText;
+	this->color = color;
+	this->width = GetTextWidth();
+	this->height = GetTextHeight();
+	this->labelAlign = align;
 }
+
+FeatherLabel::FeatherLabel(int x, int y, ID3DXFont* font, const std::wstring& labelText, DWORD color,
+	FeatherLabel::ALIGN_LABEL align)
+{
+	FeatherComponent::SetPosition(x, y);
+
+	this->labelFont = font;
+	this->labelTextW = labelText;
+	this->color = color;
+	this->width = GetTextWidth();
+	this->height = GetTextHeight();
+	this->labelAlign = align;
+}
+
 
 void FeatherLabel::Render()
 {
-    switch (labelAlign)
-    {
-    case LEFT:
-        g_render.StringA(labelFont, this, DT_LEFT, false, color, labelText.data());
-        break;
-    case CENTER:
-        g_render.StringA(labelFont, this, DT_CENTER, false, color, labelText.data());
-        break;
-    case RIGHT:
-        g_render.StringA(labelFont, this, DT_RIGHT, false, color, labelText.data());
-        break;
-    }
+	if (labelText)
+		switch (labelAlign)
+		{
+		case LEFT:
+			g_render.StringA(labelFont, this, DT_LEFT, false, color, labelText->c_str());
+			break;
+		case CENTER:
+			g_render.StringA(labelFont, this, DT_CENTER, false, color, labelText->c_str());
+			break;
+		case RIGHT:
+			g_render.StringA(labelFont, this, DT_RIGHT, false, color, labelText->c_str());
+			break;
+		}
+	else
+		switch (labelAlign)
+		{
+		case LEFT:
+			g_render.StringW(labelFont, this, DT_LEFT, false, color, labelTextW->c_str());
+			break;
+		case CENTER:
+			g_render.StringW(labelFont, this, DT_CENTER, false, color, labelTextW->c_str());
+			break;
+		case RIGHT:
+			g_render.StringW(labelFont, this, DT_RIGHT, false, color, labelTextW->c_str());
+			break;
+		}
 }
+
 void FeatherLabel::SetLabelAlign(const ALIGN_LABEL align)
 {
-    labelAlign = align;
+	labelAlign = align;
 }
 
 void FeatherLabel::SetLabelFont(ID3DXFont* font)
 {
-    labelFont = font;
+	labelFont = font;
 }
 
 void FeatherLabel::SetLabelText(const std::string& labelText)
 {
-    this->labelText = labelText;
+	this->labelText = labelText;
+}
+
+void FeatherLabel::SetLabelText(const std::wstring& labelText)
+{
+	this->labelTextW = labelText;
 }
 
 void FeatherLabel::SetTextHeight(const int height)
 {
-    this->height = height;
+	this->height = height;
 }
 
 void FeatherLabel::SetTextWidth(const int width)
 {
-    this->width = width;
+	this->width = width;
 }
 
 int FeatherLabel::GetTextWidth()
 {
-    return g_render.GetTextWidth(labelText, labelFont);
+	if (labelText)
+		return g_render.GetTextWidth(labelText.value(), labelFont);
+
+	return g_render.GetTextWidth(labelTextW.value(), labelFont);
 }
+
 void FeatherLabel::ResetTextWidth()
 {
-    this->width = GetTextWidth();
+	this->width = GetTextWidth();
 }
 
 int FeatherLabel::GetTextHeight()
 {
-    return g_render.GetTextHeight(labelText, labelFont);
+	if (labelText)
+		return RenderEngine::GetTextHeight(labelText.value(), labelFont);
+
+	return RenderEngine::GetTextHeight(labelTextW.value(), labelFont);
 }
 
 void FeatherLabel::ResetTextHeight()
 {
-    this->height = GetTextHeight();
+	this->height = GetTextHeight();
 }
 
 std::string& FeatherLabel::GetLabelText()
 {
-    return labelText;
+	return labelText.value();
 }

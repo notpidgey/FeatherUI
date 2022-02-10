@@ -80,8 +80,11 @@ void Window::InitializeDirectx(const std::vector<FeatherFont>& fonts)
     for (auto& font : fonts)
     {
         D3DXCreateFontA(pDevice, font.fontSize, 0, FW_REGULAR, 0, 0,
-            DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE,
+			font.charSet, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE,
             font.name.c_str(), font.d3dFont);
+
+		if(font.charSet == GB2312_CHARSET)
+			((ID3DXFont*)*font.d3dFont)->PreloadGlyphs(0xb6a1, 0xa3a4);
     }
 
     pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
@@ -133,7 +136,7 @@ void Window::Init()
     wc.hIcon = LoadIcon(nullptr, IDI_APPLICATION);
     wc.hbrBackground = nullptr;
     wc.lpszMenuName = nullptr;
-    wc.lpszClassName = " ";
+    wc.lpszClassName = L" ";
     wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
 
     RegisterClassEx(&wc);

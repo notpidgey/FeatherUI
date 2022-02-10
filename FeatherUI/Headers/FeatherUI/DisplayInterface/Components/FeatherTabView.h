@@ -14,6 +14,7 @@ class FeatherTabView : public FeatherComponent
 {
 public:
     FeatherTabView(int x, int y, int width, int height, int buttonHeight, ID3DXFont* font, std::vector<std::string> tabNames);
+	FeatherTabView(int x, int y, int width, int height, int buttonHeight, ID3DXFont* font, std::vector<std::wstring> tabNames);
 
     void SetActiveTab(int tabIndex);
     bool AddToTab(std::shared_ptr<FeatherComponent> component, const int tabIndex);

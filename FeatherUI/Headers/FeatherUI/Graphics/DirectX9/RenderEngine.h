@@ -19,17 +19,19 @@ public:
 
     struct Vertex
     {
-        float x, y, z = 0, rhw = 1;
+        float x{}, y{}, z = 0, rhw = 1;
         DWORD color = 0;
     };
     
     void SetPointers(LPDIRECT3DDEVICE9 pDev, ID3DXLine* pLin);
     
     void Line(float x, float y, float x1, float y1, bool aa, DWORD color, float width = 1.f) const;
-    void StringA(ID3DXFont* font, FeatherComponent* component, DWORD flags, bool shadow, DWORD color, const char* string, ...);
 
-    void StringA(ID3DXFont* font, float x, float y, DWORD flags, bool shadow, DWORD color, const char* string, ...);
-    void StringW(ID3DXFont* font, float x, float y, DWORD flags, bool shadow, DWORD color, const wchar_t* string, ...) const;
+	void StringA(ID3DXFont* font, FeatherComponent* component, DWORD flags, bool shadow, DWORD color, const char* string);
+    void StringA(ID3DXFont* font, float x, float y, DWORD flags, bool shadow, DWORD color, const char* string);
+
+	void StringW(ID3DXFont* font, FeatherComponent* component, const DWORD flags, const bool shadow, const DWORD color, const wchar_t* string);
+	void StringW(ID3DXFont* font, float x, float y, DWORD flags, bool shadow, DWORD color, const wchar_t* string) const;
     
     void Rect1(float x, float y, float w, float h, DWORD color) const;
     void Rect(float x, float y, float x1, float y1, DWORD color) const;
@@ -40,8 +42,11 @@ public:
     void Circle(float x, float y, float size, int resolution, DWORD color) const;
     void CircleFilled(float x, float y, float size, int resolution, DWORD color) const;
     
-    int GetTextWidth(std::string& text, ID3DXFont* pFont);
-    int GetTextHeight(std::string& text, ID3DXFont* pFont);
+    static int GetTextWidth(std::string& text, ID3DXFont* pFont);
+    static int GetTextHeight(std::string& text, ID3DXFont* pFont);
+
+	static int GetTextWidth(std::wstring& text, ID3DXFont* pFont);
+	static int GetTextHeight(std::wstring& text, ID3DXFont* pFont);
 };
 
 extern RenderEngine g_render;

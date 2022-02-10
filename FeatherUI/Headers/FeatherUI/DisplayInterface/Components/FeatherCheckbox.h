@@ -13,6 +13,7 @@ public:
     std::atomic<bool>* value;
     
     FeatherCheckbox(int x, int y, std::atomic<bool>* checkValue, ID3DXFont* font, const std::string& labelText, DWORD color = COLOR(255,0,0,0));
+	FeatherCheckbox(int x, int y, std::atomic<bool>* checkValue, ID3DXFont* font, const std::wstring& labelText, DWORD color = COLOR(255,0,0,0));
 private:
     DWORD currentColor;
     DWORD checkedColor = COLOR(255, 34, 34, 34);
