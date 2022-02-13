@@ -4,8 +4,8 @@
 #include <FeatherUI/DisplayInterface/Components/FeatherWindowTitle.h>
 #include <concurrent_queue.h>
 
-Window::Window(const int width, const int height, const unsigned long flags, const std::string& windowName, const DWORD background)
-{
+Window::Window(const int width, const int height, const unsigned long flags, const std::string &windowName,
+               const DWORD background) {
     Init();
 
     this->width = width;
@@ -20,38 +20,33 @@ Window::Window(const int width, const int height, const unsigned long flags, con
     this->container->SetComponentWindow(this);
 }
 
-void Window::InitializeDirectX(const std::vector<FeatherFont>& fonts)
-{
-    this->hwnd = CreateWindowExA(NULL, " ", windowName.data(), winFlags, 0, 0, width, height, nullptr, nullptr, nullptr, nullptr);
+void Window::InitializeDirectX(const std::vector<FeatherFont> &fonts) {
+    this->hwnd = CreateWindowExA(NULL, " ", windowName.data(), winFlags, 0, 0, width, height, nullptr, nullptr, nullptr,
+                                 nullptr);
     InitializeDirectx(fonts);
     SetupWindow();
 }
 
-void Window::SetupWindow() const
-{
+void Window::SetupWindow() const {
     UpdateWindow(hwnd);
     ShowWindow(hwnd, SW_SHOWDEFAULT);
 }
 
-void Window::CloseWindow() const
-{
+void Window::CloseWindow() const {
     DestroyWindow(hwnd);
     UnregisterClassA("", hInstance);
 }
 
-void Window::HandleMessage()
-{
-    while (true)
-    {
-        std::function<void()> queue;
+void Window::HandleMessage() {
+    while (true) {
+        std::function < void() > queue;
         if (postRenderQueue.try_dequeue(queue))
             queue();
         else
             break;
     }
 
-    while (PeekMessage(&this->message, this->hwnd, 0, 0, PM_REMOVE))
-    {
+    while (PeekMessage(&this->message, this->hwnd, 0, 0, PM_REMOVE)) {
         TranslateMessage(&this->message);
         DispatchMessage(&this->message);
     }
@@ -59,8 +54,7 @@ void Window::HandleMessage()
     this->Render();
 }
 
-void Window::InitializeDirectx(const std::vector<FeatherFont>& fonts)
-{
+void Window::InitializeDirectx(const std::vector<FeatherFont> &fonts) {
     ZeroMemory(&pParams, sizeof(pParams));
 
     Direct3DCreate9Ex(D3D_SDK_VERSION, &pObject);
@@ -72,19 +66,19 @@ void Window::InitializeDirectx(const std::vector<FeatherFont>& fonts)
     pParams.BackBufferWidth = width;
     pParams.BackBufferHeight = height;
 
-    pObject->CreateDeviceEx(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &pParams, nullptr, &pDevice);
+    pObject->CreateDeviceEx(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &pParams,
+                            nullptr, &pDevice);
     g_render.pDevice = pDevice;
     g_render.deviceWidth = width;
     g_render.deviceHeight = height;
 
-    for (auto& font : fonts)
-    {
+    for (auto &font: fonts) {
         D3DXCreateFontA(pDevice, font.fontSize, 0, FW_REGULAR, 0, 0,
-			font.charSet, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE,
-            font.name.c_str(), font.d3dFont);
+                        font.charSet, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE,
+                        font.name.c_str(), font.d3dFont);
 
-		if(font.charSet == GB2312_CHARSET)
-			((ID3DXFont*)*font.d3dFont)->PreloadGlyphs(0xb6a1, 0xa3a4);
+        if (font.charSet == GB2312_CHARSET)
+            ((ID3DXFont *) *font.d3dFont)->PreloadGlyphs(0xb6a1, 0xa3a4);
     }
 
     pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
@@ -100,14 +94,12 @@ void Window::InitializeDirectx(const std::vector<FeatherFont>& fonts)
     pObject->Release();
 }
 
-void Window::Render()
-{
+void Window::Render() {
     RECT base = {0, 0, width, height};
     pDevice->SetScissorRect(&base);
     pDevice->Clear(0, nullptr, D3DCLEAR_TARGET, backgroundColor, 1.f, 0);
 
-    if (pDevice->BeginScene() >= 0)
-    {
+    if (pDevice->BeginScene() >= 0) {
         keyStateManager.PollInput(&hwnd);
         container->FixPosition(0, 0);
 
@@ -122,12 +114,11 @@ void Window::Render()
     pDevice->Present(nullptr, nullptr, nullptr, nullptr);
 }
 
-void Window::Init()
-{
+void Window::Init() {
     WNDCLASSEX wc = {0};
 
     hInstance = GetModuleHandle(nullptr);
-    wc.cbSize = sizeof WNDCLASSEX;
+    wc.cbSize = sizeof(WNDCLASSEX);
     wc.style = CS_HREDRAW | CS_VREDRAW;
     wc.lpfnWndProc = DefWindowProc;
     wc.cbClsExtra = 0;
