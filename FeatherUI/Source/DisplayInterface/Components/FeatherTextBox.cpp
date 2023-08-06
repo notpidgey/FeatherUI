@@ -136,6 +136,12 @@ void FeatherTextBox::HandleInput(FeatherTouch* touch)
 
     FeatherComponent::HandleInput(touch);
 }
+
+void FeatherTextBox::SetText(std::string new_text)
+{
+    text->SetLabelText(new_text);
+}
+
 std::string* FeatherTextBox::GetText() const
 {
     return &text->GetLabelText();

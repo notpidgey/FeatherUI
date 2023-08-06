@@ -1,6 +1,7 @@
 #include <condition_variable>
 #include <pplwin.h>
 #include <FeatherUI/Window/Window.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherContainer.h>
 #include <FeatherUI/DisplayInterface/Components/FeatherWindowTitle.h>
 #include <concurrent_queue.h>
 
@@ -66,16 +67,15 @@ void Window::InitializeDirectx(const std::vector<FeatherFont> &fonts) {
     pParams.BackBufferWidth = width;
     pParams.BackBufferHeight = height;
 
-    pObject->CreateDeviceEx(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &pParams,
-                            nullptr, &pDevice);
+    pObject->CreateDeviceEx(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &pParams, nullptr, &pDevice);
     g_render.pDevice = pDevice;
     g_render.deviceWidth = width;
     g_render.deviceHeight = height;
 
     for (auto &font: fonts) {
         D3DXCreateFontA(pDevice, font.fontSize, 0, FW_REGULAR, 0, 0,
-                        font.charSet, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE,
-                        font.name.c_str(), font.d3dFont);
+            font.charSet, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE,
+            font.name.c_str(), font.d3dFont);
 
         if (font.charSet == GB2312_CHARSET)
             ((ID3DXFont *) *font.d3dFont)->PreloadGlyphs(0xb6a1, 0xa3a4);

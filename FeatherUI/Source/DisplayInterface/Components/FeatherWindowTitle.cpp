@@ -1,4 +1,5 @@
-﻿#include <FeatherUI/DisplayInterface/Components/FeatherWindowTitle.h>
+﻿#include <FeatherUI/DisplayInterface/Components/FeatherContainer.h>
+#include <FeatherUI/DisplayInterface/Components/FeatherWindowTitle.h>
 #include <FeatherUI/DisplayInterface/Components/FeatherLabel.h>
 #include <FeatherUI/Window/Window.h>
 

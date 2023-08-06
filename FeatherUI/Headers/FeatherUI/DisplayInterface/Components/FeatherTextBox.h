@@ -3,7 +3,6 @@
 #include <chrono>
 #include <optional>
 
-
 #include "FeatherLabel.h"
 
 class FeatherTextBox : public FeatherComponent
@@ -15,7 +14,10 @@ public:
     void OnMousePressed(FeatherTouch* touch) override;
     void OnMouseClickAway(FeatherTouch* touch) override;
     void HandleInput(FeatherTouch* touch) override;
+    
+    void SetText(std::string new_text);
     std::string* GetText() const;
+
 private:
     std::shared_ptr<FeatherLabel> text;
     ID3DXFont* font;
